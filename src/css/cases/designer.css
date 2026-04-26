@@ -1,106 +1,73 @@
 html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  width: 100%; height: 100%; overflow: hidden;
+  margin: 0; padding: 0;
 }
 
-.slide {
-  position: fixed;
-  inset: 0;
-  will-change: transform;
-}
-
-#phrase-screen {
-  z-index: 1;
-  background: #202020;
-}
-
+.slide { position: fixed; inset: 0; will-change: transform; }
+#phrase-screen { z-index: 1; background: #202020; }
 #lang-switcher { display: none !important; }
 
 /* КАРТОЧКА КЕЙСА */
 .case-card {
   background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   padding: 40px clamp(20px, 3vw, 72px);
   box-sizing: border-box;
 }
 
 .case-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 16px;
-  width: 100%;
-  max-height: calc(100vh - 80px);
+  display: flex; flex-direction: row; align-items: stretch; gap: 16px;
+  width: 100%; max-height: calc(100vh - 80px);
 }
 
 .case-left {
   flex: 0 0 calc(38% - 8px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
-
-.case-top { display: flex; flex-direction: column; align-items: flex-start; }
 
 .case-title {
   font-family: Helvetica, Arial, sans-serif;
   font-size: clamp(18px, 4.5vw, 96px);
-  font-weight: 700;
-  letter-spacing: -0.10em;
-  text-transform: uppercase;
-  color: var(--tx);
-  line-height: 0.88;
-  margin: 0 0 12px 0;
+  font-weight: 700; letter-spacing: -0.10em;
+  text-transform: uppercase; color: var(--tx);
+  line-height: 0.88; margin: 0 0 12px 0;
 }
 
 .case-cats { display: flex; align-items: center; margin-bottom: 20px; }
 .case-cat { font-size: 16px; opacity: 0.5; color: var(--tx); }
-.case-sep { width: 36px; height: 1px; background: var(--tx); opacity: 0.5; margin: 0 5px; }
+.case-sep { width: 36px; height: 1px; background: var(--tx); opacity: 0.5; margin: 0 8px; }
+.case-desc { font-size: 16px; color: var(--tx); line-height: 1.2; max-width: 90%; }
 
-.case-desc { font-size: 16px; color: var(--tx); line-height: 1.2; }
-
-/* КНОПКА-ССЫЛКА */
+/* КНОПКА ПОСМОТРЕТЬ КЕЙС — ТЕПЕРЬ БЕЛАЯ */
 .case-cta-link {
-  text-decoration: none;
-  color: inherit;
+  text-decoration: none; 
+  color: var(--tx) !important; /* Берет цвет текста кейса (обычно белый) */
   display: inline-block;
+  opacity: 1;
 }
 
 .case-cta {
-  font-size: 48px;
-  font-weight: 700;
-  letter-spacing: -0.07em;
-  text-transform: uppercase;
-  position: relative;
+  font-size: clamp(24px, 3vw, 48px);
+  font-weight: 700; letter-spacing: -0.07em;
+  text-transform: uppercase; position: relative;
 }
 
 .case-cta::after {
-  content: '';
-  position: absolute;
-  bottom: -14px; left: 0; width: 0; height: 3px;
-  background-color: currentColor;
-  transition: width 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  content: ''; position: absolute; bottom: -8px; left: 0;
+  width: 0; height: 3px; background: currentColor;
+  transition: width 0.3s ease;
 }
 
 .case-cta-link:hover .case-cta::after { width: 100%; }
 
 /* МЕДИА */
 .case-media-wrap {
-  flex: 1 1 0;
-  max-height: calc(100vh - 80px);
-  border-radius: 4px;
-  overflow: hidden;
+  flex: 1 1 0; border-radius: 4px; overflow: hidden;
 }
 
 .case-media {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease; display: block;
 }
 
 .case-media-link:hover .case-media { transform: scale(1.02); }
@@ -124,11 +91,9 @@ html, body {
 .lang-btn-fixed.active { opacity: 1; }
 .lang-line-fixed { width: 160px; height: 1px; background: rgba(255,255,255,0.5); }
 
-/* ФИКС ДУБЛЕЙ И АДАПТИВА */
+/* АДАПТИВНЫЙ ФИКС */
 @media (max-width: 1024px) {
-  .case-left .desktop-only { display: none !important; } /* Убираем вторую кнопку */
-  .case-card { overflow-y: auto; align-items: flex-start; padding: 40px; }
+  .case-left .desktop-only { display: none !important; }
+  .case-card { overflow-y: auto; align-items: flex-start; }
   .case-inner { flex-direction: column; max-height: none; }
-  .case-left { width: 100%; display: block; }
-  .case-title { font-size: clamp(24px, 9vw, 80px); }
 }
