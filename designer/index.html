@@ -5,231 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio — Designer</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="../src/css/base.css">
-  <link rel="stylesheet" href="../src/css/cursor.css">
-  <link rel="stylesheet" href="../src/css/cases/phrase.css">
-  <link rel="stylesheet" href="../src/css/cases/designer.css">
-  <link rel="stylesheet" href="../src/css/cases/designer-responsive.css">
+  <base href="/portfolio/">
 
+  <link rel="stylesheet" href="src/css/base.css">
+  <link rel="stylesheet" href="src/css/cursor.css">
+  <link rel="stylesheet" href="src/css/cases/phrase.css">
+  <link rel="stylesheet" href="src/css/cases/designer.css">
+  <link rel="stylesheet" href="src/css/cases/designer-responsive.css">
 </head>
 
 <body>
 
-<section class="slide" id="phrase-screen">
-
-  <div class="mode-switcher" id="mode-switcher">
-    <span class="mode-btn" id="mode-designer"></span>
-
-    <div class="mode-line" id="mode-line-left">
-      <div class="line-inner">
-        <div class="line-track"></div>
-        <div class="line-sweep" id="sweep-left"></div>
-      </div>
-    </div>
-
-    <div class="mode-line" id="mode-line-right">
-      <div class="line-inner">
-        <div class="line-track"></div>
-        <div class="line-sweep" id="sweep-right"></div>
-      </div>
-    </div>
-
-    <span class="mode-btn" id="mode-photographer"></span>
-  </div>
-
-  <div class="hero" id="hero">
-    <span class="hero-base" id="hero-base"></span>
-    <span class="hero-green" id="hero-green"></span>
-  </div>
-
-</section>
-
-
-
-<!-- CASE 1 -->
-
-<section class="slide case-card" style="--bg:#00A0A0;--tx:#F7F9FC;">
-  <div class="case-inner">
-
-    <div class="case-left">
-      <div class="case-top">
-
-        <h2 class="case-title"
-        data-ru="ЭРМИТАЖ"
-        data-en="HERMITAGE"></h2>
-
-        <div class="case-cats">
-          <span class="case-cat"
-          data-ru="[ Брендинг ]"
-          data-en="[ Branding ]"></span>
-
-          <span class="case-sep"></span>
-
-          <span class="case-cat"
-          data-ru="[ Веб ]"
-          data-en="[ Web ]"></span>
-
-          <span class="case-sep"></span>
-
-          <span class="case-cat"
-          data-ru="[ Соцсети ]"
-          data-en="[ Social media ]"></span>
+  <section class="slide" id="phrase-screen">
+    <div class="mode-switcher" id="mode-switcher">
+      <span class="mode-btn" id="mode-designer"></span>
+      <div class="mode-line" id="mode-line-left">
+        <div class="line-inner">
+          <div class="line-track"></div>
+          <div class="line-sweep" id="sweep-left"></div>
         </div>
-
-        <p class="case-desc"></p>
-
       </div>
-
-      <div class="case-bottom">
-        <span class="case-cta"
-        data-ru="[ СВЯЗАТЬСЯ ]"
-        data-en="[ CONTACT ]"></span>
-      </div>
-    </div>
-
-    <div class="case-media-wrap">
-
-      <!-- cases рядом → без ../ -->
-      <a href="cases/ermitazh.html"
-      class="case-media-link">
-
-        <!-- src вне designer → нужен ../ -->
-        <video
-        class="case-media"
-        src="../src/assets/video/hermitage_main.mp4"
-        autoplay
-        loop
-        muted
-        playsinline></video>
-
-      </a>
-
-    </div>
-
-  </div>
-</section>
-
-
-
-<!-- CASE 2 -->
-
-<section class="slide case-card" style="--bg:#3A80FC;--tx:#FFF4B2;">
-  <div class="case-inner">
-
-    <div class="case-left">
-      <div class="case-top">
-
-        <h2 class="case-title"
-        data-ru="ПРОФИМАТИКА"
-        data-en="PROFIMATIKA"></h2>
-
-        <div class="case-cats">
-          <span class="case-cat"
-          data-ru="[ UX/UI ]"
-          data-en="[ UX/UI ]"></span>
-
-          <span class="case-sep"></span>
-
-          <span class="case-cat"
-          data-ru="[ Исследования ]"
-          data-en="[ Research ]"></span>
+      <div class="mode-line" id="mode-line-right">
+        <div class="line-inner">
+          <div class="line-track"></div>
+          <div class="line-sweep" id="sweep-right"></div>
         </div>
-
-        <p class="case-desc"></p>
-
       </div>
-
-      <div class="case-bottom">
-        <span class="case-cta"
-        data-ru="[ СВЯЗАТЬСЯ ]"
-        data-en="[ CONTACT ]"></span>
-      </div>
+      <span class="mode-btn" id="mode-photographer"></span>
     </div>
 
-    <div class="case-media-wrap">
-
-      <a href="cases/profimatika.html"
-      class="case-media-link">
-
-        <img
-        class="case-media"
-        src="../src/assets/images/projects/profimatika.png"
-        alt="">
-
-      </a>
-
+    <div class="hero" id="hero">
+      <span class="hero-base" id="hero-base"></span>
+      <span class="hero-green" id="hero-green"></span>
     </div>
+  </section>
 
-  </div>
-</section>
-
-
-
-<!-- CASE 3 -->
-
-<section class="slide case-card" style="--bg:#4A64F6;--tx:#F7F9FC;">
-  <div class="case-inner">
-
-    <div class="case-left">
-      <div class="case-top">
-
-        <h2 class="case-title"
-        data-ru="ЯНДЕКС КРАУД"
-        data-en="YANDEX CROWD"></h2>
-
-        <div class="case-cats">
-          <span class="case-cat"
-          data-ru="[ Веб ]"
-          data-en="[ Web ]"></span>
-
-          <span class="case-sep"></span>
-
-          <span class="case-cat"
-          data-ru="[ Моушен ]"
-          data-en="[ Motion ]"></span>
+  <section class="slide case-card" style="--bg:#00A0A0;--tx:#F7F9FC;">
+    <div class="case-inner">
+      <div class="case-left">
+        <div class="case-top">
+          <h2 class="case-title" data-ru="ЭРМИТАЖ" data-en="HERMITAGE"></h2>
+          <div class="case-cats">
+            <span class="case-cat" data-ru="[ Брендинг ]" data-en="[ Branding ]"></span>
+            <span class="case-sep"></span>
+            <span class="case-cat" data-ru="[ Веб ]" data-en="[ Web ]"></span>
+            <span class="case-sep"></span>
+            <span class="case-cat" data-ru="[ Соцсети ]" data-en="[ Social media ]"></span>
+          </div>
+          <p class="case-desc"></p>
         </div>
-
-        <p class="case-desc"></p>
-
+        <div class="case-bottom">
+          <span class="case-cta" data-ru="[ СВЯЗАТЬСЯ ]" data-en="[ CONTACT ]"></span>
+        </div>
       </div>
-
-      <div class="case-bottom">
-        <span class="case-cta"
-        data-ru="[ СВЯЗАТЬСЯ ]"
-        data-en="[ CONTACT ]"></span>
+      <div class="case-media-wrap">
+        <a href="designer/cases/ermitazh.html" class="case-media-link">
+          <video class="case-media" src="src/assets/video/hermitage_main.mp4" autoplay loop muted playsinline></video>
+        </a>
       </div>
     </div>
+  </section>
 
-    <div class="case-media-wrap">
-
-      <a href="cases/yandex-crowd.html"
-      class="case-media-link">
-
-        <video
-        class="case-media"
-        src="../src/assets/video/yandex-crowd_main.mp4"
-        autoplay
-        loop
-        muted
-        playsinline></video>
-
-      </a>
-
+  <section class="slide case-card" style="--bg:#3A80FC;--tx:#FFF4B2;">
+    <div class="case-inner">
+      <div class="case-left">
+        <div class="case-top">
+          <h2 class="case-title" data-ru="ПРОФИМАТИКА" data-en="PROFIMATIKA"></h2>
+          <div class="case-cats">
+            <span class="case-cat" data-ru="[ UX/UI ]" data-en="[ UX/UI ]"></span>
+            <span class="case-sep"></span>
+            <span class="case-cat" data-ru="[ Исследования ]" data-en="[ Research ]"></span>
+          </div>
+          <p class="case-desc"></p>
+        </div>
+        <div class="case-bottom">
+          <span class="case-cta" data-ru="[ СВЯЗАТЬСЯ ]" data-en="[ CONTACT ]"></span>
+        </div>
+      </div>
+      <div class="case-media-wrap">
+        <a href="designer/cases/profimatika.html" class="case-media-link">
+          <img class="case-media" src="src/assets/images/projects/profimatika.png" alt="Профиматика">
+        </a>
+      </div>
     </div>
+  </section>
 
-  </div>
-</section>
+  <section class="slide case-card" style="--bg:#4A64F6;--tx:#F7F9FC;">
+    <div class="case-inner">
+      <div class="case-left">
+        <div class="case-top">
+          <h2 class="case-title" data-ru="ЯНДЕКС КРАУД" data-en="YANDEX CROWD"></h2>
+          <div class="case-cats">
+            <span class="case-cat" data-ru="[ Веб ]" data-en="[ Web ]"></span>
+            <span class="case-sep"></span>
+            <span class="case-cat" data-ru="[ Моушен ]" data-en="[ Motion ]"></span>
+          </div>
+          <p class="case-desc"></p>
+        </div>
+        <div class="case-bottom">
+          <span class="case-cta" data-ru="[ СВЯЗАТЬСЯ ]" data-en="[ CONTACT ]"></span>
+        </div>
+      </div>
+      <div class="case-media-wrap">
+        <a href="designer/cases/yandex-crowd.html" class="case-media-link">
+          <video class="case-media" src="src/assets/video/yandex-crowd_main.mp4" autoplay loop muted playsinline></video>
+        </a>
+      </div>
+    </div>
+  </section>
 
-
-
-<!-- JS -->
-
-<script src="../src/js/cursor.js"></script>
-<script src="../src/js/cases/phrase.js"></script>
-<script src="../src/js/lightbox.js"></script>
-<script src="../src/js/designer-list.js"></script>
-<script src="../src/js/cases/designer-responsive-patch.js"></script>
+  <script src="src/js/cursor.js"></script>
+  <script src="src/js/cases/phrase.js"></script>
+  <script src="src/js/lightbox.js"></script>
+  <script src="src/js/designer-list.js"></script>
+  <script src="src/js/cases/designer-responsive-patch.js"></script>
 
 </body>
 </html>
