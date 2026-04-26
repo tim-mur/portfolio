@@ -6,7 +6,6 @@
   <title>Эрмитаж — Кейс</title>
   <link rel="stylesheet" href="/portfolio/src/css/cursor.css">
   <link rel="stylesheet" href="/portfolio/src/css/cases/ermitazh.css">
-  <!-- Preload картинок брендинга, чтобы они были готовы к моменту прокрутки -->
   <link rel="preload" as="image" href="/portfolio/src/assets/images/hermitage/merch-1.png">
   <link rel="preload" as="image" href="/portfolio/src/assets/images/hermitage/merch-2.png">
   <link rel="preload" as="image" href="/portfolio/src/assets/images/hermitage/merch-3.png">
@@ -19,7 +18,6 @@
 
 <div class="page-content">
 
-  <!-- ══════════ SCREEN 1 — HERO ══════════ -->
   <section class="hero" id="screen-1">
     <div class="glitch-wrap" id="glitch-wrap">
       <div class="glitch-layer cyan"    id="layer-cyan"    data-ru="ЭРМИТАЖ" data-en="HERMITAGE">ЭРМИТАЖ</div>
@@ -28,7 +26,6 @@
     </div>
   </section>
 
-  <!-- ══════════ SCREEN 2 — О ПРОЕКТЕ ══════════ -->
   <section class="about-screen" id="screen-about">
     <div class="about-label s-label" data-ru="О&nbsp;проекте" data-en="About">О&nbsp;проекте</div>
 
@@ -38,7 +35,7 @@
     </div>
 
     <div class="about-cta">
-      <a class="cta-btn" id="about-cta-btn" href="#"
+      <a class="cta-btn" id="about-cta-btn" href="https://t.me/povarrov" target="_blank" rel="noopener"
          data-text="[ СВЯЗАТЬСЯ ]"
          data-ru="[ СВЯЗАТЬСЯ ]"
          data-en="[ CONTACT ]">[ СВЯЗАТЬСЯ ]</a>
@@ -49,7 +46,6 @@
     </div>
   </section>
 
-  <!-- ══════════ SCREEN 3 — АНАЛИЗ КОНКУРЕНТОВ (2 колонки) ══════════ -->
   <section class="split-screen" id="screen-analysis">
     <h2 class="split-label s-label" data-ru="Анализ&nbsp;конкурентов" data-en="Competitor&nbsp;analysis">Анализ&nbsp;конкурентов</h2>
     <div class="split-text">
@@ -57,7 +53,6 @@
     </div>
   </section>
 
-  <!-- ══════════ COMBINED: User flow + UI + три видео ══════════ -->
   <section class="flow-ui-section" id="screen-flow-ui">
     <div class="flow-ui-grid">
       <div class="flow-ui-col">
@@ -71,47 +66,39 @@
     </div>
 
     <div class="flow-ui-video-block">
-      <p class="flow-ui-caption"
-         data-ru="Главная страница"
-         data-en="Home page">Главная страница</p>
-      <div class="flow-ui-video" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
+      <p class="flow-ui-caption" data-ru="Главная страница" data-en="Home page">Главная страница</p>
+      <div class="flow-ui-media" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
         <video src="/portfolio/src/assets/video/hermitage_website.mp4" autoplay loop muted playsinline></video>
       </div>
     </div>
 
     <div class="flow-ui-video-block">
-      <p class="flow-ui-caption"
-         data-ru="Выставки и события"
-         data-en="Exhibitions and events">Выставки и события</p>
-      <div class="flow-ui-video" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
+      <p class="flow-ui-caption" data-ru="Выставки и события" data-en="Exhibitions and events">Выставки и события</p>
+      <div class="flow-ui-media" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
         <video src="/portfolio/src/assets/video/hermitage_website_2.mp4" autoplay loop muted playsinline></video>
       </div>
     </div>
 
     <div class="flow-ui-video-block">
-      <p class="flow-ui-caption"
-         data-ru="Выбранная выставка"
-         data-en="Selected exhibition">Выбранная выставка</p>
-      <div class="flow-ui-video" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
+      <p class="flow-ui-caption" data-ru="Выбранная выставка" data-en="Selected exhibition">Выбранная выставка</p>
+      <div class="flow-ui-media" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
         <video src="/portfolio/src/assets/video/hermitage_website_3.mp4" autoplay loop muted playsinline></video>
       </div>
     </div>
   </section>
 
-  <!-- ══════════ GALLERY GROUP 2: Брендинг и мерч (6 картинок) ══════════ -->
   <section class="gallery-section group-branding">
     <div class="group-label s-label" data-ru="Брендинг&nbsp;и&nbsp;мерч" data-en="Branding&nbsp;&amp;&nbsp;merch">Брендинг&nbsp;и&nbsp;мерч</div>
     <div class="gallery gallery-brand">
-      <div class="gi gi-b1"><img src="/portfolio/src/assets/images/hermitage/merch-1.png" alt="" loading="eager" decoding="sync" fetchpriority="high"></div>
-      <div class="gi gi-b2"><img src="/portfolio/src/assets/images/hermitage/merch-2.png" alt="" loading="eager" decoding="sync" fetchpriority="high"></div>
-      <div class="gi gi-b3"><img src="/portfolio/src/assets/images/hermitage/merch-3.png" alt="" loading="eager" decoding="sync" fetchpriority="high"></div>
-      <div class="gi gi-b4"><img src="/portfolio/src/assets/images/hermitage/merch-4.png" alt="" loading="eager" decoding="sync" fetchpriority="high"></div>
-      <div class="gi gi-b5"><img src="/portfolio/src/assets/images/hermitage/merch-5.png" alt="" loading="eager" decoding="sync" fetchpriority="high"></div>
-      <div class="gi gi-b6"><img src="/portfolio/src/assets/images/hermitage/merch-6.png" alt="" loading="eager" decoding="sync" fetchpriority="high"></div>
+      <div class="gi gi-b1"><img src="/portfolio/src/assets/images/hermitage/merch-1.png" alt="" loading="eager" decoding="sync"></div>
+      <div class="gi gi-b2"><img src="/portfolio/src/assets/images/hermitage/merch-2.png" alt="" loading="eager" decoding="sync"></div>
+      <div class="gi gi-b3"><img src="/portfolio/src/assets/images/hermitage/merch-3.png" alt="" loading="eager" decoding="sync"></div>
+      <div class="gi gi-b4"><img src="/portfolio/src/assets/images/hermitage/merch-4.png" alt="" loading="eager" decoding="sync"></div>
+      <div class="gi gi-b5"><img src="/portfolio/src/assets/images/hermitage/merch-5.png" alt="" loading="eager" decoding="sync"></div>
+      <div class="gi gi-b6"><img src="/portfolio/src/assets/images/hermitage/merch-6.png" alt="" loading="eager" decoding="sync"></div>
     </div>
   </section>
 
-  <!-- ══════════ SCREEN: Метрики + Результат (объединены) ══════════ -->
   <section class="combined-screen" id="screen-metrics-result">
     <div class="combined-row">
       <h2 class="split-label s-label" data-ru="Метрики&nbsp;успеха" data-en="Metrics">Метрики&nbsp;успеха</h2>
@@ -127,35 +114,33 @@
     </div>
   </section>
 
-</div><!-- /.page-content -->
+</div>
 
 <div class="footer-space" id="footer-space"></div>
 
-<!-- ══════════ FOOTER ══════════ -->
 <footer class="footer" id="footer">
   <div class="footer__inner" id="footer-inner">
     <p class="footer__quote"
        data-ru="&ldquo;ДИЗАЙН ДИЗАЙНОМ, ЗАТО Я ЧЕЛОВЕК ХОРОШИЙ&rdquo;"
        data-en="&ldquo;DESIGN IS DESIGN, BUT I&rsquo;M A GOOD PERSON&rdquo;">
-      &ldquo;ДИЗАЙН ДИЗАЙНОМ,<br>ЗАТО Я ЧЕЛОВЕК ХОРОШий&rdquo;
+      &ldquo;ДИЗАЙН ДИЗАЙНОМ,<br>ЗАТО Я ЧЕЛОВЕК ХОРОШИЙ&rdquo;
     </p>
     <div class="footer__social" id="footer-social">
-      <a class="footer__icon" href="#" title="Telegram">
+      <a class="footer__icon" href="https://t.me/povarrov" target="_blank" rel="noopener" title="Telegram">
         <img src="/portfolio/src/assets/icons/telegram.svg" alt="Telegram">
       </a>
       <div class="footer__line"></div>
-      <a class="footer__icon" href="#" title="Threads">
+      <a class="footer__icon" href="https://www.threads.com/@povarrov" target="_blank" rel="noopener" title="Threads">
         <img src="/portfolio/src/assets/icons/threads.svg" alt="Threads">
       </a>
       <div class="footer__line"></div>
-      <a class="footer__icon" href="#" title="Instagram">
+      <a class="footer__icon" href="https://instagram.com/povarrov" target="_blank" rel="noopener" title="Instagram">
         <img src="/portfolio/src/assets/icons/instagram.svg" alt="Instagram">
       </a>
     </div>
   </div>
 </footer>
 
-<!-- ══════════ BACK BUTTON ══════════ -->
 <a class="back-btn" href="/portfolio/designer/index.html" id="back-btn"
    data-ru="назад к списку кейсов"
    data-en="back to case list">
