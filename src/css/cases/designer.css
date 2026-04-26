@@ -40,22 +40,35 @@ html, body {
 
 /* КНОПКА ПОСМОТРЕТЬ КЕЙС */
 .case-cta-link {
-  text-decoration: none; color: inherit; display: inline-block;
+  text-decoration: none; /* Убираем дефолтное подчеркивание ссылки */
+  color: inherit; 
+  display: inline-block;
 }
 
 .case-cta {
+  font-family: 'Pixeloid Sans', monospace; /* Твой фирменный шрифт для кнопок */
   font-size: clamp(24px, 3vw, 48px);
   font-weight: 700; letter-spacing: -0.07em;
-  text-transform: uppercase; position: relative;
+  text-transform: uppercase; 
+  position: relative;
+  color: var(--tx);
 }
 
+/* Линия под кнопкой */
 .case-cta::after {
-  content: ''; position: absolute; bottom: -8px; left: 0;
-  width: 0; height: 3px; background: currentColor;
+  content: ''; 
+  position: absolute; 
+  bottom: -4px; 
+  left: 0;
+  width: 0; 
+  height: 2px; 
+  background: currentColor;
   transition: width 0.3s ease;
 }
 
-.case-cta-link:hover .case-cta::after { width: 100%; }
+.case-cta-link:hover .case-cta::after { 
+  width: 100%; 
+}
 
 /* МЕДИА */
 .case-media-wrap {
