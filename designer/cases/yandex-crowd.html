@@ -2,10 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Яндекс Крауд — Кейс</title>
   <link rel="stylesheet" href="/src/css/cursor.css">
   <link rel="stylesheet" href="/src/css/cases/yandex-crowd.css">
+  <link rel="stylesheet" href="/src/css/cases/yandex-crowd-responsive.css">
   <link rel="preload" as="image" href="/src/assets/images/yandex-crowd/yandex-crowd_logo.png">
   <link rel="preload" as="image" href="/src/assets/images/yandex-crowd/yandex-crowd_first-adaptive.png">
   <link rel="preload" as="image" href="/src/assets/images/yandex-crowd/yandex-crowd_second-adaptive.png">
@@ -113,10 +114,10 @@
           <!-- Корпус поверх (z выше foreignObject) -->
           <rect x="0" y="0" width="320" height="650" rx="48"
                 fill="none" stroke="#3a3a3a" stroke-width="3"/>
-          <!-- Внешний корпус — две дуги: тёмная рамка -->
+          <!-- Внешний корпус — тёмная рамка -->
           <path d="M48,0 H272 Q320,0 320,48 V602 Q320,650 272,650 H48 Q0,650 0,602 V48 Q0,0 48,0 Z"
                 fill="none" stroke="#2a2a2a" stroke-width="14"/>
-          <!-- Маска-оверлей: закрашивает всё ЗА экраном, экран оставляет прозрачным -->
+          <!-- Маска-оверлей -->
           <path fill-rule="evenodd" d="
             M48,0 H272 Q320,0 320,48 V602 Q320,650 272,650 H48 Q0,650 0,602 V48 Q0,0 48,0 Z
             M50,14 H270 Q306,14 306,50 V600 Q306,636 270,636 H50 Q14,636 14,600 V50 Q14,14 50,14 Z
@@ -133,7 +134,6 @@
         </svg>
       </div>
 
-      <!-- только модель телефона с видео -->
     </div>
   </section>
 
@@ -161,20 +161,20 @@
 <footer class="footer" id="footer">
   <div class="footer__inner" id="footer-inner">
     <p class="footer__quote"
-       data-ru="&ldquo;ДИЗАЙН ДИЗАЙНОМ, ЗАТО Я ЧЕЛОВЕК ХОРОШИЙ&rdquo;"
-       data-en="&ldquo;DESIGN IS DESIGN, BUT I&rsquo;M A GOOD PERSON&rdquo;">
-      &ldquo;ДИЗАЙН ДИЗАЙНОМ,<br>ЗАТО Я ЧЕЛОВЕК ХОРОШИЙ&rdquo;
+       data-ru="UX/UI-ДИЗАЙНЕР"
+       data-en="UX/UI DESIGNER">
+      UX/UI-ДИЗАЙНЕР
     </p>
     <div class="footer__social" id="footer-social">
-      <a class="footer__icon" href="#" title="Telegram">
+      <a class="footer__icon" href="https://t.me/povarrov" target="_blank" rel="noopener" title="Telegram">
         <img src="/src/assets/icons/telegram.svg" alt="Telegram">
       </a>
       <div class="footer__line"></div>
-      <a class="footer__icon" href="#" title="Threads">
+      <a class="footer__icon" href="https://www.threads.com/@povarrov" target="_blank" rel="noopener" title="Threads">
         <img src="/src/assets/icons/threads.svg" alt="Threads">
       </a>
       <div class="footer__line"></div>
-      <a class="footer__icon" href="#" title="Instagram">
+      <a class="footer__icon" href="https://instagram.com/povarrov" target="_blank" rel="noopener" title="Instagram">
         <img src="/src/assets/icons/instagram.svg" alt="Instagram">
       </a>
     </div>

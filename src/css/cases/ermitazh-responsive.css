@@ -1,0 +1,677 @@
+/*
+  ermitazh-responsive.css
+  Подключать ПОСЛЕ ermitazh.css.
+  HTML менять не требуется — селекторы покрывают существующую разметку.
+
+  Логика адаптива (Desktop-First):
+   ≤1280px — лёгкое уплотнение паддингов и --label-col
+   ≤900px  — все 2/3-колоночные секции переходят в одну колонку,
+             картинка и кнопка становятся отдельными строками,
+             параллакс отключается
+   ≤768px  — мобильные размеры шрифтов, плотные паддинги
+   ≤600px  — мобильник, .gallery-brand становится простым стэком
+             с сохранением aspect-ratio
+   ≤400px  — крайне узкие экраны
+   safe-area — учитываем notch/home-bar на iOS
+
+  Универсальное правило для секций кейса:
+   заголовок → описание → картинка → кнопка
+   (отсутствующие элементы просто пропускаются — это естественное поведение grid с auto-rows)
+*/
+
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER — акцентный фон, все элементы белые
+   ══════════════════════════════════════════════════════════════ */
+.footer {
+  background: var(--accent);
+}
+.footer__quote {
+  color: #fff;
+}
+.footer__line {
+  background: #fff;
+}
+.footer__icon img {
+  /* Белые иконки на акцентном фоне */
+  filter: brightness(0) invert(1);
+}
+
+
+
+/* ══════════════════════════════════════════════════════════════
+   1280px — лёгкое уплотнение
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1280px) {
+  :root {
+    --pad: 48px;
+    --label-col: 280px;
+    --gap-col: 32px;
+  }
+
+  .split-text p,
+  .combined-row .split-text p,
+  .flow-ui-text {
+    padding-right: 32px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   1024px — переходные правила
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  :root {
+    --pad: 40px;
+    --label-col: 240px;
+  }
+
+  /* Hero чуть меньше, но всё ещё крупный */
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(64px, 14vw, 180px);
+  }
+
+  /* Лейблы секций уменьшаются */
+  .s-label,
+  .split-label,
+  .group-label,
+  .scn-label,
+  .about-label,
+  .flow-ui-label {
+    font-size: 26px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   900px — основной перелом: всё в одну колонку
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  :root {
+    --pad: 32px;
+    --label-col: 1fr;
+    --gap-col: 24px;
+  }
+
+  /* Параллакс отключаем: картинки и слои перестают двигаться.
+     JS в ermitazh.js пишет inline `style.transform` — !important перебивает. */
+  .about-mockup img,
+  .about-mockup video {
+    will-change: auto;
+    transform: none !important;
+    transition: none !important;
+  }
+  .gi img,
+  .gi video {
+    will-change: auto;
+  }
+  .page-content {
+    will-change: auto;
+  }
+
+  /* HERO ─────────────────────────────────────────── */
+  .hero {
+    padding: 0 var(--pad);
+  }
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(48px, 14vw, 120px);
+    letter-spacing: -0.10em;
+    /* На узких экранах разрешаем перенос, чтобы длинное слово не вылезало */
+    white-space: normal;
+    word-break: keep-all;
+  }
+
+  /* ABOUT-SCREEN ─────────────────────────────────────
+     Универсальная вертикальная компоновка:
+     1) лейбл  2) тексты  3) картинка  4) кнопка
+     Если каких-то элементов в HTML нет — grid просто пропустит строку.
+     ──────────────────────────────────────────────── */
+  .about-screen {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-auto-rows: auto;
+    row-gap: 28px;
+    padding: 80px var(--pad);
+    align-items: start;
+    overflow: visible;
+  }
+
+  .about-screen .about-label {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+    align-self: center;
+    padding-right: 0;
+  }
+
+  .about-screen .about-texts {
+    grid-column: 1;
+    grid-row: 2;
+    padding-right: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .about-screen .about-texts p {
+    text-align: center;
+  }
+
+  /* Картинка — на всю ширину блока (с учётом паддингов секции) */
+  .about-screen .about-mockup {
+    grid-column: 1;
+    grid-row: 3;
+    margin-left: 0;
+    align-self: stretch;
+    justify-self: stretch;
+    width: 100%;
+    max-height: none;
+    overflow: hidden;
+  }
+  .about-screen .about-mockup img,
+  .about-screen .about-mockup video {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: none;
+    object-fit: contain;
+    display: block;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .about-screen .about-cta {
+    grid-column: 1;
+    grid-row: 4;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* CTA кнопка — текст по центру */
+  .cta-btn {
+    text-align: center;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Все лейблы секций — по центру */
+  .split-screen .split-label,
+  .combined-row .split-label,
+  .flow-ui-label,
+  .group-label {
+    text-align: center;
+  }
+
+  /* Все тексты — по центру */
+  .split-screen .split-text p,
+  .combined-row .split-text p,
+  .flow-ui-text,
+  .flow-ui-caption,
+  .gt p {
+    text-align: center;
+  }
+
+  /* SPLIT-SCREEN (Анализ конкурентов) ─────────────── */
+  .split-screen {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+    padding: 64px var(--pad);
+  }
+  .split-screen .split-label,
+  .split-screen .split-text {
+    grid-column: 1;
+    padding-right: 0;
+    padding-top: 0;
+  }
+  .split-screen .split-text p {
+    padding-right: 0;
+  }
+
+  /* COMBINED-SCREEN (Метрики + Результат) ─────────── */
+  .combined-screen {
+    min-height: auto;
+    padding: 64px var(--pad);
+    gap: 40px;
+  }
+  .combined-row {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+    column-gap: 0;
+  }
+  .combined-row .split-label,
+  .combined-row .split-text {
+    padding-right: 0;
+    padding-top: 0;
+  }
+  .combined-row .split-text p {
+    padding-right: 0;
+  }
+
+  /* FLOW-UI: Проработка сценария + UI + видео ────── */
+  .flow-ui-section {
+    padding: 64px var(--pad);
+  }
+  .flow-ui-grid {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+    column-gap: 0;
+    margin-bottom: 32px;
+  }
+  .flow-ui-text {
+    padding-right: 0;
+  }
+
+  /* GALLERY-BRAND — упрощаем 12-колоночную сетку.
+     На 900px ещё держим 2 колонки, чтобы выглядело живо. */
+  .gallery-section {
+    padding: 32px var(--pad);
+  }
+  .group-scenario,
+  .group-branding {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .group-label {
+    padding: 0 0 32px 0;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 12px;
+    row-gap: 12px;
+  }
+  .gallery-brand .gi-b1 { grid-column: 1 / 7; grid-row: auto; aspect-ratio: 16 / 10; }
+  .gallery-brand .gi-b2 { grid-column: 1 / 4; grid-row: auto; aspect-ratio: 4 / 5; }
+  .gallery-brand .gi-b3 { grid-column: 4 / 7; grid-row: auto; aspect-ratio: 4 / 5; }
+  .gallery-brand .gi-b4 { grid-column: 1 / 4; grid-row: auto; aspect-ratio: 4 / 3; }
+  .gallery-brand .gi-b5 { grid-column: 4 / 7; grid-row: auto; aspect-ratio: 1 / 1; }
+  .gallery-brand .gi-b6 { grid-column: 1 / 7; grid-row: auto; }
+
+  /* GALLERY-SCENARIO (если присутствует в HTML) ──── */
+  .gallery-scenario .scn-label,
+  .gallery-scenario .gt-scn,
+  .gallery-scenario .gi-scn-1,
+  .gallery-scenario .gi-scn-2,
+  .gallery-scenario .gi-scn-3 {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    margin-top: 0;
+  }
+  .gallery-scenario .scn-label { padding-bottom: 16px; }
+  .gallery-scenario .gi-scn-1 { aspect-ratio: 16 / 10; }
+  .gallery-scenario .gi-scn-2 { aspect-ratio: 4 / 3; }
+  .gallery-scenario .gi-scn-3 { aspect-ratio: 1 / 1; }
+
+  /* Параллакс на картинках в .gi отключаем ─────── */
+  .gi img,
+  .gi video {
+    top: 0 !important;
+    height: 100% !important;
+    transform: none !important;
+  }
+
+  /* FOOTER на адаптиве: меньше gap, цитата помещается ─ */
+  .footer__inner {
+    gap: 64px;
+    padding: 0 var(--pad);
+  }
+  .footer__quote {
+    font-size: clamp(22px, 4.2vw, 32px);
+    line-height: 1.1;
+    max-width: 100%;
+  }
+  .footer__icon {
+    padding: 0 16px;
+  }
+  .footer__icon img {
+    width: 32px;
+    height: 32px;
+  }
+  .footer__line {
+    height: 4px;
+  }
+
+  /* BACK BUTTON чуть меньше */
+  .back-btn {
+    font-size: 22px;
+    bottom: 28px;
+  }
+  .px-arrow {
+    width: 36px;
+    height: 32px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   768px — планшет/большой телефон в landscape
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root {
+    --pad: 24px;
+  }
+
+  /* Hero */
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(40px, 14vw, 96px);
+  }
+
+  /* Все лейблы — компактнее */
+  .s-label,
+  .split-label,
+  .group-label,
+  .scn-label,
+  .about-label,
+  .flow-ui-label {
+    font-size: 22px;
+  }
+
+  /* Все обычные тексты — мобильные размеры */
+  .split-text p,
+  .combined-row .split-text p,
+  .flow-ui-text,
+  .gt p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* About-screen паддинг */
+  .about-screen {
+    padding: 64px var(--pad);
+    row-gap: 24px;
+  }
+
+  /* Видео-блоки во flow-ui */
+  .flow-ui-caption {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  /* Галерея — переходит в стэк */
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+  .gallery-brand .gi-b1 { grid-column: 1 / 3; aspect-ratio: 16 / 10; }
+  .gallery-brand .gi-b2 { grid-column: 1 / 2; aspect-ratio: 4 / 5; }
+  .gallery-brand .gi-b3 { grid-column: 2 / 3; aspect-ratio: 4 / 5; }
+  .gallery-brand .gi-b4 { grid-column: 1 / 2; aspect-ratio: 4 / 3; }
+  .gallery-brand .gi-b5 { grid-column: 2 / 3; aspect-ratio: 1 / 1; }
+  .gallery-brand .gi-b6 { grid-column: 1 / 3; }
+
+  /* Cta button */
+  .cta-btn {
+    font-size: 22px;
+  }
+
+  /* Footer */
+  .footer__inner {
+    gap: 48px;
+  }
+  .footer__quote {
+    font-size: clamp(20px, 5.4vw, 28px);
+  }
+  .footer__icon {
+    padding: 0 12px;
+  }
+  .footer__icon img {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Back button */
+  .back-btn {
+    font-size: 18px;
+    bottom: 24px;
+  }
+  .px-arrow {
+    width: 30px;
+    height: 26px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   600px — мобильник
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  :root {
+    --pad: 20px;
+  }
+
+  /* Hero — переносим длинное слово, если нужно */
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(36px, 14vw, 72px);
+    letter-spacing: -0.08em;
+    white-space: normal;
+  }
+  /* На совсем узких на отрицательном tracking возможен срез справа — добавим воздух */
+  .glitch-title { padding-inline-end: 0.18em; }
+  .glitch-layer { padding-inline-end: 0.18em; }
+
+  /* Паддинги секций ещё меньше */
+  .about-screen     { padding: 48px var(--pad); }
+  .split-screen     { padding: 48px var(--pad); }
+  .combined-screen  { padding: 48px var(--pad); gap: 32px; }
+  .flow-ui-section  { padding: 48px var(--pad); }
+  .gallery-section  { padding: 24px var(--pad); }
+  .group-scenario,
+  .group-branding   { padding-top: 48px; padding-bottom: 48px; }
+
+  /* Лейблы и тексты */
+  .s-label,
+  .split-label,
+  .group-label,
+  .scn-label,
+  .about-label,
+  .flow-ui-label {
+    font-size: 20px;
+  }
+
+  .group-label {
+    padding-bottom: 24px;
+  }
+
+  /* Галерея — стэк в одну колонку, кроме парных рядов */
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8px;
+    row-gap: 8px;
+  }
+  .gallery-brand .gi-b1 { grid-column: 1 / 3; aspect-ratio: 16 / 11; }
+  .gallery-brand .gi-b2 { grid-column: 1 / 2; aspect-ratio: 4 / 5; }
+  .gallery-brand .gi-b3 { grid-column: 2 / 3; aspect-ratio: 4 / 5; }
+  .gallery-brand .gi-b4 { grid-column: 1 / 2; aspect-ratio: 4 / 3; }
+  .gallery-brand .gi-b5 { grid-column: 2 / 3; aspect-ratio: 1 / 1; }
+  .gallery-brand .gi-b6 { grid-column: 1 / 3; }
+
+  /* Видео-блоки */
+  .flow-ui-caption {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  /* CTA button */
+  .cta-btn {
+    font-size: 20px;
+    /* Touch-зона минимум 44px */
+    min-height: 44px;
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Footer — самое узкое: цитата помещается, иконки группируются */
+  .footer__inner {
+    gap: 40px;
+    padding: 0 var(--pad);
+  }
+  .footer__quote {
+    font-size: clamp(16px, 5.8vw, 24px);
+    line-height: 1.15;
+  }
+  .footer__icon {
+    padding: 0 8px;
+  }
+  .footer__icon img {
+    width: 24px;
+    height: 24px;
+  }
+  .footer__line {
+    height: 3px;
+  }
+
+  /* Back button */
+  .back-btn {
+    font-size: 16px;
+    bottom: 20px;
+    gap: 8px;
+  }
+  .px-arrow {
+    width: 24px;
+    height: 21px;
+  }
+
+  /* Лайтбокс на мобильнике */
+  .erm-lightbox {
+    padding: 80px 20px 40px;
+  }
+  .erm-lightbox__inner {
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 120px);
+  }
+  .erm-lightbox__close {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   400px — крайне узкие экраны
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 400px) {
+  :root {
+    --pad: 16px;
+  }
+
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(32px, 14vw, 56px);
+  }
+
+  .s-label,
+  .split-label,
+  .group-label,
+  .scn-label,
+  .about-label,
+  .flow-ui-label {
+    font-size: 18px;
+  }
+
+  .split-text p,
+  .combined-row .split-text p,
+  .flow-ui-text,
+  .gt p {
+    font-size: 13px;
+  }
+
+  .about-screen,
+  .split-screen,
+  .combined-screen,
+  .flow-ui-section {
+    padding: 40px var(--pad);
+  }
+
+  .footer__quote {
+    font-size: clamp(14px, 6vw, 20px);
+  }
+  .footer__icon {
+    padding: 0 6px;
+  }
+  .footer__icon img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .cta-btn {
+    font-size: 18px;
+  }
+
+  .back-btn {
+    font-size: 14px;
+  }
+  .px-arrow {
+    width: 20px;
+    height: 18px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   SAFE AREA — notch и home bar на iOS
+   ══════════════════════════════════════════════════════════════ */
+@supports (padding: max(0px)) {
+  @media (max-width: 900px) {
+    .hero,
+    .about-screen,
+    .split-screen,
+    .combined-screen,
+    .flow-ui-section,
+    .gallery-section {
+      padding-left:  max(var(--pad), env(safe-area-inset-left));
+      padding-right: max(var(--pad), env(safe-area-inset-right));
+    }
+    .footer__inner {
+      padding-left:  max(var(--pad), env(safe-area-inset-left));
+      padding-right: max(var(--pad), env(safe-area-inset-right));
+    }
+    .back-btn {
+      bottom: max(24px, calc(env(safe-area-inset-bottom) + 12px));
+    }
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   TOUCH + REDUCED MOTION
+   ══════════════════════════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+  /* Курсор-эффекты не нужны на тач-устройствах */
+  .gi img,
+  .gi video,
+  .about-mockup img,
+  .about-mockup video {
+    cursor: default;
+  }
+
+  /* CTA hover-glitch отключаем на тач — там нет hover */
+  .cta-btn:hover::before,
+  .cta-btn:hover::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .glitch-title,
+  .glitch-layer,
+  .about-mockup img,
+  .about-mockup video,
+  .gi img,
+  .gi video {
+    transform: none !important;
+  }
+}

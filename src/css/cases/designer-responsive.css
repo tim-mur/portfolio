@@ -1,22 +1,28 @@
 /*
   designer-responsive.css
   Подключать ПОСЛЕ designer.css.
+  HTML менять не требуется.
 
-  Макет на планшете/мобиле:
+  Структура на адаптиве (по скриншоту):
   ┌─────────────────────────┐
-  │      ПРОФИМАТИКА        │  ← по центру
-  │  [ UX/UI ] — [ Research ]  ← по центру
+  │      ПРОФИМАТИКА        │  ← заголовок по центру
+  │  [ UX/UI ] [ Research ] │  ← теги по центру
   │  Описание текст...      │  ← по левому краю
   │ ┌─────────────────────┐ │
   │ │      картинка       │ │
   │ └─────────────────────┘ │
-  │  [ ПОСМОТРЕТЬ КЕЙС ]    │  ← по центру, JS добавляет
+  │      [ СВЯЗАТЬСЯ ]      │  ← по центру под картинкой
   └─────────────────────────┘
+
+  Трюк: .case-left получает display: contents — её дети
+  (.case-top и .case-bottom) становятся прямыми детьми
+  grid-контейнера .case-inner. Это позволяет вытащить
+  .case-bottom из .case-left БЕЗ правки HTML.
 */
 
 
 /* ══════════════════════════════════════════════════════════════
-   1200px
+   1200px — лёгкое уплотнение
    ══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1200px) {
@@ -26,11 +32,12 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   ПЛАНШЕТЫ 1024px
+   ≤1024px — вертикальная компоновка
    ══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1024px) {
 
+  /* Карточка: вертикальный скролл, выравнивание сверху */
   .case-card {
     padding: 40px 40px 100px;
     overflow-y: auto;
@@ -38,41 +45,42 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /* GRID: три строки — текст / медиа / кнопка */
   .case-inner {
-    flex-direction: column;
-    align-items: center;
-    max-height: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
     gap: 20px;
+    max-height: none;
     width: 100%;
   }
 
-  /* Текстовый блок — по центру */
+  /* .case-left "растворяется" — её дети встают напрямую в grid */
   .case-left {
-    flex: none;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0;
+    display: contents;
   }
 
+  /* Распределяем элементы по строкам grid */
+  .case-top        { grid-row: 1; }
+  .case-media-wrap { grid-row: 2; }
+  .case-bottom     { grid-row: 3; }
+
+  /* Текстовый блок — заголовок и теги по центру, описание слева */
   .case-top {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;     /* заголовок и теги по центру */
+    width: 100%;
   }
 
-  /* Заголовок — по центру */
   .case-title {
     font-size: clamp(32px, 7vw, 80px);
     text-align: center;
     align-self: center;
     white-space: nowrap;
+    margin-bottom: 12px;
   }
 
-  /* Теги — по центру */
   .case-cats {
     justify-content: center;
     margin-bottom: 16px;
@@ -80,7 +88,7 @@
   .case-cat { font-size: 14px; }
   .case-sep { width: 28px; }
 
-  /* Описание — по левому краю (текст ≥2 строк = left) */
+  /* Описание — текст ≥2 строк всегда по левому краю */
   .case-desc {
     font-size: 15px;
     line-height: 1.4;
@@ -89,20 +97,20 @@
     align-self: flex-start;
   }
 
-  /* Оригинальная кнопка "СВЯЗАТЬСЯ" — скрываем */
-  .case-bottom {
-    display: none;
-  }
-
-  /* Медиа — на всю ширину, 16:9 */
+  /* Медиа — на всю ширину, фикс-пропорции */
   .case-media-wrap {
-    flex: none;
     width: 100%;
     max-height: none;
-    align-self: stretch;
     aspect-ratio: 16 / 9;
     overflow: hidden;
     border-radius: 4px;
+    align-self: stretch;
+  }
+
+  .case-media-link {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   .case-media {
@@ -111,6 +119,7 @@
     object-fit: cover;
     max-height: none;
     min-height: unset;
+    display: block;
   }
 
   .case-media-wrap video.case-media {
@@ -118,61 +127,32 @@
     height: 100%;
   }
 
-  /* Обёртка кнопки "ПОСМОТРЕТЬ КЕЙС" — по центру под картинкой */
-  .case-view-wrap {
+  /* Кнопка — по центру под картинкой */
+  .case-bottom {
     display: flex;
     justify-content: center;
     width: 100%;
+    margin-top: 0;
   }
 
-  /* Сама кнопка — наследует стили .case-cta */
-  .case-view-btn {
-    font-family: Helvetica, Arial, sans-serif;
+  .case-cta {
     font-size: 32px;
-    font-weight: 700;
     letter-spacing: -0.06em;
-    text-transform: uppercase;
-    color: var(--tx);
-    text-decoration: none;
-    cursor: pointer;
-    user-select: none;
-    white-space: nowrap;
-    line-height: 1;
-    display: inline-block;
-    position: relative;
-  }
-
-  .case-view-btn::after {
-    content: '';
-    position: absolute;
-    bottom: -14px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background-color: currentColor;
-    transition: width 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  }
-
-  .case-view-btn:hover::after {
-    width: 100%;
   }
 }
 
 
 /* ══════════════════════════════════════════════════════════════
-   768px
+   ≤768px
    ══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-
   .case-card  { padding: 32px 32px 90px; }
   .case-inner { gap: 16px; }
 
   .case-title { font-size: clamp(28px, 8vw, 64px); }
   .case-desc  { font-size: 14px; line-height: 1.45; }
-
-  .case-cta      { font-size: 28px; }
-  .case-view-btn { font-size: 28px; }
+  .case-cta   { font-size: 28px; }
 
   .case-media-wrap { aspect-ratio: 4 / 3; }
 
@@ -183,14 +163,12 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   640px — мобильный
+   ≤640px — мобильный
    ══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 640px) {
-
   .case-card  { padding: 24px 20px 80px; }
   .case-inner { gap: 14px; }
-  .case-left  { gap: 0; }
 
   .case-title {
     font-size: clamp(20px, 8.5vw, 44px);
@@ -207,11 +185,8 @@
 
   .case-desc { font-size: 13px; line-height: 1.45; }
 
-  .case-cta      { font-size: 22px; letter-spacing: -0.05em; }
-  .case-view-btn { font-size: 22px; letter-spacing: -0.05em; }
-
-  .case-cta::after,
-  .case-view-btn::after { height: 2px; bottom: -8px; }
+  .case-cta        { font-size: 22px; letter-spacing: -0.05em; }
+  .case-cta::after { height: 2px; bottom: -8px; }
 
   .case-media-wrap { aspect-ratio: 4 / 3; max-height: 50vh; }
 
@@ -222,16 +197,14 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   400px
+   ≤400px
    ══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 400px) {
-
   .case-card  { padding: 20px 16px 72px; }
   .case-inner { gap: 12px; }
-
-  .case-title    { font-size: clamp(18px, 8vw, 36px); }
-  .case-view-btn { font-size: 20px; }
+  .case-title { font-size: clamp(18px, 8vw, 36px); }
+  .case-cta   { font-size: 20px; }
 
   .case-media-wrap { aspect-ratio: 4 / 3; max-height: 45vh; }
 
@@ -241,7 +214,7 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   SAFE AREA
+   SAFE AREA — notch, home bar
    ══════════════════════════════════════════════════════════════ */
 
 @supports (padding: max(0px)) {
@@ -272,12 +245,10 @@
    ══════════════════════════════════════════════════════════════ */
 
 @media (hover: none) and (pointer: coarse) {
-  .case-media    { cursor: pointer; }
-  .case-cta::after,
-  .case-view-btn::after { display: none; }
+  .case-media     { cursor: pointer; }
+  .case-cta::after { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .case-cta::after,
-  .case-view-btn::after { transition: none; }
+  .case-cta::after { transition: none; }
 }

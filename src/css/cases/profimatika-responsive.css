@@ -1,0 +1,601 @@
+/*
+  profimatika-responsive.css
+  Подключать ПОСЛЕ profimatika.css.
+  HTML менять не требуется.
+
+  Логика адаптива (Desktop-First):
+   ≤1024px — лёгкое уплотнение
+   ≤900px  — основной перелом: одна колонка, картинка на всю ширину,
+             все заголовки и тексты по центру, кнопка по центру,
+             параллакс .gi отключается
+   ≤768px  — мобильные шрифты, плотные паддинги
+   ≤600px  — мобильник
+   ≤400px  — крайне узкие экраны
+   safe-area — notch/home-bar на iOS
+   reduced-motion / touch — системные предпочтения
+
+  Структура секций на адаптиве:
+   заголовок → описание → картинка → кнопка
+   (отсутствующие элементы просто пропускаются)
+*/
+
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER — акцентный фон (уже задан в profimatika.css),
+   все элементы белые
+   ══════════════════════════════════════════════════════════════ */
+.footer {
+  background: var(--accent);
+}
+.footer__quote {
+  color: #fff;
+}
+.footer__line {
+  background: #fff;
+}
+.footer__icon img {
+  filter: brightness(0) invert(1);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   1024px — лёгкое уплотнение
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  :root {
+    --pad: 40px;
+    --label-col: 240px;
+  }
+
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(54px, 12vw, 160px);
+  }
+
+  .s-label,
+  .split-label,
+  .about-label,
+  .flow-ui-label,
+  .motion-label {
+    font-size: 26px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   900px — основной перелом
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  :root {
+    --pad: 32px;
+  }
+
+  /* Параллакс .gi → отключаем */
+  .gi img,
+  .gi video {
+    top: 0 !important;
+    height: 100% !important;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 0 var(--pad);
+  }
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(42px, 13vw, 100px);
+    white-space: normal;
+    word-break: keep-all;
+  }
+
+  /* ABOUT-SCREEN: порядок лейбл → тексты → картинка → кнопка */
+  .about-screen {
+    min-height: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-auto-rows: auto;
+    gap: 28px;
+    padding: 80px var(--pad);
+    align-items: start;
+    overflow: visible;
+    will-change: auto;
+  }
+
+  .about-label {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    text-align: center;
+    align-self: center;
+    padding-right: 0;
+    padding-top: 0;
+  }
+
+  .about-texts {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    padding-right: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .about-texts p {
+    text-align: center;
+    padding-right: 0;
+  }
+
+  /* Картинка — на всю ширину блока */
+  .about-mockup {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    margin-left: 0;
+    align-self: stretch;
+    justify-self: stretch;
+    width: 100%;
+    max-height: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-mockup img,
+  .about-mockup video {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: none;
+    object-fit: contain;
+    display: block;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+
+  .about-cta {
+    grid-column: 1 !important;
+    grid-row: 4 !important;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* CTA кнопка — текст по центру */
+  .cta-btn {
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  /* SPLIT-SCREEN */
+  .split-screen {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+    padding: 64px var(--pad);
+  }
+  .split-screen .split-label {
+    grid-column: 1;
+    padding-right: 0;
+    padding-top: 0;
+    text-align: center;
+  }
+  .split-screen .split-text {
+    grid-column: 1;
+    padding-right: 0;
+  }
+  .split-screen .split-text p,
+  .split-screen .split-text ul {
+    text-align: center;
+    padding-right: 0;
+  }
+
+  /* SPLIT-WITH-MEDIA (дизайн-система) */
+  .split-with-media {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+    padding: 64px var(--pad);
+  }
+  .split-with-media__text-col .split-label {
+    text-align: center;
+    align-self: center;
+  }
+  .split-with-media__text-col .split-text p {
+    text-align: center;
+    padding-right: 0;
+  }
+  .split-with-media__media {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  /* FLOW-UI */
+  .flow-ui-section {
+    padding: 64px var(--pad);
+  }
+  .flow-ui-caption {
+    text-align: center;
+  }
+
+  /* METRICS */
+  .metrics-screen {
+    padding: 80px var(--pad) 64px;
+  }
+  .metrics-buffer {
+    height: 30vh;
+  }
+  .metrics-header {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+    margin-bottom: 48px;
+  }
+  .metrics-header .split-label {
+    text-align: center;
+  }
+  .metrics-intro-wrap {
+    grid-column: 1;
+  }
+  .metrics-intro {
+    padding-right: 0;
+    text-align: center;
+  }
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+  .metric-card:nth-child(3) {
+    grid-column: 1;
+  }
+
+  /* FOOTER */
+  .footer__inner {
+    gap: 64px;
+    padding: 0 var(--pad);
+  }
+  .footer__quote {
+    font-size: clamp(22px, 4.2vw, 32px);
+    line-height: 1.1;
+    max-width: 100%;
+  }
+  .footer__icon {
+    padding: 0 16px;
+  }
+  .footer__icon img {
+    width: 32px;
+    height: 32px;
+  }
+  .footer__line {
+    height: 4px;
+  }
+
+  /* BACK BUTTON */
+  .back-btn {
+    font-size: 22px;
+    bottom: 28px;
+  }
+  .px-arrow {
+    width: 36px;
+    height: 32px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   768px
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root {
+    --pad: 24px;
+  }
+
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(40px, 13vw, 80px);
+  }
+
+  .s-label,
+  .split-label,
+  .about-label,
+  .flow-ui-label,
+  .motion-label {
+    font-size: 22px;
+  }
+
+  .split-text p,
+  .split-text ul,
+  .metrics-intro,
+  .gt p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .about-screen {
+    padding: 64px var(--pad);
+    gap: 24px;
+  }
+
+  .split-screen {
+    padding: 56px var(--pad);
+  }
+
+  .split-with-media {
+    padding: 56px var(--pad);
+  }
+
+  .flow-ui-section {
+    padding: 56px var(--pad);
+  }
+
+  .flow-ui-caption {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .metrics-screen {
+    padding: 64px var(--pad) 48px;
+  }
+
+  .metric-card {
+    padding: 24px;
+  }
+  .metric-card__num {
+    font-size: 24px;
+  }
+  .metric-card__title {
+    font-size: 22px;
+  }
+
+  .footer__inner {
+    gap: 48px;
+  }
+  .footer__quote {
+    font-size: clamp(20px, 5.4vw, 28px);
+  }
+  .footer__icon {
+    padding: 0 12px;
+  }
+  .footer__icon img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .back-btn {
+    font-size: 18px;
+    bottom: 24px;
+  }
+  .px-arrow {
+    width: 30px;
+    height: 26px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   600px — мобильник
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  :root {
+    --pad: 20px;
+  }
+
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(36px, 13vw, 64px);
+    letter-spacing: -0.09em;
+    white-space: normal;
+  }
+  .glitch-title { padding-inline-end: 0.18em; }
+  .glitch-layer { padding-inline-end: 0.18em; }
+
+  .about-screen     { padding: 48px var(--pad); }
+  .split-screen     { padding: 48px var(--pad); }
+  .split-with-media { padding: 48px var(--pad); }
+  .flow-ui-section  { padding: 48px var(--pad); }
+  .metrics-screen   { padding: 48px var(--pad) 40px; }
+
+  .s-label,
+  .split-label,
+  .about-label,
+  .flow-ui-label,
+  .motion-label {
+    font-size: 20px;
+  }
+
+  .split-text p,
+  .split-text ul,
+  .metrics-intro,
+  .gt p {
+    font-size: 13px;
+  }
+
+  .flow-ui-caption {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .cta-btn {
+    font-size: 20px;
+    padding: 10px 16px;
+  }
+
+  .metrics-buffer {
+    height: 20vh;
+  }
+  .metric-card {
+    padding: 20px;
+    gap: 16px;
+  }
+  .metric-card__num {
+    font-size: 20px;
+  }
+  .metric-card__title {
+    font-size: 18px;
+  }
+  .metric-card__desc {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .footer__inner {
+    gap: 40px;
+    padding: 0 var(--pad);
+  }
+  .footer__quote {
+    font-size: clamp(16px, 5.8vw, 24px);
+    line-height: 1.15;
+  }
+  .footer__icon {
+    padding: 0 8px;
+  }
+  .footer__icon img {
+    width: 24px;
+    height: 24px;
+  }
+  .footer__line {
+    height: 3px;
+  }
+
+  .erm-lightbox {
+    padding: 80px 20px 40px;
+  }
+  .erm-lightbox__inner {
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 120px);
+  }
+  .erm-lightbox__close {
+    top: 16px;
+    right: 16px;
+  }
+
+  .back-btn {
+    font-size: 16px;
+    bottom: 20px;
+    gap: 8px;
+  }
+  .px-arrow {
+    width: 24px;
+    height: 21px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   400px — крайне узкие экраны
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 400px) {
+  :root {
+    --pad: 16px;
+  }
+
+  .glitch-title,
+  .glitch-layer {
+    font-size: clamp(30px, 13vw, 52px);
+  }
+
+  .s-label,
+  .split-label,
+  .about-label,
+  .flow-ui-label,
+  .motion-label {
+    font-size: 18px;
+  }
+
+  .split-text p,
+  .split-text ul,
+  .metrics-intro,
+  .gt p {
+    font-size: 13px;
+  }
+
+  .about-screen,
+  .split-screen,
+  .split-with-media,
+  .flow-ui-section,
+  .metrics-screen {
+    padding: 40px var(--pad);
+  }
+
+  .footer__quote {
+    font-size: clamp(14px, 6vw, 20px);
+  }
+  .footer__icon {
+    padding: 0 6px;
+  }
+  .footer__icon img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .cta-btn {
+    font-size: 18px;
+  }
+
+  .back-btn {
+    font-size: 14px;
+  }
+  .px-arrow {
+    width: 20px;
+    height: 18px;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   SAFE AREA — notch / home bar на iOS
+   ══════════════════════════════════════════════════════════════ */
+@supports (padding: max(0px)) {
+  @media (max-width: 900px) {
+    .hero,
+    .about-screen,
+    .split-screen,
+    .split-with-media,
+    .flow-ui-section,
+    .metrics-screen {
+      padding-left:  max(var(--pad), env(safe-area-inset-left));
+      padding-right: max(var(--pad), env(safe-area-inset-right));
+    }
+    .footer__inner {
+      padding-left:  max(var(--pad), env(safe-area-inset-left));
+      padding-right: max(var(--pad), env(safe-area-inset-right));
+    }
+    .back-btn {
+      bottom: max(24px, calc(env(safe-area-inset-bottom) + 12px));
+    }
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   TOUCH + REDUCED MOTION
+   ══════════════════════════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+  .cta-btn:hover::before,
+  .cta-btn:hover::after {
+    animation: none;
+    opacity: 0;
+  }
+  .about-mockup img,
+  .about-mockup video,
+  .gi img,
+  .gi video {
+    cursor: default;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .glitch-title,
+  .glitch-layer,
+  .about-mockup img,
+  .about-mockup video,
+  .gi img,
+  .gi video {
+    transform: none !important;
+  }
+}
