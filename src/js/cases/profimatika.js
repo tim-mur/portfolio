@@ -19,69 +19,69 @@ const rf = (a, b) => Math.random() * (b - a) + a;
 ───────────────────────────────────────────────────────── */
 const T = {
   ru: {
-    about_p1:'Профиматика — это ведущая онлайн-школа по подготовке к экзаменам, успешно работающая на рынке более 6 лет. За это время команда сформировала масштабную образовательную экосистему, объединяющую преподавателей с большим практическим опытом подготовки учеников к государственным экзаменам и университетским сессиям.',
-    about_p2:'Ключевой особенностью бренда является акцент на системности обучения и высокой экспертности наставников. Передо мной стояла задача создать интерфейс, который поддерживает сложные образовательные процессы и одновременно остаётся понятным для пользователей разного возраста и уровня цифровой грамотности.',
-    problem_p1:'Традиционные платформы для подготовки к экзаменам часто обладают устаревшим интерфейсом и разрозненным функционалом. Пользователи вынуждены использовать сразу несколько инструментов: отдельные сервисы для решения заданий, сторонние калькуляторы и мессенджеры для коммуникации с преподавателями.',
-    problem_p2:'В ходе предварительного анализа было выявлено, что ключевые сложности пользователей связаны не только с функционалом, но и со структурой интерфейса. Пользователи терялись в навигации, испытывали трудности при поиске нужных заданий и не всегда понимали, какие шаги необходимо выполнить для достижения результата.',
-    problem_p3:'Основной задачей было сформировать цифровую среду, где пользователь может быстро переходить от поиска темы к выполнению заданий, анализу ошибок и отслеживанию прогресса без необходимости переключаться между сторонними инструментами.',
+    about_p1:'Профиматика — ведущая онлайн-школа по подготовке к экзаменам, успешно работающая на рынке более 6 лет. За это время команда сформировала масштабную образовательную экосистему, объединяющую преподавателей с большим практическим опытом подготовки учеников к государственным экзаменам и университетским сессиям. Ключевой особенностью бренда является акцент на системности обучения и высокой экспертности наставников.',
+    about_p2:'Передо мной стояла задача создать интерфейс, который поддерживает сложные образовательные процессы и одновременно остаётся понятным для пользователей разного возраста и уровня цифровой грамотности.',
+    problem_p1:'Традиционные платформы для подготовки к экзаменам часто обладают устаревшим интерфейсом и разрозненным функционалом. Пользователи вынуждены использовать сразу несколько инструментов: отдельные сервисы для решения заданий, сторонние калькуляторы и мессенджеры для коммуникации с преподавателями. В ходе предварительного анализа было выявлено, что ключевые сложности связаны не только с функционалом, но и со структурой интерфейса — пользователи терялись в навигации, испытывали трудности при поиске нужных заданий и не всегда понимали, какие шаги необходимо выполнить для достижения результата.',
+    problem_p2:'Основной задачей было сформировать цифровую среду, где пользователь может быстро переходить от поиска темы к выполнению заданий, анализу ошибок и отслеживанию прогресса без необходимости переключаться между сторонними инструментами.',
+    problem_p3:'',
     research_p1:'В основу проектирования легли результаты комплексного количественного и качественного исследования пользовательского поведения. На первом этапе был проведён онлайн-опрос среди более чем 240 респондентов с использованием Google Forms.',
     research_p2:'Результаты опроса позволили выявить устойчивые поведенческие паттерны и определить ключевые проблемные зоны. Среди наиболее частых трудностей пользователей были зафиксированы:',
     research_list:['преподаватели тратили значительное количество времени на проверку и сопровождение заданий','ученики регулярно терялись при поиске нужной темы внутри каталога','пользователи сталкивались с недостатком актуальных заданий для отработки конкретных тем','часть материалов воспринималась как устаревшая и не соответствующая текущим требованиям','навигация внутри платформы воспринималась как перегруженная и недостаточно структурированная'],
-    research_p3:'Для более глубокого анализа была применена методология AJTBD (Advanced Jobs To Be Done). Такой подход позволил рассматривать пользователей не только как роли, но и как носителей конкретных задач, которые они стремятся выполнить в определённых условиях.',
-    research_p4:'На основе полученных данных были сформированы User Persona и разработаны Customer Journey Map (CJM), позволившие визуализировать путь пользователя от первого взаимодействия с платформой до регулярного использования системы.',
-    design_p1:'Для обеспечения консистентности интерфейса и ускорения разработки была создана полноценная модульная дизайн-система, ориентированная на масштабируемость. Это позволило значительно сократить время на создание новых экранов и обеспечить единообразие интерфейса на всех уровнях продукта.',
-    design_p2:'Все компоненты проектировались с использованием системы свойств и вариантов, что позволяло гибко управлять состояниями элементов и быстро адаптировать интерфейс под новые сценарии использования.',
-    design_p3:'Визуальная стратегия строилась вокруг принципов читаемости и визуального спокойствия. Интерфейс проектировался так, чтобы не перегружать пользователя лишними визуальными акцентами и сохранять концентрацию при длительной работе с учебными материалами.',
-    design_p4:'В результате была сформирована визуальная система, которая поддерживает сложные сценарии работы и остаётся устойчивой при добавлении новых функций.',
+    research_p3:'Для более глубокого анализа была применена методология AJTBD (Advanced Jobs To Be Done). Такой подход позволил рассматривать пользователей не только как роли, но и как носителей конкретных задач, которые они стремятся выполнить в определённых условиях. На основе полученных данных были сформированы User Persona и разработаны Customer Journey Map (CJM), позволившие визуализировать путь пользователя от первого взаимодействия с платформой до регулярного использования системы.',
+    research_p4:'',
+    design_p1:'Для обеспечения консистентности интерфейса и ускорения разработки была создана полноценная модульная дизайн-система, ориентированная на масштабируемость. Это позволило значительно сократить время на создание новых экранов и обеспечить единообразие интерфейса на всех уровнях продукта. Все компоненты проектировались с использованием системы свойств и вариантов, что позволяло гибко управлять состояниями элементов и быстро адаптировать интерфейс под новые сценарии использования.',
+    design_p2:'Визуальная стратегия строилась вокруг принципов читаемости и визуального спокойствия. Интерфейс проектировался так, чтобы не перегружать пользователя лишними визуальными акцентами и сохранять концентрацию при длительной работе с учебными материалами. В результате была сформирована визуальная система, которая поддерживает сложные сценарии работы и остаётся устойчивой при добавлении новых функций.',
+    design_p3:'',
+    design_p4:'',
     roles_p1:'В основе платформы лежит ролевая архитектура, включающая три основных сегмента: школьники, студенты и преподаватели. Для каждой роли были определены отдельные пользовательские задачи, точки входа и сценарии взаимодействия с системой.',
-    roles_p2:'На этапе проектирования были разработаны подробные User Flow, охватывающие более 12 основных пользовательских сценариев. Дополнительно были проработаны около 30 альтернативных веток поведения, учитывающих возможные ошибки пользователя и нестандартные действия внутри системы.',
-    roles_p3:'В результате было создано 80+ экранов интерфейса, объединённых в единую логическую структуру. Каждый экран рассматривался как часть общего сценария, что позволило сохранить связность пользовательского опыта.',
-    dashboards_p1:'Отдельное внимание было уделено проектированию аналитических интерфейсов, позволяющих пользователям отслеживать собственный прогресс и выявлять слабые зоны в подготовке.',
-    dashboards_p2:'При создании дашбордов я опирался на лучшие практики визуализации данных и результаты конкурентного анализа образовательных платформ. В интерфейсе были использованы различные типы графических представлений данных:',
+    roles_p2:'На этапе проектирования были разработаны подробные User Flow, охватывающие более 12 основных пользовательских сценариев. Дополнительно были проработаны около 30 альтернативных веток поведения, учитывающих возможные ошибки пользователя и нестандартные действия внутри системы. В результате было создано 80+ экранов интерфейса, объединённых в единую логическую структуру — каждый экран рассматривался как часть общего сценария, что позволило сохранить связность пользовательского опыта.',
+    roles_p3:'',
+    dashboards_p1:'Отдельное внимание было уделено проектированию аналитических интерфейсов, позволяющих пользователям отслеживать собственный прогресс и выявлять слабые зоны в подготовке. При создании дашбордов я опирался на лучшие практики визуализации данных и результаты конкурентного анализа образовательных платформ.',
+    dashboards_p2:'В интерфейсе были использованы различные типы графических представлений данных:',
     dashboards_list:['линейные графики для отображения динамики прогресса','столбчатые диаграммы для сравнения результатов по отдельным темам','индикаторы выполнения для визуального отображения процента завершённых заданий','агрегированные показатели, отражающие общее состояние подготовки'],
     dashboards_p3:'Сложная количественная информация была преобразована в структурированные визуальные блоки, позволяющие пользователю мгновенно оценивать свои результаты и планировать дальнейшую работу.',
-    modules_p1:'Платформа включает в себя комплекс функциональных модулей, объединённых в единую экосистему обучения. Центральным элементом стал масштабный каталог заданий, структурированный по предметам, темам и уровням сложности.',
-    modules_p2:'Особое внимание было уделено системе навигации внутри каталога. Пользователь мог переходить от общего списка тем к конкретным заданиям за минимальное количество шагов.',
-    modules_p3:'Дополнительно был спроектирован конструктор вариантов заданий, позволяющий формировать индивидуальные наборы задач для тренировки.',
-    modules_p4:'В интерфейс также были интегрированы инструменты для анализа ошибок и повторного решения заданий, позволяющие системно устранять пробелы в знаниях.',
-    modules_p5:'Каждый функциональный блок проектировался как часть единой структуры, что позволило объединить разрозненные образовательные процессы в одном интерфейсе.',
-    process_p1:'Для ускорения разработки команда активно использовала AI-инструменты в рамках рабочего процесса. На протяжении более чем полугода я взаимодействовал с AI-ассистентами для подготовки дизайн-спецификаций и проверки логики компонентов.',
-    process_p2:'Использование AI позволило быстрее формализовывать требования к интерфейсу и снижать вероятность расхождений между макетами и итоговой реализацией.',
-    process_p3:'Дополнительно AI-инструменты использовались для оптимизации повторяющихся процессов, таких как подготовка описаний компонентов и проверка визуальной консистентности.',
-    process_p4:'Такой подход позволил ускорить итерации разработки и обеспечить более точную передачу дизайн-решений на этап реализации.',
+    modules_p1:'Платформа включает в себя комплекс функциональных модулей, объединённых в единую экосистему обучения. Центральным элементом стал масштабный каталог заданий, структурированный по предметам, темам и уровням сложности. Особое внимание было уделено системе навигации внутри каталога — пользователь мог переходить от общего списка тем к конкретным заданиям за минимальное количество шагов.',
+    modules_p2:'Дополнительно был спроектирован конструктор вариантов заданий, позволяющий формировать индивидуальные наборы задач для тренировки. В интерфейс также были интегрированы инструменты для анализа ошибок и повторного решения заданий, позволяющие системно устранять пробелы в знаниях.',
+    modules_p3:'Каждый функциональный блок проектировался как часть единой структуры, что позволило объединить разрозненные образовательные процессы в одном интерфейсе.',
+    modules_p4:'',
+    modules_p5:'',
+    process_p1:'Для ускорения разработки команда активно использовала AI-инструменты в рамках рабочего процесса. На протяжении более чем полугода я взаимодействовал с AI-ассистентами для подготовки дизайн-спецификаций и проверки логики компонентов. Использование AI позволило быстрее формализовывать требования к интерфейсу и снижать вероятность расхождений между макетами и итоговой реализацией.',
+    process_p2:'Дополнительно AI-инструменты использовались для оптимизации повторяющихся процессов, таких как подготовка описаний компонентов и проверка визуальной консистентности. Такой подход позволил ускорить итерации разработки и обеспечить более точную передачу дизайн-решений на этап реализации.',
+    process_p3:'',
+    process_p4:'',
     metrics_intro:'На этапе проектирования была сформирована система ключевых продуктовых метрик, которые позволят количественно оценивать эффективность интерфейсных решений после запуска платформы. Нажмите на карточку, чтобы узнать больше.',
   },
   en:{
-    about_p1:'Profimatika is a leading online school for exam preparation, successfully operating for over 6 years. The team has built a large-scale educational ecosystem uniting teachers with extensive practical experience.',
-    about_p2:"The brand's key feature is its focus on systematic learning and the high expertise of mentors. My task was to create an interface that supports complex educational processes while remaining understandable for users of different ages.",
-    problem_p1:'Traditional exam prep platforms often have outdated interfaces and fragmented functionality. Users must juggle several tools: separate task-solving services, third-party calculators and messengers for teacher communication.',
-    problem_p2:'Preliminary analysis revealed that key user difficulties were related not only to functionality but to interface structure. Users got lost in navigation and struggled to find tasks or understand what steps to take.',
-    problem_p3:'The main goal was to create a digital environment where users move quickly from finding a topic to solving tasks, analysing mistakes and tracking progress — without switching between third-party tools.',
+    about_p1:"Profimatika is a leading online school for exam preparation, successfully operating for over 6 years. The team has built a large-scale educational ecosystem uniting teachers with extensive practical experience. The brand's key feature is its focus on systematic learning and the high expertise of mentors.",
+    about_p2:'My task was to create an interface that supports complex educational processes while remaining understandable for users of different ages.',
+    problem_p1:'Traditional exam prep platforms often have outdated interfaces and fragmented functionality. Users must juggle several tools: separate task-solving services, third-party calculators and messengers for teacher communication. Preliminary analysis revealed that key user difficulties were related not only to functionality but to interface structure — users got lost in navigation and struggled to find tasks or understand what steps to take.',
+    problem_p2:'The main goal was to create a digital environment where users move quickly from finding a topic to solving tasks, analysing mistakes and tracking progress — without switching between third-party tools.',
+    problem_p3:'',
     research_p1:'The design was based on comprehensive quantitative and qualitative user behaviour research. The first stage was an online survey of over 240 respondents using Google Forms.',
     research_p2:'Survey results revealed stable behavioural patterns and identified key problem areas:',
     research_list:['teachers spent significant time checking and supporting tasks','students regularly got lost when searching for topics in the catalog','users faced a lack of relevant tasks for practising specific topics','some materials were perceived as outdated and not matching exam requirements','platform navigation was perceived as overloaded and insufficiently structured'],
-    research_p3:'For deeper analysis the AJTBD (Advanced Jobs To Be Done) methodology was applied, allowing viewing users not only as roles but as carriers of specific tasks they aim to complete under certain conditions.',
-    research_p4:'Based on the data, User Personas and Customer Journey Maps (CJM) were created, visualising the user path from first interaction to regular system use.',
-    design_p1:'To ensure interface consistency and accelerate development, a full modular design system focused on scalability was created, significantly reducing time to build new screens.',
-    design_p2:'All components were designed using a system of properties and variants, enabling flexible state management and quick adaptation to new use cases.',
-    design_p3:'Visual strategy was built around principles of readability and visual calm — not overloading users with unnecessary accents and maintaining concentration during long study sessions.',
-    design_p4:'As a result, a visual system was formed that supports complex work scenarios and remains stable when new functions are added.',
+    research_p3:'For deeper analysis the AJTBD (Advanced Jobs To Be Done) methodology was applied, allowing viewing users not only as roles but as carriers of specific tasks they aim to complete under certain conditions. Based on the data, User Personas and Customer Journey Maps (CJM) were created, visualising the user path from first interaction to regular system use.',
+    research_p4:'',
+    design_p1:'To ensure interface consistency and accelerate development, a full modular design system focused on scalability was created, significantly reducing time to build new screens. All components were designed using a system of properties and variants, enabling flexible state management and quick adaptation to new use cases.',
+    design_p2:'Visual strategy was built around principles of readability and visual calm — not overloading users with unnecessary accents and maintaining concentration during long study sessions. As a result, a visual system was formed that supports complex work scenarios and remains stable when new functions are added.',
+    design_p3:'',
+    design_p4:'',
     roles_p1:'The platform is based on a role architecture covering three main segments: schoolchildren, students, and teachers. Separate user tasks, entry points and interaction scenarios were defined for each role.',
-    roles_p2:'Detailed User Flows were developed covering over 12 main user scenarios. Additionally, around 30 alternative behaviour branches were elaborated, accounting for possible user errors and non-standard actions.',
-    roles_p3:'The result was 80+ interface screens combined into a unified logical structure, preserving the coherence of user experience even with many functions.',
-    dashboards_p1:'Particular attention was given to designing analytical interfaces that let users track their progress and identify weak areas in their preparation.',
-    dashboards_p2:'When creating dashboards, I drew on best data visualisation practices and competitive analysis of educational platforms. Various types of data representation were used:',
+    roles_p2:'Detailed User Flows were developed covering over 12 main user scenarios. Additionally, around 30 alternative behaviour branches were elaborated, accounting for possible user errors and non-standard actions. The result was 80+ interface screens combined into a unified logical structure, preserving the coherence of user experience even with many functions.',
+    roles_p3:'',
+    dashboards_p1:'Particular attention was given to designing analytical interfaces that let users track their progress and identify weak areas in their preparation. When creating dashboards, I drew on best data visualisation practices and competitive analysis of educational platforms.',
+    dashboards_p2:'Various types of data representation were used:',
     dashboards_list:['line graphs for showing progress dynamics','bar charts for comparing results across topics','progress indicators for visualising task completion percentage','aggregated indicators reflecting overall preparation status'],
     dashboards_p3:'Complex quantitative information was transformed into structured visual blocks, letting users instantly assess their results and plan further work.',
-    modules_p1:'The platform includes a complex of functional modules united in a single learning ecosystem. The central element is a large task catalog structured by subjects, topics, and difficulty levels.',
-    modules_p2:'Special attention was given to navigation within the catalog — users move from general topic lists to specific tasks in the minimum number of steps.',
-    modules_p3:'Additionally, a task variant constructor was designed, allowing users to form individual sets of tasks for training.',
-    modules_p4:'Tools for error analysis and task re-solving were also integrated, letting users return to difficult topics and systematically eliminate knowledge gaps.',
-    modules_p5:'Each functional block was designed as part of a unified structure, combining fragmented educational processes in a single interface.',
-    process_p1:'To accelerate development, the team actively used AI tools in the workflow. For over six months, I worked with AI assistants to prepare design specifications and verify component logic.',
-    process_p2:'Using AI allowed faster formalisation of interface requirements and reduced discrepancies between mockups and final implementation.',
-    process_p3:'Additionally, AI tools were used to optimise repetitive processes such as preparing component descriptions and checking visual consistency.',
-    process_p4:'This approach accelerated development iterations and ensured more accurate transfer of design solutions to the implementation stage.',
+    modules_p1:'The platform includes a complex of functional modules united in a single learning ecosystem. The central element is a large task catalog structured by subjects, topics, and difficulty levels. Special attention was given to navigation within the catalog — users move from general topic lists to specific tasks in the minimum number of steps.',
+    modules_p2:'Additionally, a task variant constructor was designed, allowing users to form individual sets of tasks for training. Tools for error analysis and task re-solving were also integrated, letting users return to difficult topics and systematically eliminate knowledge gaps.',
+    modules_p3:'Each functional block was designed as part of a unified structure, combining fragmented educational processes in a single interface.',
+    modules_p4:'',
+    modules_p5:'',
+    process_p1:'To accelerate development, the team actively used AI tools in the workflow. For over six months, I worked with AI assistants to prepare design specifications and verify component logic. Using AI allowed faster formalisation of interface requirements and reduced discrepancies between mockups and final implementation.',
+    process_p2:'Additionally, AI tools were used to optimise repetitive processes such as preparing component descriptions and checking visual consistency. This approach accelerated development iterations and ensured more accurate transfer of design solutions to the implementation stage.',
+    process_p3:'',
+    process_p4:'',
     metrics_intro:'At the design stage, a system of key product metrics was formed to evaluate the effectiveness of interface solutions after platform launch. Click on a card to learn more.',
   }
 };
@@ -93,7 +93,14 @@ function getLang() { return localStorage.getItem('userLanguage') || 'ru'; }
 
 function setText(id, val) {
   const el = document.getElementById(id);
-  if (el && val !== undefined) el.textContent = val;
+  if (!el || val === undefined) return;
+  if (val === '' || val === null) {
+    el.textContent = '';
+    el.style.display = 'none';
+  } else {
+    el.textContent = val;
+    el.style.display = '';
+  }
 }
 
 function setList(id, items) {
@@ -167,12 +174,13 @@ if (content) content.addEventListener('scroll', () => {
 
   if (glitchWrap) glitchWrap.style.transform = `translateY(${-sy * 0.25}px)`;
 
-  const mi = document.querySelector('.about-mockup img, .about-mockup video');
-  if (mi) {
-    const r = mi.closest('.about-mockup').getBoundingClientRect();
-    if (r.bottom > 0 && r.top < vh)
-      mi.style.transform = `translateY(${(r.top + r.height / 2 - vh / 2) * 0.12}px)`;
-  }
+  // Parallax removed from mockup image — keeping it stable
+  // const mi = document.querySelector('.about-mockup img, .about-mockup video');
+  // if (mi) {
+  //   const r = mi.closest('.about-mockup').getBoundingClientRect();
+  //   if (r.bottom > 0 && r.top < vh)
+  //     mi.style.transform = `translateY(${(r.top + r.height / 2 - vh / 2) * 0.12}px)`;
+  // }
 
   document.querySelectorAll('.gi img, .gi video').forEach(img => {
     const r = img.parentElement.getBoundingClientRect();
@@ -389,4 +397,4 @@ document.querySelectorAll('video[autoplay]').forEach(v => {
   ['click','touchstart','keydown'].forEach(ev =>
     document.addEventListener(ev, play, { once: true, passive: true })
   );
-});
+}); 
