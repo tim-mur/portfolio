@@ -1,125 +1,53 @@
 (function () {
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var N = slides.length;
-  var progress = 0, target = 0, rafId = null, snapTimer = null, snapping = false;
-  var LERP = 0.11, SNAP_LERP = 0.09, PARALLAX = 0.35, THRESHOLD = 0.5;
+  if (N < 2) return;
 
-  if (N >= 2) {
-    slides.forEach(function (el, i) { el.style.zIndex = String(i + 1); });
+  slides.forEach(function (el, i) {
+    el.style.zIndex = String(i + 1);
+  });
 
-    function apply(p) {
-      slides.forEach(function (el, i) {
-        var ty;
-        if (i === 0) ty = -Math.min(p, 1) * PARALLAX * 100;
-        else {
-          var entry = p - (i - 1);
-          if (entry <= 0) ty = 100;
-          else if (entry <= 1) ty = (1 - entry) * 100;
-          else ty = -Math.min(entry - 1, 1) * PARALLAX * 100;
-        }
-        el.style.transform = 'translateY(' + ty + '%)';
-      });
-    }
+  var progress = 0;
+  var target = 0;
+  var rafId = null;
+  var LERP = 0.11;
+  var PARALLAX = 0.35;
 
-    function tick() {
-      var speed = snapping ? SNAP_LERP : LERP;
-      var diff = target - progress;
-      if (Math.abs(diff) < 0.0003) { progress = target; apply(progress); rafId = null; return; }
-      progress += diff * speed;
-      apply(progress);
-      rafId = requestAnimationFrame(tick);
-    }
-
-    function run() { if (!rafId) rafId = requestAnimationFrame(tick); }
-
-    function scheduleSnap() {
-      clearTimeout(snapTimer);
-      snapTimer = setTimeout(function () {
-        snapping = true;
-        var frac = progress - Math.floor(progress);
-        target = frac >= THRESHOLD ? Math.ceil(progress) : Math.floor(progress);
-        target = Math.max(0, Math.min(N - 1, target));
-        run();
-      }, 160);
-    }
-
-    window.addEventListener('wheel', function (e) {
-      if (Math.abs(e.deltaY) < 1) return;
-      e.preventDefault(); snapping = false; clearTimeout(snapTimer);
-      var dy = e.deltaY;
-      if (e.deltaMode === 1) dy *= 32;
-      if (e.deltaMode === 2) dy *= 300;
-      target += dy / window.innerHeight;
-      target = Math.max(0, Math.min(N - 1, target));
-      run(); scheduleSnap();
-    }, { passive: false });
-
-    var touchY = null;
-    window.addEventListener('touchstart', function (e) { touchY = e.touches[0].clientY; snapping = false; }, { passive: true });
-    window.addEventListener('touchmove', function (e) {
-      if (touchY === null) return; e.preventDefault();
-      var dy = touchY - e.touches[0].clientY; touchY = e.touches[0].clientY;
-      target += dy / window.innerHeight; target = Math.max(0, Math.min(N - 1, target)); run();
-    }, { passive: false });
-    window.addEventListener('touchend', function () { touchY = null; scheduleSnap(); });
-
-    apply(0);
-  }
-
-  function syncLayout() {
-    if (window.innerWidth <= 1024) return;
-    var cards = document.querySelectorAll('.case-card');
-    cards.forEach(function (card) {
-      var media = card.querySelector('.case-media');
-      var left = card.querySelector('.case-left');
-      if (media && left) {
-        var h = media.offsetHeight;
-        if (h > 0) left.style.height = h + 'px';
+  function apply(p) {
+    slides.forEach(function (el, i) {
+      var ty;
+      if (i === 0) {
+        ty = -Math.min(p, 1) * PARALLAX * 100;
+      } else {
+        var entry = p - (i - 1);
+        if (entry <= 0) ty = 100;
+        else if (entry <= 1) ty = (1 - entry) * 100;
+        else ty = -Math.min(entry - 1, 1) * PARALLAX * 100;
       }
+      el.style.transform = 'translateY(' + ty + '%)';
     });
   }
 
-  function applyLangToCards(lang) {
-    var els = document.querySelectorAll('[data-ru][data-en]');
-    for (var i = 0; i < els.length; i++) {
-      var val = els[i].getAttribute('data-' + lang);
-      if (val !== null) els[i].textContent = val;
+  function tick() {
+    var diff = target - progress;
+    if (Math.abs(diff) < 0.001) {
+      progress = target;
+      apply(progress);
+      rafId = null;
+      return;
     }
-    syncLayout();
+    progress += diff * LERP;
+    apply(progress);
+    rafId = requestAnimationFrame(tick);
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    var _savedLang = localStorage.getItem('userLanguage') || 'ru';
-    applyLangToCards(_savedLang);
+  window.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    target += e.deltaY / window.innerHeight;
+    target = Math.max(0, Math.min(N - 1, target));
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }, { passive: false });
 
-    var btnRuFixed = document.getElementById('lang-ru-fixed');
-    var btnEnFixed = document.getElementById('lang-en-fixed');
-
-    function updateOverlayLang(lang) {
-      if (!btnRuFixed || !btnEnFixed) return;
-      btnRuFixed.classList.toggle('active', lang === 'ru');
-      btnEnFixed.classList.toggle('active', lang === 'en');
-    }
-    updateOverlayLang(_savedLang);
-
-    window.switchLang = function (lang) {
-      localStorage.setItem('userLanguage', lang);
-      if (typeof window.updatePhraseLang === 'function') window.updatePhraseLang(lang); 
-      applyLangToCards(lang);
-      updateOverlayLang(lang);
-    };
-
-    if (btnRuFixed) btnRuFixed.addEventListener('click', function () { window.switchLang('ru'); });
-    if (btnEnFixed) btnEnFixed.addEventListener('click', function () { window.switchLang('en'); });
-
-    var btnP = document.getElementById('mode-photographer');
-    if (btnP) {
-      btnP.addEventListener('click', function () {
-        setTimeout(function () { window.location.href = 'photographer/index.html?mode=photographer'; }, 300);
-      });
-    }
-  });
-
-  window.addEventListener('load', syncLayout);
-  window.addEventListener('resize', syncLayout);
-}());
+  // Начальная установка
+  apply(0);
+})();
