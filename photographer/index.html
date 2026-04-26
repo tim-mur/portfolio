@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Photographer</title>
+  <link rel="stylesheet" href="/src/css/base.css">
+  <link rel="stylesheet" href="/src/css/cursor.css">
+  <link rel="stylesheet" href="/src/css/cases/phrase.css">
+  <link rel="stylesheet" href="/src/css/cases/photographer.css">
+  <link rel="stylesheet" href="/src/css/cases/designer.css">
+</head>
+<body>
+
+  <!-- ── Слайд 0: phrase (без lang-switcher — он в overlay) ── -->
+  <section class="slide" id="phrase-screen">
+
+    <div class="mode-switcher" id="mode-switcher">
+      <span class="mode-btn" id="mode-designer"></span>
+      <div class="mode-line" id="mode-line-left">
+        <div class="line-inner">
+          <div class="line-track"></div>
+          <div class="line-sweep" id="sweep-left"></div>
+        </div>
+      </div>
+      <div class="mode-line" id="mode-line-right">
+        <div class="line-inner">
+          <div class="line-track"></div>
+          <div class="line-sweep" id="sweep-right"></div>
+        </div>
+      </div>
+      <span class="mode-btn" id="mode-photographer"></span>
+    </div>
+
+    <div class="hero" id="hero">
+      <span class="hero-base" id="hero-base"></span>
+      <span class="hero-green" id="hero-green"></span>
+    </div>
+
+  </section>
+
+  <!-- ── Слайд 1: Placeholder для фото-кейсов ── -->
+  <section class="slide case-card" style="--bg:#2C2C2C;--tx:#F7F9FC;">
+    <div class="case-inner">
+      <div class="case-left">
+        <div class="case-top">
+          <h2 class="case-title" data-ru="ФОТОПРОЕКТ 1" data-en="PHOTO PROJECT 1"></h2>
+          <div class="case-cats">
+            <span class="case-cat" data-ru="[ Фотография ]" data-en="[ Photography ]"></span>
+          </div>
+          <p class="case-desc"
+             data-ru="Описание фотопроекта будет здесь. Добавь свои кейсы и замени этот текст."
+             data-en="Photo project description will be here. Add your cases and replace this text."></p>
+        </div>
+        <div class="case-bottom">
+          <span class="case-cta" data-ru="[ СВЯЗАТЬСЯ ]" data-en="[ CONTACT ]"></span>
+        </div>
+      </div>
+      <div class="case-media-wrap">
+        <img class="case-media lb-trigger" src="/src/assets/images/projects/polotskie.jpg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Overlay: только lang-switcher ── -->
+  <div class="ui-overlay">
+    <div class="lang-switcher-fixed">
+      <span class="lang-btn-fixed" id="lang-ru-fixed" data-ru="[ RU ]" data-en="[ RU ]">[ RU ]</span>
+      <div class="lang-line-fixed">
+        <div class="line-track-fixed"></div>
+      </div>
+      <span class="lang-btn-fixed" id="lang-en-fixed" data-ru="[ EN ]" data-en="[ EN ]">[ EN ]</span>
+    </div>
+  </div>
+  
+  <!-- Скрипты -->
+  <script src="/src/js/cursor.js"></script>
+  <script src="/src/js/cases/phrase.js"></script>
+  <script src="/src/js/lightbox.js"></script>
+  <script src="/src/js/photographer-list.js"></script>
+
+</body>
+</html>

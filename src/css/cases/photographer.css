@@ -1,0 +1,35 @@
+/*
+  photographer.css
+  Подключается ПОСЛЕ designer.css — только переопределения
+  и специфика страницы фотографа.
+
+  В photographer.html:
+    <link rel="stylesheet" href="../css/phrase.css">
+    <link rel="stylesheet" href="../css/designer.css">
+    <link rel="stylesheet" href="../css/photographer.css">
+*/
+
+
+/*
+  ── Цвета карточек ─────────────────────────────────────
+  Каждая карточка получает --bg и --tx инлайново:
+    style="--bg:#000000;--tx:#ffffff;"
+
+  Здесь можно задать дефолт на случай если переменная
+  не передана — не обязательно, но удобно.
+*/
+
+.case-card {
+  background: var(--bg, #202020);
+  color:      var(--tx, #F5FFFB);
+}
+
+/*
+  ── Убираем .case-desc ─────────────────────────────────
+  На странице фотографа описания нет.
+  Если вдруг .case-desc окажется в разметке — скрываем.
+*/
+
+.case-desc {
+  display: none;
+}

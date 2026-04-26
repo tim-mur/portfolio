@@ -1,0 +1,452 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+/* ══════════════════════════════════════
+   СЛАЙДЫ
+   ══════════════════════════════════════ */
+
+.slide {
+  position: fixed;
+  inset: 0;
+  will-change: transform;
+}
+
+#phrase-screen {
+  z-index: 1;
+  background: #202020;
+}
+
+/* phrase.css рисует .mode-switcher и .hero как position:fixed —
+   они работают корректно внутри #phrase-screen */
+
+/* Скрываем lang-switcher из phrase.js — он нам не нужен на кейс-страницах */
+#lang-switcher {
+  display: none !important;
+}
+
+
+/* ══════════════════════════════════════
+   КАРТОЧКА КЕЙСА (desktop default)
+   ══════════════════════════════════════ */
+
+.case-card {
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px clamp(20px, 3vw, 72px);
+  box-sizing: border-box;
+}
+
+/* Внутренний контейнер: текст слева, медиа справа */
+.case-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-height: calc(100vh - 80px);
+}
+
+
+/* ── Левая колонка (текст + кнопка) ─────────────────── */
+
+.case-left {
+  flex: 0 0 calc(38% - 8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.case-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.case-title {
+  font-family: Helvetica, Arial, sans-serif;
+  /* На десктопе заголовок в колонке ~38% экрана.
+     clamp подбирает размер автоматически:
+     - min 18px (очень маленькие экраны)
+     - preferred 4.5vw — на 1440px = ~65px, на 375px = ~17px
+     - max 96px (большие мониторы)
+     letter-spacing: -0.10em сильно сжимает текст, поэтому 4.5vw достаточно */
+  font-size: clamp(18px, 4.5vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.10em;
+  text-transform: uppercase;
+  color: var(--tx);
+  line-height: 0.88;
+  white-space: nowrap;
+  overflow: visible;
+  margin: 0 0 12px 0;
+  text-box: trim-both cap alphabetic;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+/* На планшете и мобиле колонка становится 100% ширины —
+   увеличиваем размер относительно полной ширины экрана */
+@media (max-width: 1024px) {
+  .case-title {
+    font-size: clamp(24px, 9vw, 80px);
+  }
+}
+
+@media (max-width: 640px) {
+  .case-title {
+    font-size: clamp(18px, 8.5vw, 48px);
+  }
+}
+
+.case-cats {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin: 0 0 20px 0;
+}
+
+.case-cat {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--tx);
+  opacity: 0.5;
+  white-space: nowrap;
+}
+
+.case-sep {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: var(--tx);
+  opacity: 0.5;
+  margin: 0 5px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.case-desc {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--tx);
+  line-height: 1.2;
+}
+
+.case-bottom {
+  flex-shrink: 0;
+}
+
+.case-cta {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  color: var(--tx);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  line-height: 1;
+  display: inline-block;
+  position: relative;
+  transition: opacity 0.2s;
+}
+
+.case-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: currentColor;
+  transition: width 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.case-cta:hover::after {
+  width: 100%;
+}
+
+
+/* ── Правая колонка (медиа) ──────────────────────────── */
+
+.case-media-wrap {
+  flex: 1 1 0;
+  min-width: 0;
+  max-height: calc(100vh - 80px);
+  overflow: hidden;
+  align-self: flex-start;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-media-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.case-media-link:has(> .case-media) {
+  /* ссылка растягивается под медиа */
+  display: contents;
+}
+
+.case-media {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  cursor: pointer;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.case-media-link:hover .case-media {
+  opacity: 0.85;
+}
+
+/* Видео без заданной высоты может схлопнуться — задаём минимум */
+.case-media-wrap video.case-media {
+  min-height: 280px;
+}
+
+
+/* ══════════════════════════════════════
+   LANG-SWITCHER OVERLAY (difference)
+   ══════════════════════════════════════ */
+
+.ui-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.lang-switcher-fixed {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: all;
+}
+
+.lang-btn-fixed {
+  font-family: 'Pixeloid Sans', monospace;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  padding: 0 12px;
+  transition: opacity 0.25s;
+  opacity: 0.5;
+}
+
+.lang-btn-fixed:first-child { padding-left: 0; }
+.lang-btn-fixed:last-child  { padding-right: 0; }
+
+.lang-btn-fixed.active             { opacity: 1; }
+.lang-btn-fixed:not(.active):hover { opacity: 0.75; }
+
+.lang-line-fixed {
+  width: 160px;
+  height: 1px;
+  position: relative;
+}
+
+.line-track-fixed {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0.5;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   АДАПТИВ
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Большие десктопы ── */
+
+@media (max-width: 1600px) {
+  .case-cta { font-size: 44px; }
+}
+
+@media (max-width: 1400px) {
+  .case-cta { font-size: 38px; }
+}
+
+@media (max-width: 1200px) {
+  .case-cta  { font-size: 34px; }
+  .case-card { padding: 32px 48px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   ПЛАНШЕТЫ (1024px и ниже): текст сверху, медиа снизу
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+
+  .case-card {
+    padding: 32px 32px;
+    overflow-y: auto;
+    align-items: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .case-inner {
+    flex-direction: column;
+    max-height: none;
+    gap: 24px;
+    min-height: 100%;
+  }
+
+  .case-left {
+    flex: none;
+    width: 100%;
+    gap: 24px;
+  }
+
+  /* Заголовок кейса — clamp сам подстраивает размер */
+  .case-cta    { font-size: 32px; }
+  .case-desc   { font-size: 15px; line-height: 1.4; }
+  .case-cat    { font-size: 14px; }
+
+  .case-media-wrap {
+    flex: none;
+    width: 100%;
+    max-height: none;
+    align-self: stretch;
+  }
+
+  .case-media {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    min-height: 280px;
+    object-fit: cover;
+  }
+
+  .case-bottom { margin-top: 12px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   МОБИЛЬНЫЕ (640px и ниже)
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+
+  .case-card {
+    padding: 24px 20px;
+  }
+
+  .case-inner { gap: 20px; }
+
+  /* Заголовок кейса — clamp сам подстраивает размер */
+
+  .case-cats {
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 6px 0;
+  }
+
+  .case-cat  { font-size: 13px; }
+  .case-sep  { width: 20px; margin: 0 6px; }
+  .case-desc { font-size: 14px; line-height: 1.45; }
+
+  .case-cta {
+    font-size: 26px;
+    letter-spacing: -0.05em;
+  }
+
+  .case-cta::after {
+    height: 2px;
+    bottom: -10px;
+  }
+
+  .case-media {
+    max-height: 50vh;
+    min-height: 220px;
+  }
+
+  .lang-switcher-fixed { bottom: 20px; }
+  .lang-btn-fixed { font-size: 18px; padding: 0 8px; }
+  .lang-line-fixed { width: 100px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ (400px и ниже)
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 400px) {
+  .case-card { padding: 20px 16px; }
+
+  .case-cta   { font-size: 22px; }
+  .case-media { min-height: 180px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   TOUCH-УСТРОЙСТВА: курсор-подсказки
+   ══════════════════════════════════════════════════════════════ */
+
+@media (hover: none) and (pointer: coarse) {
+  /* На тачскринах показываем обычный курсор */
+  .case-media {
+    cursor: pointer;
+  }
+}
+
+/* ── Ссылка-обёртка медиа на кейс (добавить в designer.css) ──────────────
+   Заменяет lb-trigger: клик ведёт на страницу кейса, не в лайтбокс.
+   Курсор cursor.js определяет по тегу VIDEO/IMG — оставляем стандартный
+   pointer, чтобы не было путаницы с «СМОТРЕТЬ». */
+
+.case-media-link {
+  display: block;          /* занимает всё место внутри .case-media-wrap */
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  line-height: 0;          /* убирает лишний отступ под inline-элементами */
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Медиа внутри ссылки — те же стили, что были у .case-media напрямую */
+.case-media-link .case-media {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  object-fit: cover;
+  /* Лёгкий scale при ховере — даёт ощущение интерактивности */
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.case-media-link:hover .case-media {
+  transform: scale(1.02);
+}

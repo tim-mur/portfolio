@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'Pixeloid Sans';
+    src: url('../fonts/PixeloidSans.ttf') format('truetype');
+}
+
+:root {
+    --bg: #202020;
+    --text: #FEFAF7;
+    --accent-red: #E50136;
+    --accent-cyan: #00FFFF;
+    --accent-magenta: #FF00FF;
+    --font-pixel: 'Pixeloid Sans', monospace;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-pixel);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Переключатели (Верхний и Нижний) */
+.mode-switcher, .lang-switcher {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+}
+
+.mode-switcher { top: 32px; gap: 12px; }
+.lang-switcher { bottom: 32px; gap: 8px; }
+
+.mode-btn, .lang-btn {
+    cursor: pointer;
+    text-transform: uppercase;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.mode-btn.active, .lang-btn.active { opacity: 1; }
+
+.mode-line, .lang-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.line-inner {
+    width: 100%;
+    height: 100%;
+    background: var(--text);
+    transform: scaleX(0.3); /* эффект из оригинала */
+}
+
+/* Глитч 302 */
+.glitch-wrap {
+    position: relative;
+    font-size: 200px;
+    font-weight: bold;
+}
+
+.glitch-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: none;
+}
+.glitch-layer.cyan { color: var(--accent-cyan); z-index: -1; }
+.glitch-layer.magenta { color: var(--accent-magenta); z-index: -2; }
+
+/* Нижняя фраза */
+.bottom-container {
+    position: fixed;
+    bottom: 80px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.bottom-phrase {
+    color: var(--accent-red);
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    margin: 0;
+}

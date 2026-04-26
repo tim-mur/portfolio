@@ -1,0 +1,338 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #F5FFFB;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+
+body.filled { background: #202020; }
+body.cursor-active { cursor: pointer; }
+
+/* ── Canvas ── */
+#pixelCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Оверлей-ссылка на весь экран после заливки ── */
+#screen-link {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 5; /* ниже lang-switcher (20), выше canvas (0) */
+  cursor: pointer;
+}
+
+body.filled #screen-link { display: block; }
+
+/* ── Switcher ── */
+.lang-switcher {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  padding: 0 72px;
+  gap: 36px;
+  box-sizing: border-box;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* ── Lang buttons ── */
+.lang-btn {
+  font-family: 'Pixeloid Sans', 'Arial Black', monospace;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #202020;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: all;
+  user-select: none;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: color 0.4s, opacity 0.3s;
+}
+
+.lang-btn.active              { opacity: 1; }
+.lang-btn:not(.active):hover  { opacity: 1; }
+
+body.filled .lang-btn { color: #F5FFFB; }
+
+/* ── Линия ── */
+.lang-line {
+  flex: 1;
+  position: relative;
+  height: 2px;
+}
+
+.line-track {
+  position: absolute;
+  inset: 0;
+  background: #202020;
+  opacity: 0.5;
+  transition: opacity 0.3s, background 0.4s;
+}
+
+.lang-line.is-active .line-track { opacity: 1; }
+
+body.filled .line-track { background: #F5FFFB; }
+
+.line-fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: #202020;
+  opacity: 1;
+  transition: background 0.4s;
+}
+
+#line-left  .line-fill { right: 0; left: auto; }
+#line-right .line-fill { left: 0; right: auto; }
+
+body.filled .line-fill { background: #F5FFFB; }
+
+/* ── Кнопка ── */
+a.pixel-shape {
+  text-decoration: none;
+  color: inherit;
+}
+
+.pixel-shape {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  flex-shrink: 0;
+  transition: transform 0.12s ease;
+}
+
+.pixel-shape:hover  { transform: scale(1.04); }
+.pixel-shape:active { transform: scale(0.96); }
+
+.pixel-shape .bg {
+  display: block;
+  width: 280px;
+  height: 280px;
+  transition: opacity 0.4s;
+}
+
+body.filled .pixel-shape .bg { opacity: 0; }
+
+.label {
+  position: absolute;
+  z-index: 2;
+  color: #F5FFFB;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  transition: color 0.4s;
+  width: 100%;
+  max-width: 200px;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+body.filled .label { color: #F5FFFB; }/* ══════════════════════════════════════════════════
+   TABLET (≤1024px) — vertical layout
+   ══════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .lang-switcher {
+    flex-direction: column;
+    padding: 60px 0;
+    top: 0;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    transform: translateX(-50%);
+    gap: 24px;
+  }
+
+  .lang-line {
+    flex: 1;
+    width: 2px;
+    height: auto;
+  }
+
+  .line-track {
+    inset: 0;
+  }
+
+  .line-fill {
+    width: 100% !important;
+    height: 0%;
+    left: 0;
+    right: auto;
+    top: auto;
+  }
+
+  /* Top line (left=RU): fill grows from bottom upward */
+  #line-left .line-fill {
+    bottom: 0;
+    top: auto;
+    right: auto;
+    left: 0;
+  }
+
+  /* Bottom line (right=EN): fill grows from top downward */
+  #line-right .line-fill {
+    top: 0;
+    bottom: auto;
+    right: auto;
+    left: 0;
+  }
+
+  .pixel-shape .bg {
+    width: 260px;
+    height: 260px;
+  }
+
+  .label {
+    font-size: 26px;
+    max-width: 190px;
+  }
+
+  .lang-btn {
+    font-size: 32px;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   MOBILE (≤480px) — smaller elements
+   ══════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .lang-switcher {
+    padding: 40px 0;
+    gap: 16px;
+  }
+
+  .pixel-shape .bg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .label {
+    font-size: 22px;
+    max-width: 150px;
+  }
+
+  .lang-btn {
+    font-size: 26px;
+  }
+}
+/* ══════════════════════════════════════════════════
+   TABLET (≤1024px) — vertical layout
+   ══════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .lang-switcher {
+    flex-direction: column;
+    padding: 60px 0;
+    top: 0;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    transform: translateX(-50%);
+    gap: 24px;
+  }
+
+  .lang-line {
+    flex: 1;
+    width: 2px;
+    height: auto;
+  }
+
+  .line-track {
+    inset: 0;
+  }
+
+  .line-fill {
+    width: 100% !important;
+    height: 0%;
+    left: 0;
+    right: auto;
+    top: auto;
+  }
+
+  /* Top line (left=RU): fill grows from bottom upward */
+  #line-left .line-fill {
+    bottom: 0;
+    top: auto;
+    right: auto;
+    left: 0;
+  }
+
+  /* Bottom line (right=EN): fill grows from top downward */
+  #line-right .line-fill {
+    top: 0;
+    bottom: auto;
+    right: auto;
+    left: 0;
+  }
+
+  .pixel-shape .bg {
+    width: 260px;
+    height: 260px;
+  }
+
+  .label {
+    font-size: 26px;
+    max-width: 190px;
+  }
+
+  .lang-btn {
+    font-size: 32px;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   MOBILE (≤480px) — smaller elements
+   ══════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .lang-switcher {
+    padding: 40px 0;
+    gap: 16px;
+  }
+
+  .pixel-shape .bg {
+    width: 200px;
+    height: 200px;
+  }
+
+  .label {
+    font-size: 22px;
+    max-width: 150px;
+  }
+
+  .lang-btn {
+    font-size: 26px;
+  }
+}

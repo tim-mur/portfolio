@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>timur povarov</title>
+  <link rel="stylesheet" href="/src/css/main.css">
+  <link rel="stylesheet" href="/src/css/cursor.css">
+</head>
+<body>
+
+  <canvas id="pixelCanvas"></canvas>
+
+  <!-- Невидимая ссылка на весь экран — активируется после заливки -->
+  <a href="/choice.html" id="screen-link" aria-label="Перейти к портфолио"></a>
+
+  <div class="lang-switcher">
+
+    <span class="lang-btn" id="lang-ru">[ RU ]</span>
+
+    <div class="lang-line" id="line-left">
+      <div class="line-track"></div>
+      <div class="line-fill" id="fill-left"></div>
+    </div>
+
+    <a href="/choice.html" class="pixel-shape" id="btn">
+      <div class="label" data-ru="СМОТРЕТЬ ПОРТФОЛИО" data-en="LOOK MY PORTFOLIO">СМОТРЕТЬ ПОРТФОЛИО</div>
+      <img src="/src/assets/images/ui/Button shape.svg" alt="button" class="bg"/>
+    </a>
+
+    <div class="lang-line" id="line-right">
+      <div class="line-track"></div>
+      <div class="line-fill" id="fill-right"></div>
+    </div>
+
+    <span class="lang-btn" id="lang-en">[ EN ]</span>
+
+  </div>
+
+  <script type="module" src="/src/js/main.js"></script>
+
+</body>
+</html>

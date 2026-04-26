@@ -1,0 +1,156 @@
+/* =============================================
+   CUSTOM CURSOR  v3  — cursor.css
+   Подключи в <head>: <link rel="stylesheet" href="cursor.css">
+   ============================================= */
+
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+/* ── Корень: фиксированный размер 92px, масштаб меняется через scale() ── */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 92px;
+  height: 92px;
+  pointer-events: none;
+  z-index: 2147483647;
+  opacity: 0;
+  /* Базовый scale соответствует 40px / 92px ≈ 0.435 */
+  --scale: 0.435;
+  transform: translate(-50%, -50%) scale(var(--scale));
+  /*
+    scale плавно едет через custom property — не работает напрямую,
+    поэтому scale прописываем в transition руками.
+  */
+  transition:
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity   0.20s ease;
+  will-change: transform;
+}
+
+/* ── Кольцо ── */
+#custom-cursor .cursor-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transition:
+    background    0.45s ease,
+    border-color  0.45s ease,
+    box-shadow    0.45s ease;
+}
+
+/* ── Точка ── */
+#custom-cursor .cursor-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /*
+    Физический размер точки относительно 92px-контейнера:
+    6px / 0.435 ≈ 13.8px — выглядит как 6px при базовом scale
+  */
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  transform-origin: center;
+  transition:
+    background    0.45s ease,
+    transform     0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity       0.30s ease;
+  will-change: transform, opacity;
+}
+
+/* ── Надпись ── */
+#custom-cursor .cursor-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center;
+  white-space: nowrap;
+  /*
+    font-size компенсирует scale контейнера:
+    хотим ~10px визуально при scale 1.0 (медиа = 92px/92px)
+  */
+  font-family: sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform  0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity    0.30s ease,
+    color      0.45s ease;
+  will-change: transform, opacity;
+}
+
+
+/* ══════════════════════════════════════════════
+   ТЕМЫ  (только цвета — размеры через JS scale)
+   ══════════════════════════════════════════════ */
+
+/* Светлый фон → тёмный курсор */
+#custom-cursor.theme-dark .cursor-ring {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1.5px solid rgba(0, 0, 0, 0.50);
+}
+#custom-cursor.theme-dark .cursor-dot   { background: #111; }
+#custom-cursor.theme-dark .cursor-label { color: #111; }
+
+#custom-cursor.theme-dark.state-button .cursor-ring {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.65);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+}
+
+/* медиа на светлом: чёрная заливка, белая надпись */
+#custom-cursor.theme-dark.state-media .cursor-ring {
+  background: rgba(0, 0, 0, 0.88);
+  border-color: rgba(0, 0, 0, 0.90);
+}
+#custom-cursor.theme-dark.state-media .cursor-label { color: #fff; }
+
+
+/* Тёмный / цветной фон → светлый курсор */
+#custom-cursor.theme-light .cursor-ring {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1.5px solid rgba(255, 255, 255, 0.60);
+}
+#custom-cursor.theme-light .cursor-dot   { background: #fff; }
+#custom-cursor.theme-light .cursor-label { color: #fff; }
+
+#custom-cursor.theme-light.state-button .cursor-ring {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.80);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+}
+
+/* медиа на тёмном: белая заливка, чёрная надпись */
+#custom-cursor.theme-light.state-media .cursor-ring {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.95);
+}
+#custom-cursor.theme-light.state-media .cursor-label { color: #111; }
+
+
+/* ══════════════════════════════════════════════
+   Клик — мгновенное сжатие поверх текущего scale
+   ══════════════════════════════════════════════ */
+#custom-cursor.is-pressing {
+  transition: transform 0.12s ease;
+}
+
+
+/* ══════════════════════════════════════════════
+   Тач-устройства
+   ══════════════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+  #custom-cursor { display: none !important; }
+  *, *::before, *::after { cursor: auto !important; }
+}

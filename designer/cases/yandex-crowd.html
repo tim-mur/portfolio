@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Яндекс Крауд — Кейс</title>
+  <link rel="stylesheet" href="/src/css/cursor.css">
+  <link rel="stylesheet" href="/src/css/cases/yandex-crowd.css">
+  <link rel="preload" as="image" href="/src/assets/images/yandex-crowd/yandex-crowd_logo.png">
+  <link rel="preload" as="image" href="/src/assets/images/yandex-crowd/yandex-crowd_first-adaptive.png">
+  <link rel="preload" as="image" href="/src/assets/images/yandex-crowd/yandex-crowd_second-adaptive.png">
+  <link rel="preload" as="image" href="/src/assets/images/yandex-crowd/yandex-crowd_third-adaptive.png">
+</head>
+<body>
+
+<div class="page-content">
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero" id="screen-1">
+    <div class="glitch-wrap" id="glitch-wrap">
+      <div class="glitch-layer cyan"    id="layer-cyan"    data-ru="ЯНДЕКС КРАУД" data-en="YANDEX CROWD">ЯНДЕКС КРАУД</div>
+      <div class="glitch-layer magenta" id="layer-magenta" data-ru="ЯНДЕКС КРАУД" data-en="YANDEX CROWD">ЯНДЕКС КРАУД</div>
+      <h1 class="glitch-title" id="glitch-title"           data-ru="ЯНДЕКС КРАУД" data-en="YANDEX CROWD">ЯНДЕКС КРАУД</h1>
+    </div>
+  </section>
+
+  <!-- ══════════ О ПРОЕКТЕ ══════════ -->
+  <section class="about-screen" id="screen-about">
+    <div class="about-label s-label" data-ru="О&nbsp;проекте" data-en="About">О&nbsp;проекте</div>
+
+    <div class="about-texts">
+      <p id="about-p1"></p>
+      <p id="about-p2"></p>
+    </div>
+
+    <div class="about-cta">
+      <a class="cta-btn" id="about-cta-btn" href="https://t.me/povarrov" target="_blank" rel="noopener"
+         data-text="[ СВЯЗАТЬСЯ ]"
+         data-ru="[ СВЯЗАТЬСЯ ]"
+         data-en="[ CONTACT ]">[ СВЯЗАТЬСЯ ]</a>
+    </div>
+
+    <div class="about-mockup">
+      <img src="/src/assets/images/yandex-crowd/yandex-crowd_logo.png" alt="Yandex Crowd logo">
+    </div>
+  </section>
+
+  <!-- ══════════ ИССЛЕДОВАНИЕ И БЕНЧМАРКИНГ ══════════ -->
+  <section class="split-screen" id="screen-research">
+    <h2 class="split-label s-label" data-ru="Исследование&nbsp;и&nbsp;бенчмаркинг" data-en="Research&nbsp;&amp;&nbsp;benchmarking">Исследование&nbsp;и&nbsp;бенчмаркинг</h2>
+    <div class="split-text">
+      <p id="research-p1"></p>
+    </div>
+  </section>
+
+  <!-- ══════════ ПРОЕКТИРОВАНИЕ + UI + ВАЙРФРЕЙМИНГ-ВИДЕО ══════════ -->
+  <section class="flow-ui-section" id="screen-flow-ui">
+    <div class="flow-ui-grid">
+      <div class="flow-ui-col">
+        <h2 class="flow-ui-label s-label" data-ru="Проектирование" data-en="Structure">Проектирование</h2>
+        <p id="scenario-text" class="flow-ui-text"></p>
+      </div>
+      <div class="flow-ui-col">
+        <h2 class="flow-ui-label s-label" data-ru="UI-концепция" data-en="UI concept">UI-концепция</h2>
+        <p id="ui-p1" class="flow-ui-text"></p>
+      </div>
+    </div>
+
+    <div class="flow-ui-video-block">
+      <p class="flow-ui-caption"
+         data-ru="Вайрфрейминг"
+         data-en="Wireframing">Вайрфрейминг</p>
+      <div class="flow-ui-media" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
+        <video src="/src/assets/video/yandex-crowd_prototype.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ МОУШН И ПРЕЗЕНТАЦИЯ ══════════ -->
+  <section class="motion-section" id="screen-motion">
+    <div class="motion-header">
+      <h2 class="motion-label s-label" data-ru="Моушн&nbsp;и&nbsp;презентация" data-en="Motion&nbsp;&amp;&nbsp;presentation">Моушн&nbsp;и&nbsp;презентация</h2>
+      <p id="motion-text" class="motion-text"></p>
+    </div>
+
+    <div class="motion-video-wrap" data-cursor="media" data-cursor-label="СМОТРЕТЬ">
+      <video src="/src/assets/video/yandex-crowd_result.mp4" autoplay loop muted playsinline></video>
+    </div>
+  </section>
+
+  <!-- ══════════ АДАПТИВНЫЕ МАКЕТЫ — айфон + слайдшоу ══════════ -->
+  <section class="adaptive-section" id="screen-adaptive">
+    <div class="adaptive-left">
+      <h2 class="adaptive-label s-label" data-ru="Адаптивные&nbsp;макеты" data-en="Adaptive&nbsp;layouts">Адаптивные&nbsp;макеты</h2>
+      <p class="adaptive-desc" id="adaptive-text"></p>
+    </div>
+
+    <div class="adaptive-right">
+
+      <!-- SVG-рамка айфона с видео через foreignObject — точное совпадение без пересчётов -->
+      <div class="iphone-frame">
+        <svg class="iphone-svg" viewBox="0 0 320 650" xmlns="http://www.w3.org/2000/svg">
+          <!-- Видео прямо в SVG — точно в экранной зоне -->
+          <foreignObject x="14" y="14" width="292" height="622">
+            <video
+              xmlns="http://www.w3.org/1999/xhtml"
+              id="iphone-video"
+              src="/src/assets/video/yandex-crowd_adaptive.mp4"
+              autoplay loop muted playsinline
+              style="width:100%;height:100%;object-fit:cover;display:block;border-radius:36px;"
+            ></video>
+          </foreignObject>
+          <!-- Корпус поверх (z выше foreignObject) -->
+          <rect x="0" y="0" width="320" height="650" rx="48"
+                fill="none" stroke="#3a3a3a" stroke-width="3"/>
+          <!-- Внешний корпус — две дуги: тёмная рамка -->
+          <path d="M48,0 H272 Q320,0 320,48 V602 Q320,650 272,650 H48 Q0,650 0,602 V48 Q0,0 48,0 Z"
+                fill="none" stroke="#2a2a2a" stroke-width="14"/>
+          <!-- Маска-оверлей: закрашивает всё ЗА экраном, экран оставляет прозрачным -->
+          <path fill-rule="evenodd" d="
+            M48,0 H272 Q320,0 320,48 V602 Q320,650 272,650 H48 Q0,650 0,602 V48 Q0,0 48,0 Z
+            M50,14 H270 Q306,14 306,50 V600 Q306,636 270,636 H50 Q14,636 14,600 V50 Q14,14 50,14 Z
+          " fill="#1a1a1a"/>
+          <!-- Dynamic Island -->
+          <rect x="118" y="22" width="84" height="30" rx="15" fill="#1a1a1a"/>
+          <!-- Кнопка power справа -->
+          <rect x="317" y="180" width="5" height="80" rx="2.5" fill="#2a2a2a"/>
+          <!-- Кнопки громкости слева -->
+          <rect x="-2" y="150" width="5" height="55" rx="2.5" fill="#2a2a2a"/>
+          <rect x="-2" y="218" width="5" height="55" rx="2.5" fill="#2a2a2a"/>
+          <!-- Home indicator -->
+          <rect x="120" y="628" width="80" height="5" rx="2.5" fill="#3a3a3a"/>
+        </svg>
+      </div>
+
+      <!-- только модель телефона с видео -->
+    </div>
+  </section>
+
+  <!-- ══════════ МЕТРИКИ + РЕЗУЛЬТАТ ══════════ -->
+  <section class="combined-screen" id="screen-metrics-result">
+    <div class="combined-row">
+      <h2 class="split-label s-label" data-ru="Метрики&nbsp;успеха" data-en="Metrics">Метрики&nbsp;успеха</h2>
+      <div class="split-text">
+        <p id="metrics-text"></p>
+      </div>
+    </div>
+    <div class="combined-row">
+      <h2 class="split-label s-label" data-ru="Результат" data-en="Result">Результат</h2>
+      <div class="split-text">
+        <p id="result-text"></p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.page-content -->
+
+<div class="footer-space" id="footer-space"></div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer" id="footer">
+  <div class="footer__inner" id="footer-inner">
+    <p class="footer__quote"
+       data-ru="&ldquo;ДИЗАЙН ДИЗАЙНОМ, ЗАТО Я ЧЕЛОВЕК ХОРОШИЙ&rdquo;"
+       data-en="&ldquo;DESIGN IS DESIGN, BUT I&rsquo;M A GOOD PERSON&rdquo;">
+      &ldquo;ДИЗАЙН ДИЗАЙНОМ,<br>ЗАТО Я ЧЕЛОВЕК ХОРОШИЙ&rdquo;
+    </p>
+    <div class="footer__social" id="footer-social">
+      <a class="footer__icon" href="#" title="Telegram">
+        <img src="/src/assets/icons/telegram.svg" alt="Telegram">
+      </a>
+      <div class="footer__line"></div>
+      <a class="footer__icon" href="#" title="Threads">
+        <img src="/src/assets/icons/threads.svg" alt="Threads">
+      </a>
+      <div class="footer__line"></div>
+      <a class="footer__icon" href="#" title="Instagram">
+        <img src="/src/assets/icons/instagram.svg" alt="Instagram">
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ BACK BUTTON ══════════ -->
+<a class="back-btn" href="/designer/index.html" id="back-btn"
+   data-ru="назад к списку кейсов"
+   data-en="back to case list">
+  назад к списку кейсов
+  <svg class="px-arrow" width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 9V12L24 12V9L0 9ZM18 12V15H21V12H18ZM15 15V18H18V15H15ZM12 18L12 21H15L15 18H12ZM18 9V6H21V9H18Z" fill="currentColor"/>
+    <path d="M15 15V3H18V15H15ZM12 18V0L15 0V18H12Z" fill="currentColor"/>
+  </svg>
+</a>
+
+<script type="module" src="/src/js/cases/yandex-crowd.js"></script>
+
+</body>
+</html>
