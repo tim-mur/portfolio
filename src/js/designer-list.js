@@ -1,5 +1,4 @@
 (function () {
-  // ── Глобальные переменные параллакса ──────────────────────
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var N = slides.length;
   var progress = 0, target = 0, rafId = null, snapTimer = null, snapping = false;
@@ -11,7 +10,7 @@
     function apply(p) {
       slides.forEach(function (el, i) {
         var ty;
-        if (i === 0) { ty = -Math.min(p, 1) * PARALLAX * 100; } 
+        if (i === 0) ty = -Math.min(p, 1) * PARALLAX * 100;
         else {
           var entry = p - (i - 1);
           if (entry <= 0) ty = 100;
@@ -25,9 +24,7 @@
     function tick() {
       var speed = snapping ? SNAP_LERP : LERP;
       var diff = target - progress;
-      if (Math.abs(diff) < 0.0003) {
-        progress = target; apply(progress); rafId = null; return;
-      }
+      if (Math.abs(diff) < 0.0003) { progress = target; apply(progress); rafId = null; return; }
       progress += diff * speed;
       apply(progress);
       rafId = requestAnimationFrame(tick);
@@ -47,6 +44,7 @@
     }
 
     window.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaY) < 1) return;
       e.preventDefault(); snapping = false; clearTimeout(snapTimer);
       var dy = e.deltaY;
       if (e.deltaMode === 1) dy *= 32;
@@ -56,7 +54,6 @@
       run(); scheduleSnap();
     }, { passive: false });
 
-    // Touch events
     var touchY = null;
     window.addEventListener('touchstart', function (e) { touchY = e.touches[0].clientY; snapping = false; }, { passive: true });
     window.addEventListener('touchmove', function (e) {
@@ -69,30 +66,28 @@
     apply(0);
   }
 
-  // ── Синхронизация размеров ────────────────────────────────
-  function syncCardHeights() {
-    if (window.innerWidth <= 1024) return; // На мобильных используем авто-высоту
+  function syncLayout() {
+    if (window.innerWidth <= 1024) return;
     var cards = document.querySelectorAll('.case-card');
     cards.forEach(function (card) {
       var media = card.querySelector('.case-media');
       var left = card.querySelector('.case-left');
-      if (!media || !left) return;
-      var h = media.offsetHeight;
-      if (h > 0) left.style.height = h + 'px';
+      if (media && left) {
+        var h = media.offsetHeight;
+        if (h > 0) left.style.height = h + 'px';
+      }
     });
   }
 
-  // ── i18n: перевод ─────────────────────────────────────────
   function applyLangToCards(lang) {
     var els = document.querySelectorAll('[data-ru][data-en]');
     for (var i = 0; i < els.length; i++) {
       var val = els[i].getAttribute('data-' + lang);
       if (val !== null) els[i].textContent = val;
     }
-    syncCardHeights();
+    syncLayout();
   }
 
-  // ── Инициализация ─────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     var _savedLang = localStorage.getItem('userLanguage') || 'ru';
     applyLangToCards(_savedLang);
@@ -101,40 +96,30 @@
     var btnEnFixed = document.getElementById('lang-en-fixed');
 
     function updateOverlayLang(lang) {
-      if (!btnRuFixed || !btnEnFixed) return; // Защита от ошибки ClassList
-      if (lang === 'ru') {
-        btnRuFixed.classList.add('active');
-        btnEnFixed.classList.remove('active');
-      } else {
-        btnEnFixed.classList.add('active');
-        btnRuFixed.classList.remove('active');
-      }
+      if (!btnRuFixed || !btnEnFixed) return;
+      btnRuFixed.classList.toggle('active', lang === 'ru');
+      btnEnFixed.classList.toggle('active', lang === 'en');
     }
     updateOverlayLang(_savedLang);
+
+    window.switchLang = function (lang) {
+      localStorage.setItem('userLanguage', lang);
+      if (typeof window.updatePhraseLang === 'function') window.updatePhraseLang(lang); 
+      applyLangToCards(lang);
+      updateOverlayLang(lang);
+    };
 
     if (btnRuFixed) btnRuFixed.addEventListener('click', function () { window.switchLang('ru'); });
     if (btnEnFixed) btnEnFixed.addEventListener('click', function () { window.switchLang('en'); });
 
-    // Связка с внешними скриптами
-    if (typeof window.switchLang === 'function') {
-      var _orig = window.switchLang;
-      window.switchLang = function (lang) {
-        localStorage.setItem('userLanguage', lang);
-        _orig(lang);
-        applyLangToCards(lang);
-        updateOverlayLang(lang);
-      };
-    }
-
-    // Навигация
     var btnP = document.getElementById('mode-photographer');
     if (btnP) {
       btnP.addEventListener('click', function () {
-        setTimeout(function () { window.location.href = '/portfolio/photographer/index.html?mode=photographer'; }, 300);
+        setTimeout(function () { window.location.href = 'photographer/index.html?mode=photographer'; }, 300);
       });
     }
   });
 
-  window.addEventListener('load', syncCardHeights);
-  window.addEventListener('resize', syncCardHeights);
+  window.addEventListener('load', syncLayout);
+  window.addEventListener('resize', syncLayout);
 }());
