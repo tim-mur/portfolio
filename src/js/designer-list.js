@@ -1,39 +1,22 @@
 (function () {
-  // ── Глобальные переменные и настройки ──────────────────────
+  // ── Глобальные переменные параллакса ──────────────────────
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var N = slides.length;
-  
-  var progress = 0;
-  var target = 0;
-  var rafId = null;
-  var snapTimer = null;
-  var snapping = false;
+  var progress = 0, target = 0, rafId = null, snapTimer = null, snapping = false;
+  var LERP = 0.11, SNAP_LERP = 0.09, PARALLAX = 0.35, THRESHOLD = 0.5;
 
-  var LERP = 0.11;
-  var SNAP_LERP = 0.09;
-  var PARALLAX = 0.35;
-  var THRESHOLD = 0.5;
-
-  // ── Параллакс и логика слайдов ────────────────────────────
   if (N >= 2) {
-    slides.forEach(function (el, i) {
-      el.style.zIndex = String(i + 1);
-    });
+    slides.forEach(function (el, i) { el.style.zIndex = String(i + 1); });
 
     function apply(p) {
       slides.forEach(function (el, i) {
         var ty;
-        if (i === 0) {
-          ty = -Math.min(p, 1) * PARALLAX * 100;
-        } else {
+        if (i === 0) { ty = -Math.min(p, 1) * PARALLAX * 100; } 
+        else {
           var entry = p - (i - 1);
-          if (entry <= 0) {
-            ty = 100;
-          } else if (entry <= 1) {
-            ty = (1 - entry) * 100;
-          } else {
-            ty = -Math.min(entry - 1, 1) * PARALLAX * 100;
-          }
+          if (entry <= 0) ty = 100;
+          else if (entry <= 1) ty = (1 - entry) * 100;
+          else ty = -Math.min(entry - 1, 1) * PARALLAX * 100;
         }
         el.style.transform = 'translateY(' + ty + '%)';
       });
@@ -43,19 +26,14 @@
       var speed = snapping ? SNAP_LERP : LERP;
       var diff = target - progress;
       if (Math.abs(diff) < 0.0003) {
-        progress = target;
-        apply(progress);
-        rafId = null;
-        return;
+        progress = target; apply(progress); rafId = null; return;
       }
       progress += diff * speed;
       apply(progress);
       rafId = requestAnimationFrame(tick);
     }
 
-    function run() {
-      if (!rafId) rafId = requestAnimationFrame(tick);
-    }
+    function run() { if (!rafId) rafId = requestAnimationFrame(tick); }
 
     function scheduleSnap() {
       clearTimeout(snapTimer);
@@ -69,127 +47,61 @@
     }
 
     window.addEventListener('wheel', function (e) {
-      e.preventDefault();
-      snapping = false;
-      clearTimeout(snapTimer);
+      e.preventDefault(); snapping = false; clearTimeout(snapTimer);
       var dy = e.deltaY;
       if (e.deltaMode === 1) dy *= 32;
       if (e.deltaMode === 2) dy *= 300;
       target += dy / window.innerHeight;
       target = Math.max(0, Math.min(N - 1, target));
-      run();
-      scheduleSnap();
+      run(); scheduleSnap();
     }, { passive: false });
 
+    // Touch events
     var touchY = null;
-    window.addEventListener('touchstart', function (e) {
-      touchY = e.touches[0].clientY;
-      snapping = false;
-      clearTimeout(snapTimer);
-    }, { passive: true });
-
+    window.addEventListener('touchstart', function (e) { touchY = e.touches[0].clientY; snapping = false; }, { passive: true });
     window.addEventListener('touchmove', function (e) {
-      if (touchY === null) return;
-      e.preventDefault();
-      var dy = touchY - e.touches[0].clientY;
-      touchY = e.touches[0].clientY;
-      target += dy / window.innerHeight;
-      target = Math.max(0, Math.min(N - 1, target));
-      run();
+      if (touchY === null) return; e.preventDefault();
+      var dy = touchY - e.touches[0].clientY; touchY = e.touches[0].clientY;
+      target += dy / window.innerHeight; target = Math.max(0, Math.min(N - 1, target)); run();
     }, { passive: false });
-
-    window.addEventListener('touchend', function () {
-      touchY = null;
-      scheduleSnap();
-    });
-
-    window.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-        e.preventDefault();
-        snapping = true;
-        target = Math.min(Math.round(progress) + 1, N - 1);
-        run();
-      }
-      if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault();
-        snapping = true;
-        target = Math.max(Math.round(progress) - 1, 0);
-        run();
-      }
-    });
+    window.addEventListener('touchend', function () { touchY = null; scheduleSnap(); });
 
     apply(0);
   }
 
   // ── Синхронизация размеров ────────────────────────────────
   function syncCardHeights() {
+    if (window.innerWidth <= 1024) return; // На мобильных используем авто-высоту
     var cards = document.querySelectorAll('.case-card');
     cards.forEach(function (card) {
       var media = card.querySelector('.case-media');
       var left = card.querySelector('.case-left');
       if (!media || !left) return;
-
-      function doSync() {
-        var h = media.offsetHeight;
-        if (h > 0) left.style.height = h + 'px';
-      }
-
-      if (media.tagName === 'VIDEO') {
-        if (media.readyState >= 1) doSync();
-        else media.addEventListener('loadedmetadata', doSync);
-      } else {
-        if (media.complete) doSync();
-        else media.addEventListener('load', doSync);
-      }
+      var h = media.offsetHeight;
+      if (h > 0) left.style.height = h + 'px';
     });
   }
 
-  function syncCategoriesWidth() {
-    var cards = document.querySelectorAll('.case-card');
-    cards.forEach(function (card) {
-      var title = card.querySelector('.case-title');
-      var cats = card.querySelector('.case-cats');
-      if (!title || !cats) return;
-      var w = title.offsetWidth;
-      if (w > 0) cats.style.width = w + 'px';
-    });
-  }
-
-  window.addEventListener('load', function() {
-    syncCardHeights();
-    syncCategoriesWidth();
-  });
-  window.addEventListener('resize', function() {
-    syncCardHeights();
-    syncCategoriesWidth();
-  });
-
-  // ── i18n: перевод карточек ────────────────────────────
+  // ── i18n: перевод ─────────────────────────────────────────
   function applyLangToCards(lang) {
     var els = document.querySelectorAll('[data-ru][data-en]');
     for (var i = 0; i < els.length; i++) {
       var val = els[i].getAttribute('data-' + lang);
-      if (val !== null) {
-        els[i].textContent = val;
-      }
+      if (val !== null) els[i].textContent = val;
     }
     syncCardHeights();
-    syncCategoriesWidth();
   }
 
-  // ── Инициализация после загрузки DOM ──────────────────────
+  // ── Инициализация ─────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     var _savedLang = localStorage.getItem('userLanguage') || 'ru';
-    
-    // Применяем язык сразу
     applyLangToCards(_savedLang);
 
-    // Логика фиксированного переключателя
     var btnRuFixed = document.getElementById('lang-ru-fixed');
     var btnEnFixed = document.getElementById('lang-en-fixed');
 
     function updateOverlayLang(lang) {
-      if (!btnRuFixed || !btnEnFixed) return; // Защита от null
+      if (!btnRuFixed || !btnEnFixed) return; // Защита от ошибки ClassList
       if (lang === 'ru') {
         btnRuFixed.classList.add('active');
         btnEnFixed.classList.remove('active');
@@ -198,22 +110,12 @@
         btnRuFixed.classList.remove('active');
       }
     }
-
     updateOverlayLang(_savedLang);
 
-    if (btnRuFixed) {
-      btnRuFixed.addEventListener('click', function () {
-        if (typeof window.switchLang === 'function') window.switchLang('ru');
-      });
-    }
+    if (btnRuFixed) btnRuFixed.addEventListener('click', function () { window.switchLang('ru'); });
+    if (btnEnFixed) btnEnFixed.addEventListener('click', function () { window.switchLang('en'); });
 
-    if (btnEnFixed) {
-      btnEnFixed.addEventListener('click', function () {
-        if (typeof window.switchLang === 'function') window.switchLang('en');
-      });
-    }
-
-    // Перехватываем функцию смены языка из phrase.js
+    // Связка с внешними скриптами
     if (typeof window.switchLang === 'function') {
       var _orig = window.switchLang;
       window.switchLang = function (lang) {
@@ -228,12 +130,11 @@
     var btnP = document.getElementById('mode-photographer');
     if (btnP) {
       btnP.addEventListener('click', function () {
-        setTimeout(function () {
-          // Здесь путь тоже без ../ благодаря <base>
-          window.location.href = 'photographer/index.html?mode=photographer';
-        }, 300);
+        setTimeout(function () { window.location.href = '/portfolio/photographer/index.html?mode=photographer'; }, 300);
       });
     }
   });
 
+  window.addEventListener('load', syncCardHeights);
+  window.addEventListener('resize', syncCardHeights);
 }());
