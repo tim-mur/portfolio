@@ -9,20 +9,14 @@
   --bg: #111111;
   --accent: #E50136;
   --text: #FEFAF7;
-  --font-main: 'Helvetica', Arial, sans-serif;
   --font-pixel: 'Pixeloid Sans', sans-serif;
 }
 
-* { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-main);
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -36,11 +30,9 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: clamp(30px, 6vh, 60px);
-  width: 100%;
+  gap: clamp(40px, 8vh, 80px);
 }
 
-/* 404 Glitch */
 .glitch-wrap {
   position: relative;
   line-height: 0.8;
@@ -48,10 +40,8 @@ body {
 
 .glitch-title, .glitch-layer {
   font-family: var(--font-pixel);
-  font-size: clamp(100px, 22vw, 324px);
-  text-transform: uppercase; /* 1. UPPERCASE */
-  user-select: none;
-  white-space: nowrap;
+  font-size: clamp(120px, 25vw, 324px);
+  text-transform: uppercase;
 }
 
 .glitch-title {
@@ -72,22 +62,23 @@ body {
 .glitch-layer.cyan { color: #00ffff; }
 .glitch-layer.magenta { color: #ff00ff; }
 
-/* Текст «страница не найдена» */
+/* Текст 64px и UPPERCASE */
 .error-message {
   color: var(--accent);
-  text-transform: uppercase; /* 1. UPPERCASE */
+  font-family: Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
   font-weight: 700;
   letter-spacing: -0.05em;
   white-space: nowrap;
-  font-size: clamp(18px, 4.2vw, 48px);
+  font-size: clamp(24px, 5vw, 64px); 
 }
 
-/* 3. Кнопка по центру */
+/* Кнопка строго по центру */
 .back-btn {
   position: fixed;
-  bottom: 40px;
+  bottom: 60px;
   left: 50%;
-  transform: translateX(-50%); /* Центрирование */
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -95,30 +86,28 @@ body {
   color: var(--text);
   font-family: var(--font-pixel);
   font-size: 18px;
-  text-transform: uppercase; /* 1. UPPERCASE */
-  transition: opacity 0.3s ease;
+  text-transform: uppercase;
   z-index: 100;
   white-space: nowrap;
 }
 
-/* 4. При наведении не меняем цвет */
+/* Цвет при наведении не меняется */
 .back-btn:hover {
   color: var(--text);
 }
 
 .px-arrow {
+  width: 24px;
+  height: 24px;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  flex-shrink: 0;
 }
 
-/* 4. Только анимация стрелки */
+/* Анимация только для стрелки */
 .back-btn:hover .px-arrow {
-  transform: translateX(-8px);
+  transform: translateX(-10px);
 }
 
-@media (max-width: 600px) {
-  .back-btn {
-    font-size: 14px;
-    bottom: 30px;
-  }
+@media (max-width: 768px) {
+  .back-btn { font-size: 14px; bottom: 40px; }
+  .error-message { font-size: clamp(18px, 4vw, 32px); }
 }
