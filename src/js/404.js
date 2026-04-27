@@ -1,46 +1,69 @@
-import './cursor.js';
+/**
+ * Скрипт для страницы 404
+ */
 
-const layerC = document.getElementById('layer-cyan');
-const layerM = document.getElementById('layer-magenta');
-
-const ri = (a, b) => Math.floor(Math.random() * (b - a)) + a;
-const rf = (a, b) => Math.random() * (b - a) + a;
-
-// Реакция на движение мыши
-window.addEventListener('mousemove', (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 35;
-  const y = (e.clientY / window.innerHeight - 0.5) * 35;
-  if (layerC) layerC.style.transform = `translate(${x}px, ${y}px)`;
-  if (layerM) layerM.style.transform = `translate(${-x}px, ${-y}px)`;
+document.addEventListener('DOMContentLoaded', () => {
+    initBackNavigation();
+    initGlitchEffect();
+    // Если у тебя на сайте есть глобальный переключатель языка, 
+    // можно вызвать функцию обновления текстов здесь
 });
 
-// "Ломаный" глитч через clip-path
-function triggerGlitch() {
-  const duration = ri(50, 150);
-  const clip = `inset(${ri(0, 70)}% 0 ${ri(0, 70)}% 0)`;
-  
-  [layerC, layerM].forEach(l => {
-    if (l) {
-      l.style.clipPath = clip;
-      l.style.opacity = '1';
-    }
-  });
+/**
+ * Логика навигации назад
+ * Проверяет referrer: если пользователь пришел изнутри сайта — возвращает назад,
+ * если зашел по прямой ссылке — отправляет на главную.
+ */
+function initBackNavigation() {
+    const backBtn = document.getElementById('back-btn');
+    if (!backBtn) return;
 
-  setTimeout(() => {
-    [layerC, layerM].forEach(l => {
-      if (l) {
-        l.style.clipPath = 'none';
-        l.style.opacity = '0.8';
-      }
-    });
-    setTimeout(triggerGlitch, ri(2000, 5000));
-  }, duration);
+    const referrer = document.referrer;
+    const currentHost = window.location.hostname;
+
+    // Проверка: пришел ли пользователь с твоего же домена
+    if (referrer && referrer.includes(currentHost)) {
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Используем location.href вместо history.back для надежности в новых вкладках
+            window.location.href = referrer;
+        });
+    } else {
+        // Если зашли "извне", кнопка просто сработает как ссылка на index.html
+        backBtn.setAttribute('href', '/portfolio/index.html');
+    }
 }
 
-// Постоянная микро-вибрация
-setInterval(() => {
-  if (layerC) layerC.style.marginLeft = `${rf(-1, 1)}px`;
-  if (layerM) layerM.style.marginTop = `${rf(-1, 1)}px`;
-}, 70);
+/**
+ * Дополнительная микро-анимация глитча (по желанию)
+ * Можно добавить рандомные скачки слоев через JS для большей "битости"
+ */
+function initGlitchEffect() {
+    const layers = document.querySelectorAll('.glitch-layer');
+    
+    if (layers.length > 0) {
+        setInterval(() => {
+            layers.forEach(layer => {
+                // Шанс 10% что слой дернется
+                if (Math.random() > 0.9) {
+                    const x = (Math.random() * 4 - 2) + 'px';
+                    const y = (Math.random() * 2 - 1) + 'px';
+                    layer.style.transform = `translate(${x}, ${y})`;
+                } else {
+                    layer.style.transform = 'translate(0, 0)';
+                }
+            });
+        }, 150);
+    }
+}
 
-triggerGlitch();
+/**
+ * Функция для смены языка (если планируешь использовать)
+ * Ищет элементы с data-ru / data-en и меняет textContent
+ */
+export function updateLanguage(lang = 'ru') {
+    const elements = document.querySelectorAll('[data-' + lang + ']');
+    elements.forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+    });
+}
