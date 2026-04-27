@@ -1,6 +1,5 @@
 @font-face {
   font-family: 'Pixeloid Sans';
-  /* Путь из папки css в папку fonts через выход на уровень выше */
   src: url('../assets/fonts/PixeloidSans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -8,7 +7,7 @@
 
 :root {
   --bg: #111111;
-  --accent: #E50136; /* Тот самый красный */
+  --accent: #E50136;
   --text: #FEFAF7;
   --font-main: 'Helvetica', Arial, sans-serif;
   --font-pixel: 'Pixeloid Sans', sans-serif;
@@ -32,16 +31,13 @@ body {
   justify-content: center;
 }
 
-/* Контейнер для центрального блока */
 .error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  /* Динамический отступ между 404 и подписью */
-  gap: clamp(30px, 6vh, 60px); 
+  gap: clamp(30px, 6vh, 60px);
   width: 100%;
-  padding: 0 20px;
 }
 
 /* 404 Glitch */
@@ -52,9 +48,8 @@ body {
 
 .glitch-title, .glitch-layer {
   font-family: var(--font-pixel);
-  /* Размер 324px на десктопе, уменьшается на мобильных */
   font-size: clamp(100px, 22vw, 324px);
-  text-transform: uppercase;
+  text-transform: uppercase; /* 1. UPPERCASE */
   user-select: none;
   white-space: nowrap;
 }
@@ -80,68 +75,50 @@ body {
 /* Текст «страница не найдена» */
 .error-message {
   color: var(--accent);
-  text-transform: lowercase;
-  font-weight: 700; /* Жирный */
-  letter-spacing: -0.05em; /* Плотное межбуквенное расстояние */
+  text-transform: uppercase; /* 1. UPPERCASE */
+  font-weight: 700;
+  letter-spacing: -0.05em;
   white-space: nowrap;
   font-size: clamp(18px, 4.2vw, 48px);
 }
 
-/* Кнопка "назад" — копия из Профиматики с пиксельным шрифтом */
+/* 3. Кнопка по центру */
 .back-btn {
   position: fixed;
   bottom: 40px;
-  left: clamp(20px, 5vw, 72px);
+  left: 50%;
+  transform: translateX(-50%); /* Центрирование */
   display: flex;
   align-items: center;
   gap: 16px;
   text-decoration: none;
   color: var(--text);
-  
-  /* Пиксельный шрифт для кнопки */
-  font-family: var(--font-pixel); 
+  font-family: var(--font-pixel);
   font-size: 18px;
-  
-  text-transform: lowercase;
-  /* Плавная кривая Безье как в оригинале */
-  transition: color 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  text-transform: uppercase; /* 1. UPPERCASE */
+  transition: opacity 0.3s ease;
   z-index: 100;
+  white-space: nowrap;
 }
 
+/* 4. При наведении не меняем цвет */
 .back-btn:hover {
-  color: var(--accent);
+  color: var(--text);
 }
 
 .px-arrow {
-  /* Анимация стрелки */
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   flex-shrink: 0;
 }
 
-/* При ховере стрелка уходит влево */
+/* 4. Только анимация стрелки */
 .back-btn:hover .px-arrow {
   transform: translateX(-8px);
 }
 
-/* Адаптив для мобильных устройств */
 @media (max-width: 600px) {
   .back-btn {
-    left: 50%;
-    transform: translateX(-50%); /* Центрируем кнопку */
+    font-size: 14px;
     bottom: 30px;
-    font-size: 16px;
-  }
-  .error-container { 
-    padding-bottom: 60px; 
-  }
-}
-
-/* Адаптив для горизонтальных экранов с малой высотой */
-@media (max-height: 450px) {
-  .error-container {
-    gap: 15px;
-  }
-  .glitch-title, .glitch-layer {
-    font-size: 120px;
   }
 }
