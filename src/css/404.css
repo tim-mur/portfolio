@@ -1,6 +1,5 @@
 @font-face {
   font-family: 'Pixeloid Sans';
-  /* Путь от корня до шрифтов */
   src: url('/portfolio/src/assets/fonts/PixeloidSans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -8,7 +7,7 @@
 
 :root {
   --bg: #111111;
-  --accent: #E50136;
+  --accent: #E50136; /* Ваш красный цвет */
   --text: #FEFAF7;
   --font-main: 'Helvetica', Arial, sans-serif;
   --font-pixel: 'Pixeloid Sans', sans-serif;
@@ -21,67 +20,91 @@ body {
   color: var(--text);
   font-family: var(--font-main);
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.error-page {
+.error-container {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  /* Отступ между 404 и текстом */
+  gap: 60px; 
 }
 
-.glitch-wrap { position: relative; display: inline-block; }
+/* Глитч 404 */
+.glitch-wrap {
+  position: relative;
+  display: inline-block;
+}
 
 .glitch-title, .glitch-layer {
   font-family: var(--font-pixel);
-  font-size: 512px;
-  line-height: 0.9;
+  font-size: 324px; /* Поменьше, как просили */
+  line-height: 0.8;
   text-transform: uppercase;
   user-select: none;
+}
+
+.glitch-title {
+  position: relative;
+  color: var(--accent); /* Красный 404 */
+  z-index: 2;
 }
 
 .glitch-layer {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  opacity: 0.7;
-  mix-blend-mode: screen;
-  pointer-events: none;
+  opacity: 0.8;
+  z-index: 1;
 }
 
-.glitch-layer.cyan { color: #00ffff; z-index: -1; }
-.glitch-layer.magenta { color: var(--accent); z-index: -2; }
+.glitch-layer.cyan { color: #00ffff; mix-blend-mode: screen; }
+.glitch-layer.magenta { color: #ff00ff; mix-blend-mode: screen; }
 
 .error-message {
   font-size: 48px;
+  color: var(--accent); /* Красный текст */
   text-transform: lowercase;
-  margin-top: -40px;
+  letter-spacing: -0.02em;
 }
 
+/* Кнопка "назад" — копия из Профиматики */
 .back-btn {
   position: fixed;
   bottom: 40px;
   left: 40px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   text-decoration: none;
   color: var(--text);
   font-size: 18px;
+  font-family: var(--font-main);
   text-transform: lowercase;
-  transition: color 0.3s ease;
+  transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 100;
 }
 
-.back-btn:hover { color: var(--accent); }
-.px-arrow { transition: transform 0.3s ease; }
-.back-btn:hover .px-arrow { transform: translateX(-5px); }
+.back-btn:hover {
+  color: var(--accent);
+}
+
+.px-arrow {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.back-btn:hover .px-arrow {
+  transform: translateX(-8px); /* Анимация стрелки влево */
+}
 
 @media (max-width: 768px) {
-  .glitch-title, .glitch-layer { font-size: 150px; }
-  .error-message { font-size: 24px; }
+  .glitch-title, .glitch-layer { font-size: 120px; }
+  .error-message { font-size: 20px; }
+  .error-container { gap: 20px; }
 }
