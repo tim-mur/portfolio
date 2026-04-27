@@ -13,7 +13,11 @@
   --font-pixel: 'Pixeloid Sans', sans-serif;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
 
 body {
   background-color: var(--bg);
@@ -32,26 +36,30 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 60px; /* Отступ между 404 и текстом */
+  /* Гибкий отступ: 60px на десктопе, уменьшается на мобилках */
+  gap: clamp(20px, 5vh, 60px); 
+  width: 90%;
 }
 
 /* 404 Glitch */
 .glitch-wrap {
   position: relative;
   display: inline-block;
+  line-height: 0.8;
 }
 
 .glitch-title, .glitch-layer {
   font-family: var(--font-pixel);
-  font-size: 324px; /* Ровно 324px */
-  line-height: 0.8;
+  /* На десктопе 324px, на маленьких экранах подстраивается под ширину */
+  font-size: clamp(80px, 25vw, 324px); 
   text-transform: uppercase;
   user-select: none;
+  white-space: nowrap;
 }
 
 .glitch-title {
   position: relative;
-  color: var(--accent); /* Красный 404 */
+  color: var(--accent);
   z-index: 2;
 }
 
@@ -69,14 +77,16 @@ body {
 
 /* Текст под 404 */
 .error-message {
-  font-size: 48px;
   color: var(--accent);
   text-transform: lowercase;
-  font-weight: 700; /* Жирнее */
-  letter-spacing: -0.05em; /* Уплотненное межбуквенное расстояние */
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  white-space: nowrap; /* Запрещаем перенос строки */
+  /* На десктопе 48px, на мобилках плавно уменьшается */
+  font-size: clamp(16px, 4.5vw, 48px);
 }
 
-/* Кнопка — копия из Профиматики */
+/* Кнопка "назад" */
 .back-btn {
   position: fixed;
   bottom: 40px;
@@ -89,9 +99,9 @@ body {
   font-size: 18px;
   font-family: var(--font-main);
   text-transform: lowercase;
-  /* Плавный переход цвета как в оригинале */
   transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 100;
+  white-space: nowrap;
 }
 
 .back-btn:hover {
@@ -100,15 +110,37 @@ body {
 
 .px-arrow {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0; /* Чтобы стрелка не сжималась */
 }
 
-/* Анимация стрелки влево при ховере */
 .back-btn:hover .px-arrow {
   transform: translateX(-8px);
 }
 
-@media (max-width: 768px) {
-  .glitch-title, .glitch-layer { font-size: 120px; }
-  .error-message { font-size: 20px; }
-  .error-container { gap: 20px; }
+/* Адаптив для маленьких экранов (телефоны) */
+@media (max-width: 600px) {
+  .back-btn {
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%); /* Центрируем кнопку на мобилке */
+    font-size: 16px;
+    gap: 12px;
+  }
+  
+  .error-container {
+    padding-bottom: 80px; /* Чтобы текст не перекрывал кнопку */
+  }
+}
+
+/* Адаптив для низких экранов (горизонтальная ориентация телефона) */
+@media (max-height: 500px) {
+  .glitch-title, .glitch-layer {
+    font-size: 120px;
+  }
+  .error-container {
+    gap: 10px;
+  }
+  .back-btn {
+    bottom: 15px;
+  }
 }
