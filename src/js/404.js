@@ -1,69 +1,41 @@
-/**
- * Скрипт для страницы 404
- */
+(function() {
+    document.addEventListener('DOMContentLoaded', () => {
+        const backBtn = document.getElementById('back-btn');
+        if (!backBtn) {
+            console.error('Кнопка с id="back-btn" не найдена!');
+            return;
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initBackNavigation();
-    initGlitchEffect();
-    // Если у тебя на сайте есть глобальный переключатель языка, 
-    // можно вызвать функцию обновления текстов здесь
-});
+        const referrer = document.referrer;
+        const currentHost = window.location.hostname;
 
-/**
- * Логика навигации назад
- * Проверяет referrer: если пользователь пришел изнутри сайта — возвращает назад,
- * если зашел по прямой ссылке — отправляет на главную.
- */
-function initBackNavigation() {
-    const backBtn = document.getElementById('back-btn');
-    if (!backBtn) return;
+        // Отладочный лог — посмотри его в консоли (F12)
+        console.log('Referrer:', referrer);
 
-    const referrer = document.referrer;
-    const currentHost = window.location.hostname;
-
-    // Проверка: пришел ли пользователь с твоего же домена
-    if (referrer && referrer.includes(currentHost)) {
-        backBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Используем location.href вместо history.back для надежности в новых вкладках
-            window.location.href = referrer;
-        });
-    } else {
-        // Если зашли "извне", кнопка просто сработает как ссылка на index.html
-        backBtn.setAttribute('href', '/portfolio/index.html');
-    }
-}
-
-/**
- * Дополнительная микро-анимация глитча (по желанию)
- * Можно добавить рандомные скачки слоев через JS для большей "битости"
- */
-function initGlitchEffect() {
-    const layers = document.querySelectorAll('.glitch-layer');
-    
-    if (layers.length > 0) {
-        setInterval(() => {
-            layers.forEach(layer => {
-                // Шанс 10% что слой дернется
-                if (Math.random() > 0.9) {
-                    const x = (Math.random() * 4 - 2) + 'px';
-                    const y = (Math.random() * 2 - 1) + 'px';
-                    layer.style.transform = `translate(${x}, ${y})`;
-                } else {
-                    layer.style.transform = 'translate(0, 0)';
-                }
+        // Если есть referrer и он ведет с твоего сайта
+        if (referrer && referrer.indexOf(currentHost) !== -1) {
+            backBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = referrer;
             });
-        }, 150);
-    }
-}
+        } else {
+            // Если зашли напрямую или извне — просто ставим ссылку на главную
+            backBtn.href = '/portfolio/index.html';
+        }
 
-/**
- * Функция для смены языка (если планируешь использовать)
- * Ищет элементы с data-ru / data-en и меняет textContent
- */
-export function updateLanguage(lang = 'ru') {
-    const elements = document.querySelectorAll('[data-' + lang + ']');
-    elements.forEach(el => {
-        el.textContent = el.getAttribute('data-' + lang);
+        // Минимальный глитч-эффект для слоев
+        const layers = document.querySelectorAll('.glitch-layer');
+        if (layers.length > 0) {
+            setInterval(() => {
+                layers.forEach(layer => {
+                    if (Math.random() > 0.95) {
+                        const x = (Math.random() * 4 - 2) + 'px';
+                        layer.style.transform = `translate(${x}, 0)`;
+                    } else {
+                        layer.style.transform = 'translate(0, 0)';
+                    }
+                });
+            }, 100);
+        }
     });
-}
+})();
