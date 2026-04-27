@@ -1,15 +1,16 @@
 @font-face {
-  font-family: 'Pixeloid Sans';
-  src: url('../assets/fonts/PixeloidSans.ttf') format('truetype');
+  font-family: 'PixeloidSans';
+  src: url('../../assets/fonts/PixeloidSans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 :root {
   --bg: #111111;
   --accent: #E50136;
   --text: #FEFAF7;
-  --font-pixel: 'Pixeloid Sans', sans-serif;
+  --font: Helvetica, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,6 +18,7 @@
 body {
   background-color: var(--bg);
   color: var(--text);
+  font-family: var(--font);
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -30,18 +32,20 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: clamp(40px, 8vh, 80px);
+  gap: 24px;
 }
 
+/* Теперь заголовок 404 имеет размер 64px */
 .glitch-wrap {
   position: relative;
-  line-height: 0.8;
+  line-height: 1;
 }
 
 .glitch-title, .glitch-layer {
-  font-family: var(--font-pixel);
-  font-size: clamp(120px, 25vw, 324px);
+  font-family: 'PixeloidSans', monospace;
+  font-size: 64px; 
   text-transform: uppercase;
+  user-select: none;
 }
 
 .glitch-title {
@@ -62,52 +66,56 @@ body {
 .glitch-layer.cyan { color: #00ffff; }
 .glitch-layer.magenta { color: #ff00ff; }
 
-/* Текст 64px и UPPERCASE */
 .error-message {
-  color: var(--accent);
-  font-family: Helvetica, Arial, sans-serif;
+  color: var(--text);
+  font-size: 18px;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: -0.05em;
-  white-space: nowrap;
-  font-size: clamp(24px, 5vw, 64px); 
+  letter-spacing: -0.02em;
 }
 
-/* Кнопка строго по центру */
+/* КОПИЯ СТИЛЕЙ ИЗ ermitazh.css */
 .back-btn {
   position: fixed;
-  bottom: 60px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  font-family: 'PixeloidSans', monospace;
+  font-size: 32px;
+  letter-spacing: -0.07em;
+  color: #ffffff;
   text-decoration: none;
-  color: var(--text);
-  font-family: var(--font-pixel);
-  font-size: 18px;
-  text-transform: uppercase;
-  z-index: 100;
+  mix-blend-mode: difference;
+  z-index: 1001;
   white-space: nowrap;
-}
-
-/* Цвет при наведении не меняется */
-.back-btn:hover {
-  color: var(--text);
+  user-select: none;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .px-arrow {
-  width: 24px;
-  height: 24px;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 48px;
+  height: 42px;
+  display: block;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Анимация только для стрелки */
 .back-btn:hover .px-arrow {
-  transform: translateX(-10px);
+  transform: translateX(8px);
 }
 
 @media (max-width: 768px) {
-  .back-btn { font-size: 14px; bottom: 40px; }
-  .error-message { font-size: clamp(18px, 4vw, 32px); }
+  .back-btn {
+    font-size: 24px;
+    bottom: 30px;
+  }
+  .px-arrow {
+    width: 36px;
+    height: 32px;
+  }
 }
