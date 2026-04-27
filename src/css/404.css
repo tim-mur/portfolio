@@ -10,8 +10,7 @@
   --bg: #111111;
   --accent: #E50136;
   --text: #FEFAF7;
-  --font-main: Helvetica, Arial, sans-serif;
-  --font-pixel: 'PixeloidSans', monospace;
+  --font: Helvetica, Arial, sans-serif;
 }
 
 * { 
@@ -23,7 +22,7 @@
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-main);
+  font-family: var(--font);
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -32,7 +31,6 @@ body {
   justify-content: center;
 }
 
-/* Контейнер ошибки */
 .error-container {
   display: flex;
   flex-direction: column;
@@ -41,7 +39,6 @@ body {
   gap: 24px;
 }
 
-/* Заголовок 404 */
 .glitch-wrap {
   position: relative;
   line-height: 1;
@@ -49,7 +46,7 @@ body {
 
 .glitch-title, 
 .glitch-layer {
-  font-family: var(--font-pixel);
+  font-family: 'PixeloidSans', monospace;
   font-size: 64px; 
   text-transform: uppercase;
   user-select: none;
@@ -75,7 +72,6 @@ body {
 .glitch-layer.cyan { color: #00ffff; }
 .glitch-layer.magenta { color: #ff00ff; }
 
-/* Текст "Страница не найдена" */
 .error-message {
   color: var(--text);
   font-size: clamp(16px, 5vw, 32px);
@@ -84,7 +80,6 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Кнопка назад (Логика из кейса Эрмитажа) */
 .back-btn {
   position: fixed;
   bottom: 40px;
@@ -93,7 +88,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: var(--font-pixel);
+  font-family: 'PixeloidSans', monospace;
   font-size: clamp(16px, 5vw, 32px);
   letter-spacing: -0.07em;
   color: #ffffff;
@@ -106,22 +101,19 @@ body {
   text-transform: uppercase;
 }
 
-/* Иконка стрелки */
 .px-arrow {
-  width: 1.5em;
-  height: auto;
+  width: 48px;
+  height: 42px;
   display: block;
   flex-shrink: 0;
   image-rendering: pixelated;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Анимация стрелки при наведении на кнопку */
 .back-btn:hover .px-arrow {
   transform: translateX(8px);
 }
 
-/* Фикс для мобильных устройств, если нужен дополнительный отступ */
 @media (max-width: 480px) {
   .back-btn {
     bottom: 30px;
