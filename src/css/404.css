@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Pixeloid Sans';
-  src: url('../assets/fonts/PixeloidSans.ttf') format('truetype');
+  font-family: 'PixeloidSans';
+  src: url('../../assets/fonts/PixeloidSans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -8,9 +8,10 @@
 
 :root {
   --bg: #111111;
-  --accent: #E50136; /* Тот самый красный */
+  --accent: #E50136; /* Твой красный */
   --text: #FEFAF7;
   --font-main: Helvetica, Arial, sans-serif;
+  --font-pixel: 'PixeloidSans', monospace;
 }
 
 * { 
@@ -29,6 +30,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Убираем стандартный курсор, если используем кастомный */
+  cursor: none; 
 }
 
 .error-container {
@@ -47,8 +50,8 @@ body {
 
 .glitch-title, 
 .glitch-layer {
-  font-family: 'Pixeloid Sans', monospace;
-  font-size: 324px; 
+  font-family: var(--font-pixel);
+  font-size: 64px; 
   text-transform: uppercase;
   user-select: none;
 }
@@ -89,22 +92,22 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Pixeloid Sans', monospace;
+  font-family: var(--font-pixel);
   font-size: clamp(16px, 5vw, 32px);
   letter-spacing: -0.07em;
   color: #ffffff;
   text-decoration: none;
   mix-blend-mode: difference;
-  z-index: 1001;
+  z-index: 1001; /* Чтобы была под курсором, но над всем остальным */
   white-space: nowrap;
   user-select: none;
   line-height: 1;
   text-transform: uppercase;
 }
 
-/* Стрелка — Уменьшена */
+/* Стрелка — Компактная */
 .px-arrow {
-  width: 24px; /* Сделал компактнее */
+  width: 24px; 
   height: auto;
   display: block;
   flex-shrink: 0;
@@ -114,4 +117,10 @@ body {
 
 .back-btn:hover .px-arrow {
   transform: translateX(8px);
+}
+
+/* Фикс для кастомного курсора */
+.cursor, #cursor {
+    z-index: 9999 !important;
+    pointer-events: none;
 }
