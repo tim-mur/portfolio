@@ -1,44 +1,24 @@
-(function() {
-    const init404 = () => {
-        const backBtn = document.getElementById('back-btn');
-        
-        // 1. Умная навигация
-        if (backBtn) {
-            const referrer = document.referrer;
-            const currentHost = window.location.hostname;
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('back-btn');
+    if (!btn) return;
 
-            // Проверяем, что пользователь пришел с твоего сайта
-            if (referrer && referrer.includes(currentHost)) {
-                backBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.location.href = referrer;
-                });
-            } else {
-                // Если зашли по прямой ссылке, кнопка просто ведет на главную
-                backBtn.href = '/portfolio/index.html';
-            }
-        }
-
-        // 2. Глитч-эффект для слоев (только по X, чтобы не дергалось слишком сильно)
-        const layers = document.querySelectorAll('.glitch-layer');
-        if (layers.length > 0) {
-            setInterval(() => {
-                layers.forEach(layer => {
-                    if (Math.random() > 0.97) {
-                        const x = (Math.random() * 4 - 2) + 'px';
-                        layer.style.transform = `translate(${x}, 0)`;
-                    } else {
-                        layer.style.transform = 'translate(0, 0)';
-                    }
-                });
-            }, 120);
-        }
-    };
-
-    // Ждем загрузки DOM
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init404);
+    // Умный реферер
+    if (document.referrer && document.referrer.includes(window.location.hostname)) {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = document.referrer;
+        });
     } else {
-        init404();
+        btn.href = '/portfolio/index.html';
     }
-})();
+
+    // Микро-глитч для красоты
+    const layers = document.querySelectorAll('.glitch-layer');
+    setInterval(() => {
+        layers.forEach(l => {
+            l.style.transform = Math.random() > 0.95 
+                ? `translate(${Math.random() * 6 - 3}px, 0)` 
+                : 'translate(0,0)';
+        });
+    }, 100);
+});
