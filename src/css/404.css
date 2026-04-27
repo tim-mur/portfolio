@@ -47,7 +47,7 @@ body {
 
 .glitch-title, 
 .glitch-layer {
-  font-family: 'PixeloidSans', monospace;
+  font-family: 'Pixeloid Sans', monospace;
   font-size: 64px; 
   text-transform: uppercase;
   user-select: none;
@@ -89,7 +89,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'PixeloidSans', monospace;
+  font-family: 'Pixeloid Sans', monospace;
   font-size: clamp(16px, 5vw, 32px);
   letter-spacing: -0.07em;
   color: #ffffff;
