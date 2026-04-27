@@ -8,9 +8,9 @@
 
 :root {
   --bg: #111111;
-  --accent: #E50136;
+  --accent: #E50136; /* Тот самый красный */
   --text: #FEFAF7;
-  --font: Helvetica, Arial, sans-serif;
+  --font-main: Helvetica, Arial, sans-serif;
 }
 
 * { 
@@ -22,7 +22,7 @@
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font);
+  font-family: var(--font-main);
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -36,9 +36,10 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 24px;
+  gap: 20px;
 }
 
+/* Заголовок 404 — Пиксельный */
 .glitch-wrap {
   position: relative;
   line-height: 1;
@@ -60,10 +61,8 @@ body {
 
 .glitch-layer {
   position: absolute;
-  top: 0; 
-  left: 0;
-  width: 100%; 
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   z-index: 1;
   pointer-events: none;
   mix-blend-mode: screen;
@@ -72,14 +71,16 @@ body {
 .glitch-layer.cyan { color: #00ffff; }
 .glitch-layer.magenta { color: #ff00ff; }
 
+/* Фраза — Красная и адаптивная */
 .error-message {
-  color: var(--text);
+  color: var(--accent); 
   font-size: clamp(16px, 5vw, 32px);
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
+/* Кнопка — Пиксельная и адаптивная */
 .back-btn {
   position: fixed;
   bottom: 40px;
@@ -101,9 +102,10 @@ body {
   text-transform: uppercase;
 }
 
+/* Стрелка — Уменьшена */
 .px-arrow {
-  width: 48px;
-  height: 42px;
+  width: 24px; /* Сделал компактнее */
+  height: auto;
   display: block;
   flex-shrink: 0;
   image-rendering: pixelated;
@@ -112,10 +114,4 @@ body {
 
 .back-btn:hover .px-arrow {
   transform: translateX(8px);
-}
-
-@media (max-width: 480px) {
-  .back-btn {
-    bottom: 30px;
-  }
 }
