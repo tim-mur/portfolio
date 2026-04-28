@@ -1,24 +1,39 @@
 @font-face {
   font-family: 'PixeloidSans';
+  /* Абсолютный путь от корня проекта */
   src: url('/portfolio/src/assets/fonts/PixeloidSans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
-.page-404 {
-  background-color: #111111 !important;
-  margin: 0;
-  padding: 0;
+:root {
+  --bg: #111111;
+  --accent: #E50136; /* Твой красный */
+  --text: #FEFAF7;
+  --font-pixel: 'PixeloidSans', monospace;
+}
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: Helvetica, Arial, sans-serif;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  cursor: none; /* Прячем дефолтный курсор */
+  cursor: none; /* Прячем дефолтный курсор для работы кастомного */
 }
 
-/* Контейнер по центру */
-.page-404 .error-container {
+.error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,49 +41,66 @@
   gap: 10px;
 }
 
-/* Глитч-заголовок 404 */
-.page-404 .glitch-wrap {
+/* ЗАГОЛОВОК 404 — 256px */
+.glitch-wrap {
   position: relative;
   display: inline-block;
+  /* Добавляем небольшой padding, чтобы глитч не обрезался по краям */
+  padding: 0 10px; 
 }
 
-.page-404 .glitch-title, 
-.page-404 .glitch-layer {
-  font-family: 'PixeloidSans', monospace !important;
-  font-size: 120px !important; /* Размер как на скриншоте */
+.glitch-title, 
+.glitch-layer {
+  font-family: var(--font-pixel) !important;
+  font-size: 256px !important; /* Жестко 256px */
   line-height: 1;
   margin: 0;
   text-transform: uppercase;
+  user-select: none;
 }
 
-.page-404 .glitch-title {
-  color: #E50136 !important; /* Твой красный */
+.glitch-title {
   position: relative;
-  z-index: 2;
+  color: var(--accent);
+  z-index: 3;
 }
 
-.page-404 .glitch-layer {
+.glitch-layer {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
+  top: 0; 
+  left: 10px; /* Учитываем padding родителя */
+  width: 100%; 
+  height: 100%;
   z-index: 1;
   pointer-events: none;
 }
 
-.page-404 .glitch-layer.cyan { color: #00ffff; mix-blend-mode: screen; }
-.page-404 .glitch-layer.magenta { color: #ff00ff; mix-blend-mode: screen; }
-
-/* Красная фраза под цифрами */
-.page-404 .error-message {
-  color: #E50136 !important;
-  font-family: 'PixeloidSans', monospace !important;
-  font-size: 24px;
-  text-transform: uppercase;
-  margin-top: -10px;
+/* ПОСТОЯННЫЙ ГЛИТЧ-ЭФФЕКТ (через CSS анимации) */
+.glitch-layer.cyan {
+  color: #00ffff;
+  mix-blend-mode: screen;
+  /* Анимация: имя, длительность, итерации, тайминг */
+  animation: glitch-anim-cyan 2.5s infinite linear alternate-reverse;
 }
 
-/* Кнопка внизу */
-.page-404 .back-btn {
+.glitch-layer.magenta {
+  color: #ff00ff;
+  mix-blend-mode: screen;
+  /* Анимация с другой длительностью для хаотичности */
+  animation: glitch-anim-magenta 3s infinite linear alternate-reverse;
+}
+
+/* Красная фраза под заголовком */
+.error-message {
+  color: var(--accent);
+  font-family: var(--font-pixel);
+  font-size: 32px;
+  text-transform: uppercase;
+  margin-top: -20px; /* Прижимаем к 404 */
+}
+
+/* КНОПКА НАЗАД (Стили из кейса Эрмитаж) */
+.back-btn {
   position: fixed;
   bottom: 60px;
   left: 50%;
@@ -76,22 +108,56 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  font-family: 'PixeloidSans', monospace !important;
+  font-family: var(--font-pixel);
   font-size: 28px;
   color: #FFFFFF !important;
   text-decoration: none;
   text-transform: uppercase;
   z-index: 1000;
+  mix-blend-mode: difference;
 }
 
-.page-404 .px-arrow {
+.px-arrow {
   width: 32px;
   height: auto;
   image-rendering: pixelated;
+  transition: transform 0.3s ease;
 }
 
-/* Чтобы кастомный курсор был виден */
+.back-btn:hover .px-arrow {
+  transform: translateX(8px);
+}
+
+/* Слой кастомного курсора (если есть) */
 #cursor, .cursor {
   z-index: 9999 !important;
   pointer-events: none;
+}
+
+
+/* =========================================
+   KEYFRAMES ДЛЯ ПОСТОЯННОГО ГЛИТЧА
+   ========================================= */
+
+/* Анимация для синего слоя (быстрые хаотичные сдвиги и обрезка) */
+@keyframes glitch-anim-cyan {
+  0%   { clip-path: inset(80% 0 1% 0); transform: translate(-5px, -2px); }
+  5%   { clip-path: inset(10% 0 80% 0); transform: translate(5px, 2px); }
+  10%  { clip-path: inset(50% 0 30% 0); transform: translate(-3px, 0); }
+  15%  { clip-path: inset(0 0 0 0);      transform: translate(0, 0); } /* Пауза */
+  20%  { clip-path: inset(20% 0 60% 0); transform: translate(4px, -1px); }
+  25%  { clip-path: inset(70% 0 15% 0); transform: translate(-2px, 3px); }
+  30%  { clip-path: inset(0 0 0 0);      transform: translate(0, 0); } /* Пауза */
+  100% { clip-path: inset(0 0 0 0);      transform: translate(0, 0); }
+}
+
+/* Анимация для розового слоя (другой ритм и сдвиги) */
+@keyframes glitch-anim-magenta {
+  0%   { clip-path: inset(10% 0 80% 0); transform: translate(5px, 2px); }
+  5%   { clip-path: inset(80% 0 1% 0);  transform: translate(-5px, -2px); }
+  10%  { clip-path: inset(0 0 0 0);      transform: translate(0, 0); } /* Пауза */
+  15%  { clip-path: inset(60% 0 20% 0); transform: translate(-4px, 1px); }
+  20%  { clip-path: inset(15% 0 75% 0); transform: translate(3px, -3px); }
+  25%  { clip-path: inset(0 0 0 0);      transform: translate(0, 0); } /* Пауза */
+  100% { clip-path: inset(0 0 0 0);      transform: translate(0, 0); }
 }
