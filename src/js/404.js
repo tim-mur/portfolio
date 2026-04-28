@@ -1,24 +1,42 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('back-btn');
-    if (!btn) return;
+(function() {
+    /**
+     * Инициализация функционала страницы 404
+     */
+    const init404Page = () => {
+        const backBtn = document.getElementById('back-btn');
+        
+        // 1. Настройка "умной" навигации кнопки назад
+        if (backBtn) {
+            const referrer = document.referrer;
+            const currentHost = window.location.hostname;
 
-    // Умный реферер
-    if (document.referrer && document.referrer.includes(window.location.hostname)) {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = document.referrer;
-        });
+            // Проверяем: если пользователь пришел с вашего сайта (любой внутренней страницы)
+            if (referrer && referrer.includes(currentHost)) {
+                backBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Возвращаем его ровно туда, откуда он пришел
+                    window.location.href = referrer;
+                });
+            } else {
+                // Если зашли по прямой ссылке или извне, кнопка ведет на главную
+                backBtn.href = '/portfolio/index.html';
+            }
+        }
+
+        // 2. Дополнительная проверка для кастомного курсора
+        // Если курсор не инициализировался из cursor.js, принудительно показываем стандартный
+        setTimeout(() => {
+            const customCursor = document.getElementById('cursor') || document.querySelector('.cursor');
+            if (!customCursor) {
+                document.body.style.cursor = 'auto';
+            }
+        }, 500);
+    };
+
+    // Запуск после загрузки DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init404Page);
     } else {
-        btn.href = '/portfolio/index.html';
+        init404Page();
     }
-
-    // Микро-глитч для красоты
-    const layers = document.querySelectorAll('.glitch-layer');
-    setInterval(() => {
-        layers.forEach(l => {
-            l.style.transform = Math.random() > 0.95 
-                ? `translate(${Math.random() * 6 - 3}px, 0)` 
-                : 'translate(0,0)';
-        });
-    }, 100);
-});
+})();
