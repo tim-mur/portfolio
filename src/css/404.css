@@ -1,92 +1,97 @@
 @font-face {
   font-family: 'PixeloidSans';
-  /* Путь от корня, чтобы точно нашло */
   src: url('/portfolio/src/assets/fonts/PixeloidSans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
 }
 
-:root {
-  --bg: #111111;
-  --accent: #E50136;
-  --text: #FEFAF7;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: Helvetica, Arial, sans-serif;
+.page-404 {
+  background-color: #111111 !important;
+  margin: 0;
+  padding: 0;
   height: 100vh;
-  width: 100vw;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: none; /* Скрываем стандартный, чтобы работал твой */
+  overflow: hidden;
+  cursor: none; /* Прячем дефолтный курсор */
 }
 
-.error-container {
+/* Контейнер по центру */
+.page-404 .error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  text-align: center;
+  gap: 10px;
 }
 
-.glitch-title, .glitch-layer {
-  font-family: 'PixeloidSans', monospace;
-  font-size: 64px;
+/* Глитч-заголовок 404 */
+.page-404 .glitch-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.page-404 .glitch-title, 
+.page-404 .glitch-layer {
+  font-family: 'PixeloidSans', monospace !important;
+  font-size: 120px !important; /* Размер как на скриншоте */
   line-height: 1;
+  margin: 0;
   text-transform: uppercase;
 }
 
-.glitch-title { color: var(--accent); position: relative; z-index: 2; }
+.page-404 .glitch-title {
+  color: #E50136 !important; /* Твой красный */
+  position: relative;
+  z-index: 2;
+}
 
-.glitch-layer {
+.page-404 .glitch-layer {
   position: absolute;
   top: 0; left: 0;
-  width: 100%; height: 100%;
+  width: 100%;
   z-index: 1;
-  mix-blend-mode: screen;
+  pointer-events: none;
 }
-.glitch-layer.cyan { color: #00ffff; }
-.glitch-layer.magenta { color: #ff00ff; }
 
-.error-message {
-  color: var(--accent);
-  font-size: clamp(16px, 5vw, 32px);
-  font-family: 'PixeloidSans', monospace;
+.page-404 .glitch-layer.cyan { color: #00ffff; mix-blend-mode: screen; }
+.page-404 .glitch-layer.magenta { color: #ff00ff; mix-blend-mode: screen; }
+
+/* Красная фраза под цифрами */
+.page-404 .error-message {
+  color: #E50136 !important;
+  font-family: 'PixeloidSans', monospace !important;
+  font-size: 24px;
   text-transform: uppercase;
-  font-weight: 700;
+  margin-top: -10px;
 }
 
-.back-btn {
+/* Кнопка внизу */
+.page-404 .back-btn {
   position: fixed;
-  bottom: 40px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-family: 'PixeloidSans', monospace;
-  font-size: clamp(16px, 5vw, 32px);
-  color: #ffffff;
+  gap: 15px;
+  font-family: 'PixeloidSans', monospace !important;
+  font-size: 28px;
+  color: #FFFFFF !important;
   text-decoration: none;
-  mix-blend-mode: difference;
-  z-index: 1001;
   text-transform: uppercase;
+  z-index: 1000;
 }
 
-.px-arrow {
-  width: 24px;
+.page-404 .px-arrow {
+  width: 32px;
   height: auto;
   image-rendering: pixelated;
-  transition: transform 0.3s ease;
 }
 
-.back-btn:hover .px-arrow { transform: translateX(8px); }
-
-/* Слой курсора всегда сверху */
-#cursor, .cursor { z-index: 9999 !important; pointer-events: none; }
+/* Чтобы кастомный курсор был виден */
+#cursor, .cursor {
+  z-index: 9999 !important;
+  pointer-events: none;
+}
