@@ -1,42 +1,33 @@
 (function() {
-    /**
-     * Инициализация функционала страницы 404
-     */
-    const init404Page = () => {
+    const init404 = () => {
         const backBtn = document.getElementById('back-btn');
         
-        // 1. Настройка "умной" навигации кнопки назад
         if (backBtn) {
             const referrer = document.referrer;
             const currentHost = window.location.hostname;
 
-            // Проверяем: если пользователь пришел с вашего сайта (любой внутренней страницы)
+            // Если пришли с внутреннего URL — возвращаем назад, иначе на главную
             if (referrer && referrer.includes(currentHost)) {
                 backBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    // Возвращаем его ровно туда, откуда он пришел
                     window.location.href = referrer;
                 });
             } else {
-                // Если зашли по прямой ссылке или извне, кнопка ведет на главную
                 backBtn.href = '/portfolio/index.html';
             }
         }
 
-        // 2. Дополнительная проверка для кастомного курсора
-        // Если курсор не инициализировался из cursor.js, принудительно показываем стандартный
+        // Страховка для курсора: если через 500мс его нет, возвращаем дефолтный
         setTimeout(() => {
-            const customCursor = document.getElementById('cursor') || document.querySelector('.cursor');
-            if (!customCursor) {
+            if (!document.getElementById('cursor') && !document.querySelector('.cursor')) {
                 document.body.style.cursor = 'auto';
             }
         }, 500);
     };
 
-    // Запуск после загрузки DOM
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init404Page);
+        document.addEventListener('DOMContentLoaded', init404);
     } else {
-        init404Page();
+        init404();
     }
 })();
