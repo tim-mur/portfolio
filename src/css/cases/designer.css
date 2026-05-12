@@ -5,7 +5,7 @@ html, body {
 
 .slide { position: fixed; inset: 0; will-change: transform; }
 #phrase-screen { z-index: 1; background: #202020; }
-/* #lang-switcher { display: none !important; } */
+#lang-switcher { display: none !important; }
 
 /* КАРТОЧКА КЕЙСА */
 .case-card {
