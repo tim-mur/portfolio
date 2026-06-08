@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СВОЯК</title>
+<link href="https://fonts.cdnfonts.com/css/pixeloid-sans" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF8400;
+    --yellow:#FFE966;
+    --bg:#140f07;
+    --bg2:#1d160c;
+    --ink:#fff6e6;
+    --pixel:'Pixeloid Sans','Pixelify Sans',monospace;
+    --body:'Onest',system-ui,-apple-system,sans-serif;
+    --cell:34px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background:
+      repeating-linear-gradient(0deg, rgba(255,233,102,.025) 0 1px, transparent 1px var(--cell)),
+      repeating-linear-gradient(90deg, rgba(255,233,102,.025) 0 1px, transparent 1px var(--cell)),
+      radial-gradient(120% 90% at 50% -10%, #241a0d 0%, var(--bg) 60%);
+    background-attachment:fixed;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .pixel{font-family:var(--pixel);letter-spacing:.04em;}
+
+  /* ---------- screens ---------- */
+  .screen{
+    min-height:100vh;
+    display:none;
+    flex-direction:column;
+    animation:fade .35s ease both;
+  }
+  .screen.active{display:flex;}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  /* ---------- start ---------- */
+  #start{align-items:center;justify-content:center;text-align:center;gap:48px;padding:32px;}
+  .logo{
+    font-family:var(--pixel);
+    font-size:clamp(72px,18vw,200px);
+    line-height:.9;
+    color:var(--yellow);
+    text-shadow:
+      4px 0 0 var(--orange),
+      8px 4px 0 rgba(255,132,0,.55),
+      0 0 40px rgba(255,132,0,.25);
+    animation:pop .6s steps(4) both;
+  }
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .tagline{
+    font-family:var(--pixel);
+    font-size:clamp(10px,2.4vw,15px);
+    color:var(--orange);
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    opacity:0;
+    animation:fade .5s .35s ease forwards;
+  }
+
+  .btn{
+    font-family:var(--pixel);
+    font-size:clamp(14px,3vw,20px);
+    letter-spacing:.06em;
+    color:var(--bg);
+    background:var(--yellow);
+    border:none;
+    padding:20px 40px;
+    cursor:pointer;
+    text-transform:uppercase;
+    position:relative;
+    box-shadow:6px 6px 0 var(--orange), 12px 12px 0 rgba(0,0,0,.4);
+    transition:transform .08s steps(2), box-shadow .08s steps(2), background .15s;
+  }
+  .btn:hover{background:var(--orange);color:var(--ink);transform:translate(2px,2px);box-shadow:4px 4px 0 var(--yellow),8px 8px 0 rgba(0,0,0,.4);}
+  .btn:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--orange),2px 2px 0 rgba(0,0,0,.4);}
+
+  /* ---------- pixel transition ---------- */
+  #pixelOverlay{
+    position:fixed;inset:0;z-index:9999;display:none;
+    grid-auto-flow:row;pointer-events:none;
+  }
+  .pix{opacity:0;transform:scale(.4);transition:opacity .16s steps(2),transform .16s steps(2);}
+  .pix.on{opacity:1;transform:scale(1);}
+
+  /* ---------- board ---------- */
+  #board{padding:clamp(20px,4vw,56px) clamp(14px,4vw,56px) 64px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:clamp(20px,4vw,40px);flex-wrap:wrap;}
+  .brand{font-family:var(--pixel);font-size:clamp(24px,6vw,44px);color:var(--yellow);text-shadow:3px 0 0 var(--orange);}
+  .reset{
+    font-family:var(--pixel);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--orange);background:transparent;border:2px solid var(--orange);
+    padding:9px 16px;cursor:pointer;transition:all .15s;
+  }
+  .reset:hover{background:var(--orange);color:var(--bg);}
+
+  .board-wrap{overflow-x:auto;padding-bottom:6px;}
+  .grid{
+    display:grid;
+    grid-template-columns:minmax(168px,1.4fr) repeat(5,minmax(78px,1fr));
+    gap:8px;
+    min-width:700px;
+  }
+  .theme-name{
+    display:flex;align-items:center;
+    font-weight:700;font-size:clamp(13px,1.5vw,17px);
+    padding:14px 16px;line-height:1.25;
+    background:var(--bg2);
+    border-left:5px solid var(--orange);
+    position:sticky;left:0;z-index:2;
+  }
+  .theme-name span{display:block;}
+  .cell{
+    font-family:var(--pixel);
+    font-size:clamp(18px,3vw,30px);
+    color:var(--yellow);
+    background:var(--bg2);
+    border:2px solid rgba(255,132,0,.35);
+    aspect-ratio:1/.62;
+    min-height:54px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:transform .1s steps(2),background .12s,color .12s,border-color .12s;
+    position:relative;
+  }
+  .cell:hover{background:var(--orange);color:var(--bg);border-color:var(--yellow);transform:translateY(-3px);}
+  .cell.used{
+    color:rgba(255,246,230,.18);
+    background:#120d06;
+    border-color:rgba(255,255,255,.06);
+    cursor:default;
+    pointer-events:none;
+  }
+  .cell.cat::after{
+    content:"";position:absolute;top:6px;right:6px;width:8px;height:8px;
+    background:var(--orange);box-shadow:0 0 0 2px var(--bg2);
+  }
+  .cell.used.cat::after{display:none;}
+
+  .final-row{margin-top:clamp(20px,4vw,36px);}
+  .final-btn{
+    width:100%;
+    font-family:var(--pixel);
+    font-size:clamp(16px,3vw,26px);
+    letter-spacing:.12em;
+    color:var(--bg);
+    background:linear-gradient(90deg,var(--orange),var(--yellow));
+    border:none;padding:22px;cursor:pointer;text-transform:uppercase;
+    box-shadow:0 8px 0 rgba(0,0,0,.35);
+    transition:transform .1s steps(2);
+  }
+  .final-btn:hover{transform:translateY(-2px);}
+  .legend{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:13px;color:rgba(255,246,230,.55);}
+  .legend .dot{width:9px;height:9px;background:var(--orange);display:inline-block;}
+
+  /* ---------- question ---------- */
+  #question{padding:clamp(18px,4vw,40px);justify-content:flex-start;}
+  .q-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:clamp(28px,6vw,56px);flex-wrap:wrap;}
+  .back{
+    font-family:var(--pixel);font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);background:transparent;border:2px solid rgba(255,246,230,.3);
+    padding:11px 18px;cursor:pointer;transition:all .15s;
+  }
+  .back:hover{border-color:var(--yellow);color:var(--yellow);}
+  .q-tag{font-family:var(--pixel);font-size:clamp(14px,2.4vw,20px);color:var(--yellow);text-align:right;}
+  .q-tag b{color:var(--orange);}
+
+  .q-body{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;max-width:920px;margin:0 auto;width:100%;gap:40px;padding:10px 0 40px;}
+  .cat-badge{
+    font-family:var(--pixel);font-size:12px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--bg);background:var(--orange);padding:8px 16px;
+  }
+  .q-text{font-size:clamp(22px,4vw,38px);font-weight:600;line-height:1.4;}
+  .answer{
+    width:100%;
+    border-top:2px dashed rgba(255,132,0,.5);
+    padding-top:28px;margin-top:6px;
+    display:none;
+  }
+  .answer.show{display:block;animation:slideUp .4s ease both;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .answer .label{font-family:var(--pixel);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;}
+  .answer .text{font-size:clamp(20px,3.4vw,30px);font-weight:700;color:var(--yellow);line-height:1.45;}
+  .answer .text.muted{color:rgba(255,246,230,.5);font-weight:500;font-style:italic;font-size:clamp(16px,3vw,22px);}
+
+  .scroll-hint{font-size:12px;color:rgba(255,246,230,.4);margin-top:14px;text-align:center;}
+  @media(min-width:760px){.scroll-hint{display:none;}}
+</style>
+</head>
+<body>
+
+<div id="pixelOverlay"></div>
+
+<!-- START -->
+<section id="start" class="screen active">
+  <div>
+    <div class="logo pixel">СВОЯК</div>
+    <div class="tagline">интеллектуальная викторина · ИПТИП</div>
+  </div>
+  <button class="btn" onclick="startGame()">Начать игру</button>
+</section>
+
+<!-- BOARD -->
+<section id="board" class="screen">
+  <div class="topbar">
+    <div class="brand pixel">СВОЯК</div>
+    <button class="reset" onclick="resetGame()">Сбросить</button>
+  </div>
+  <div class="board-wrap">
+    <div class="grid" id="grid"></div>
+  </div>
+  <p class="scroll-hint">← проведите по доске, чтобы увидеть все баллы →</p>
+  <div class="final-row">
+    <button class="final-btn" onclick="openFinal()">★ Финальный раунд ★</button>
+  </div>
+  <div class="legend"><span class="dot"></span> — «кот в мешке»</div>
+</section>
+
+<!-- QUESTION -->
+<section id="question" class="screen">
+  <div class="q-top">
+    <button class="back" onclick="backToBoard()">← К вопросам</button>
+    <div class="q-tag" id="qTag"></div>
+  </div>
+  <div class="q-body">
+    <div class="cat-badge" id="catBadge" style="display:none">🐱 Кот в мешке</div>
+    <div class="q-text" id="qText"></div>
+    <button class="btn" id="revealBtn" onclick="revealAnswer()">Узнать ответ</button>
+    <div class="answer" id="answerBox">
+      <div class="label">Ответ</div>
+      <div class="text" id="aText"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const THEMES = [
+  { title:"Лихие 90-е в МИРЭА", questions:[
+    {p:100, q:"Какой популярный в 1990-е годы напиток в стеклянных бутылках студенты часто покупали вместо воды?", a:"«Пепси-кола» (или «Кока-кола»)"},
+    {p:200, q:"Какая организация пришла на смену комсомолу в МИРЭА в 1992 году?", a:"Студенческий союз МИРЭА"},
+    {p:300, cat:true, q:"Что появилось раньше: интернет в России или первый iPhone?", a:"Интернет — в 1990 году. Первый iPhone — в 2007 году."},
+    {p:400, q:"Как называлась система распределения выпускников вузов по рабочим местам, которая перестала работать в 1990-е? Также с помощью этого фиксируют корабли в море.", a:"Якорь"},
+    {p:500, q:"Какую должность — первую в России среди вузов — учредили в МИРЭА в конце 90-х?", a:"Президент университета"},
+  ]},
+  { title:"Наука — сила", questions:[
+    {p:100, q:"Какое объединение является базовой платформой массового вовлечения студентов в науку?", a:"Студенческое научное общество (СНО)"},
+    {p:200, q:"Какое подразделение координирует студенческую науку?", a:"Дирекция научных студенческих программ"},
+    {p:300, q:"Как называется экскурсионно-образовательный проект МИРЭА для школьников с посещением мегалабораторий?", a:"«Университетские субботы»"},
+    {p:400, cat:true, q:"Продемонстрируйте приветствие ИПТИП.", a:"Ну львы!"},
+    {p:500, q:"Как называется конференция в МИРЭА, в которой ежегодно участвуют более 3000 студентов?", a:"Научно-техническая конференция студентов и аспирантов РТУ МИРЭА"},
+  ]},
+  { title:"Мозгодробилка", questions:[
+    {p:100, q:"Что написано? (вопрос-картинка)", a:""},
+    {p:200, q:"В официальной биологии такого вида не существует. Однако в интернет-фольклоре этот гибрид семейства кошачьих и зайцеобразных обрёл не только имя, но и биографию: он живёт в советской квартире, спит на диване и не требует логического обоснования. Назовите этого рогатого (точнее — ушастого) льва.", a:""},
+    {p:300, q:"Что написано? (вопрос-картинка)", a:""},
+    {p:400, q:"Что написано? (вопрос-картинка)", a:""},
+    {p:500, q:"«Пароль, построенный на отрицании смысла». Речь идёт о *** ***, которые в сознании поколения Альфа утратили количественное значение и превратились в чистый жест — крик, проверку реальности, маркер «свой/чужой». Никто не знает, почему именно они. Назовите этот числовой код.", a:""},
+  ]},
+  { title:"Где? Куда?", questions:[
+    {p:100, q:"Какая ветка метро идёт под Проспектом Вернадского?", a:"Сокольническая (красная) линия"},
+    {p:200, q:"Как называется высотное здание, которое видно из окон корпуса на Вернадского?", a:"РАНХиГС"},
+    {p:300, q:"Парк напротив главного корпуса МИРЭА на Вернадского, 78.", a:"Парк 50-летия Октября"},
+    {p:400, cat:true, q:"Что можно увидеть один раз в минуту, два раза в момент, но никогда за тысячу лет?", a:"Буква «М» (игра слов)"},
+    {p:500, q:"Какой московский вокзал ближе всего к общежитиям МИРЭА на Соколиной горе?", a:"Курский вокзал или Казанский вокзал"},
+  ]},
+  { title:"Ультра-супер-пупер-мегалаборатории", questions:[
+    {p:100, q:"Какая программа поддержки студенческих проектов в РТУ МИРЭА включает грантовое финансирование и помощь экспертов?", a:"Акселератор РТУ МИРЭА"},
+    {p:200, q:"Где находится лаборатория цифровых и аддитивных технологий машиностроения?", a:"Стромынка, 20"},
+    {p:300, q:"Кто курирует мегалаборатории в ИПТИП сегодня?", a:"Станислав Алексеевич Кудж"},
+    {p:400, q:"В каком году состоялся первый набор на программу «Компьютерный дизайн»?", a:"2020 год"},
+    {p:500, q:"Лазеры с каким типом временного разрешения используются в наших лабах для сверхточных измерений?", a:"Фемтосекундные лазеры"},
+  ]},
+  { title:"Что за буквы?", questions:[
+    {p:100, q:"Что ранее означала аббревиатура «МИРЭА» в полном названии университета?", a:"Московский институт радиотехники, электроники и автоматики"},
+    {p:200, q:"Расшифруйте «РТУ» в современном названии вуза.", a:"Российский технологический университет"},
+    {p:300, q:"Что значит «ИПТИП»?", a:"Институт перспективных технологий и индустриального программирования"},
+    {p:400, q:"Как расшифровывается «ФТИ» — предшественник ИПТИП?", a:"Физико-технологический институт"},
+    {p:500, q:"Какая аббревиатура обозначала факультет электроники в 1971 году?", a:"ЭКП (Электронные и квантовые приборы)"},
+  ]},
+  { title:"Шаришь за ИПТИП?", questions:[
+    {p:100, q:"Какое самое популярное направление обучения?", a:"Фуллстек-разработка"},
+    {p:200, q:"Как звали сбежавший электрон?", a:"Борис Богданович"},
+    {p:300, cat:true, q:"Какой химический элемент легче всех?", a:"Водород. Молекулярная масса газообразного водорода составляет около 2 г/моль."},
+    {p:400, q:"Назовите основные традиционные мероприятия нашего Института.", a:"«ИПТИП жарит», Корпоративный НГ, НИНЖ, «Познакомимся?»"},
+    {p:500, q:"Назовите 3 последних состава комитета.", a:"Цех Надежда (Молодцова Варвара, Самойленко Анна, Ибатуллина Азалия, Аккерман Даниил, Михайлик Мария); Гукетлев Хазрет (Банокина Дарья, Тазетдинова Аделлина, Федосова Юлия, Хубаева Аделла, Феничев Аркадий); Сулейманова Виктория (Сиднев Дмитрий, Гукетлев Хазрет, Жилин Егор, Варданян Вагинак, Шаньгин Лев)."},
+  ]},
+];
+
+const FINAL = {
+  q:"Он никогда не был ректором, но его именем названа одна из трёх именных стипендий МИРЭА. Он был членом-корреспондентом АН СССР и одним из основателей промышленности редких элементов. Его фамилия состоит из двух корней: один напоминает большого человека, другой — защиту. Назовите его фамилию.",
+  a:"Большаков Константин Анатольевич"
+};
+
+const used = new Set();
+let current = null; // {ti, qi} or {final:true}
+
+/* ---------- build board ---------- */
+function buildBoard(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  THEMES.forEach((theme, ti)=>{
+    const name = document.createElement('div');
+    name.className = 'theme-name';
+    name.innerHTML = `<span>${theme.title}</span>`;
+    grid.appendChild(name);
+    theme.questions.forEach((qq, qi)=>{
+      const c = document.createElement('div');
+      c.className = 'cell' + (qq.cat ? ' cat':'');
+      if(used.has(ti+'-'+qi)) c.classList.add('used');
+      c.textContent = qq.p;
+      c.onclick = ()=>openQuestion(ti, qi);
+      grid.appendChild(c);
+    });
+  });
+}
+
+/* ---------- transitions ---------- */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function pixelTransition(midpoint){
+  const overlay = document.getElementById('pixelOverlay');
+  overlay.innerHTML = '';
+  overlay.style.display = 'grid';
+  const size = 34;
+  const cols = Math.ceil(window.innerWidth / size);
+  const rows = Math.ceil(window.innerHeight / size);
+  overlay.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+  overlay.style.gridTemplateRows = `repeat(${rows},1fr)`;
+  const cells = [];
+  const total = cols*rows;
+  for(let i=0;i<total;i++){
+    const d = document.createElement('div');
+    d.className = 'pix';
+    d.style.background = Math.random()<0.5 ? 'var(--orange)' : 'var(--yellow)';
+    overlay.appendChild(d);
+    cells.push(d);
+  }
+  const span = 600;
+  // fill in
+  cells.forEach(c=>{
+    c.style.transitionDelay = (Math.random()*span)+'ms';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>c.classList.add('on')));
+  });
+  // swap underlying screen once fully covered
+  setTimeout(()=>{
+    midpoint();
+    // clear out
+    cells.forEach(c=>{
+      c.style.transitionDelay = (Math.random()*span)+'ms';
+      c.classList.remove('on');
+    });
+    setTimeout(()=>{ overlay.style.display='none'; overlay.innerHTML=''; }, span+300);
+  }, span+260);
+}
+
+/* ---------- actions ---------- */
+function startGame(){
+  pixelTransition(()=>{ buildBoard(); showScreen('board'); });
+}
+
+function openQuestion(ti, qi){
+  current = {ti, qi};
+  const qq = THEMES[ti].questions[qi];
+  document.getElementById('qTag').innerHTML = `${THEMES[ti].title} · <b>${qq.p}</b>`;
+  document.getElementById('qText').textContent = qq.q;
+  document.getElementById('catBadge').style.display = qq.cat ? 'inline-block' : 'none';
+  prepareAnswer(qq.a);
+  showScreen('question');
+}
+
+function openFinal(){
+  current = {final:true};
+  document.getElementById('qTag').innerHTML = `<b>★ ФИНАЛ ★</b>`;
+  document.getElementById('qText').textContent = FINAL.q;
+  document.getElementById('catBadge').style.display = 'none';
+  prepareAnswer(FINAL.a);
+  showScreen('question');
+}
+
+function prepareAnswer(text){
+  const box = document.getElementById('answerBox');
+  const aText = document.getElementById('aText');
+  box.classList.remove('show');
+  if(text && text.trim()){
+    aText.textContent = text;
+    aText.classList.remove('muted');
+  } else {
+    aText.textContent = "Ответ не указан в исходном документе (вопрос-картинка / заполняется ведущим).";
+    aText.classList.add('muted');
+  }
+  const btn = document.getElementById('revealBtn');
+  btn.style.display = 'inline-block';
+}
+
+function revealAnswer(){
+  document.getElementById('answerBox').classList.add('show');
+  document.getElementById('revealBtn').style.display = 'none';
+}
+
+function backToBoard(){
+  if(current && !current.final){
+    used.add(current.ti+'-'+current.qi);
+  }
+  buildBoard();
+  showScreen('board');
+}
+
+function resetGame(){
+  used.clear();
+  buildBoard();
+}
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape' && document.getElementById('question').classList.contains('active')){
+    backToBoard();
+  }
+});
+</script>
+</body>
+</html>
