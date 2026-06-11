@@ -141,12 +141,6 @@
     cursor:default;
     pointer-events:none;
   }
-  .cell.cat::after{
-    content:"";position:absolute;top:6px;right:6px;width:8px;height:8px;
-    background:var(--orange);box-shadow:0 0 0 2px var(--bg2);
-  }
-  .cell.used.cat::after{display:none;}
-
   .final-row{margin-top:clamp(20px,4vw,36px);}
   .final-btn{
     width:100%;
@@ -160,8 +154,6 @@
     transition:transform .1s steps(2);
   }
   .final-btn:hover{transform:translateY(-2px);}
-  .legend{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:13px;color:rgba(255,246,230,.55);}
-  .legend .dot{width:9px;height:9px;background:var(--orange);display:inline-block;}
 
   /* ---------- question ---------- */
   #question{padding:clamp(18px,4vw,40px);justify-content:flex-start;}
@@ -195,11 +187,49 @@
 
   .scroll-hint{font-size:12px;color:rgba(255,246,230,.4);margin-top:14px;text-align:center;}
   @media(min-width:760px){.scroll-hint{display:none;}}
+
+  /* ---------- cat-in-the-bag reveal ---------- */
+  #catReveal{
+    position:fixed;inset:0;z-index:500;display:none;
+    flex-direction:column;align-items:center;justify-content:center;gap:22px;
+    text-align:center;cursor:pointer;overflow:hidden;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,233,102,.03) 0 1px, transparent 1px var(--cell)),
+      repeating-linear-gradient(90deg, rgba(255,233,102,.03) 0 1px, transparent 1px var(--cell)),
+      radial-gradient(110% 80% at 50% 45%, #2c1f0d 0%, var(--bg) 70%);
+  }
+  #catReveal.show{display:flex;animation:fade .2s ease;}
+  .cat-emoji{
+    font-size:clamp(84px,22vw,190px);line-height:1;
+    animation:catBounce .5s steps(3) infinite alternate;
+    filter:drop-shadow(0 10px 0 rgba(0,0,0,.35));
+  }
+  .cat-title{
+    font-family:var(--pixel);
+    font-size:clamp(38px,11vw,108px);line-height:.95;
+    color:var(--yellow);
+    text-shadow:5px 0 0 var(--orange),10px 5px 0 rgba(255,132,0,.5),0 0 50px rgba(255,132,0,.3);
+    animation:catPop .5s steps(4) both;
+  }
+  .cat-sub{
+    font-family:var(--pixel);font-size:clamp(11px,2.6vw,16px);
+    letter-spacing:.22em;text-transform:uppercase;color:var(--orange);
+    opacity:0;animation:fadeIn .4s .65s ease forwards;
+  }
+  @keyframes catPop{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+  @keyframes catBounce{from{transform:translateY(6px) rotate(-6deg)}to{transform:translateY(-20px) rotate(6deg)}}
+  @keyframes fadeIn{to{opacity:1}}
 </style>
 </head>
 <body>
 
 <div id="pixelOverlay"></div>
+
+<div id="catReveal" onclick="hideCatReveal()">
+  <div class="cat-emoji">🐱</div>
+  <div class="cat-title pixel">КОТ В МЕШКЕ</div>
+  <div class="cat-sub">нажмите, чтобы открыть вопрос</div>
+</div>
 
 <!-- START -->
 <section id="start" class="screen active">
@@ -223,7 +253,6 @@
   <div class="final-row">
     <button class="final-btn" onclick="openFinal()">★ Финальный раунд ★</button>
   </div>
-  <div class="legend"><span class="dot"></span> — «кот в мешке»</div>
 </section>
 
 <!-- QUESTION -->
@@ -315,7 +344,7 @@ function buildBoard(){
     grid.appendChild(name);
     theme.questions.forEach((qq, qi)=>{
       const c = document.createElement('div');
-      c.className = 'cell' + (qq.cat ? ' cat':'');
+      c.className = 'cell';
       if(used.has(ti+'-'+qi)) c.classList.add('used');
       c.textContent = qq.p;
       c.onclick = ()=>openQuestion(ti, qi);
@@ -380,6 +409,14 @@ function openQuestion(ti, qi){
   document.getElementById('catBadge').style.display = qq.cat ? 'inline-block' : 'none';
   prepareAnswer(qq.a);
   showScreen('question');
+  if(qq.cat) showCatReveal();
+}
+
+function showCatReveal(){
+  document.getElementById('catReveal').classList.add('show');
+}
+function hideCatReveal(){
+  document.getElementById('catReveal').classList.remove('show');
 }
 
 function openFinal(){
@@ -425,6 +462,11 @@ function resetGame(){
 }
 
 document.addEventListener('keydown', e=>{
+  const reveal = document.getElementById('catReveal');
+  if(reveal.classList.contains('show')){
+    if(['Enter',' ','Spacebar','Escape'].includes(e.key)){ hideCatReveal(); e.preventDefault(); }
+    return;
+  }
   if(e.key==='Escape' && document.getElementById('question').classList.contains('active')){
     backToBoard();
   }
